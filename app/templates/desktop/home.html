@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<!--
+=============================================================================
+  app/templates/desktop/home.html
+=============================================================================
+  WHY THIS FILE EXISTS:
+    Desktop visitors get a traditional website layout: full navigation bar,
+    wide hero section, multi-column feature cards, and a footer.
+
+  HOW DEVICE ROUTING WORKS (end-to-end):
+    1. Browser sends GET / with a desktop User-Agent header.
+    2. main.index() calls is_mobile(request) → False.
+    3. render_template("desktop/home.html", ...) is called.
+    4. THIS FILE is rendered. Mobile template is never loaded.
+
+  STACK:
+    - Bootstrap 5.3 CDN (responsive grid, utility classes)
+    - Google Fonts: "Outfit" (modern geometric sans-serif)
+    - Vanilla CSS custom properties for brand colours
+    - Minimal JavaScript for subtle interaction
+=============================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+        content="SAHAL Branding Agency — premium branding, identity design, and digital strategy for ambitious brands." />
+  <title>SAHAL Branding Agency — Desktop</title>
+
+  <!-- Bootstrap 5.3 CSS -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        crossorigin="anonymous" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Google Fonts: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap"
+        rel="stylesheet" />
+
+  <style>
+    /* =========================================================================
+       CSS Custom Properties (Brand Tokens)
+       Centralizing colours here means theme changes touch only this block.
+    ========================================================================= */
+    :root {
+      --clr-primary:     #0d0d0d;
+      --clr-accent:      #C9A84C;   /* SAHAL gold */
+      --clr-accent-dark: #9e7a2e;
+      --clr-surface:     #111111;
+      --clr-card:        #1a1a1a;
+      --clr-text:        #f0f0f0;
+      --clr-muted:       #888888;
+      --clr-success:     #2dce89;
+      --clr-danger:      #f5365c;
+      --font-body:       'Outfit', sans-serif;
+      --radius:          12px;
+      --transition:      0.25s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--clr-primary);
+      color: var(--clr-text);
+      margin: 0;
+      padding: 0;
+      /* Subtle animated gradient background */
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.04) 0%, transparent 50%);
+    }
+
+    /* =========================================================================
+       Navbar
+    ========================================================================= */
+    .navbar-brand-text {
+      font-weight: 900;
+      font-size: 1.35rem;
+      letter-spacing: 0.08em;
+      color: var(--clr-accent) !important;
+      text-transform: uppercase;
+    }
+
+    .nav-link {
+      color: var(--clr-muted) !important;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      transition: color var(--transition);
+    }
+
+    .nav-link:hover { color: var(--clr-accent) !important; }
+
+    .navbar {
+      background: rgba(13, 13, 13, 0.85) !important;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    }
+
+    /* =========================================================================
+       Hero Section
+    ========================================================================= */
+    .hero {
+      min-height: 86vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,168,76,0.12), transparent);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--clr-accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 .gold { color: var(--clr-accent); }
+
+    .hero p.lead {
+      color: var(--clr-muted);
+      font-size: 1.15rem;
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-dark));
+      color: #0d0d0d;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      transition: all var(--transition);
+      box-shadow: 0 0 24px rgba(201,168,76,0.3);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 36px rgba(201,168,76,0.5);
+      color: #0d0d0d;
+    }
+
+    .btn-outline-gold {
+      border: 1px solid var(--clr-accent);
+      color: var(--clr-accent);
+      background: transparent;
+      font-weight: 600;
+      padding: 0.72rem 2rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: all var(--transition);
+    }
+
+    .btn-outline-gold:hover {
+      background: rgba(201,168,76,0.1);
+      color: var(--clr-accent);
+    }
+
+    /* =========================================================================
+       Status Cards
+    ========================================================================= */
+    .status-card {
+      background: var(--clr-card);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: transform var(--transition), border-color var(--transition);
+    }
+
+    .status-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201,168,76,0.35);
+    }
+
+    .status-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .icon-success { background: rgba(45,206,137,0.15); color: var(--clr-success); }
+    .icon-gold    { background: rgba(201,168,76,0.15); color: var(--clr-accent); }
+    .icon-info    { background: rgba(90,120,255,0.15); color: #8b9fff; }
+
+    .status-card h6 {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clr-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .status-card p {
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    /* =========================================================================
+       Section Titles
+    ========================================================================= */
+    .section-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--clr-accent);
+      margin-bottom: 0.5rem;
+    }
+
+    /* =========================================================================
+       Feature Cards (Future modules)
+    ========================================================================= */
+    .feature-card {
+      background: var(--clr-card);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      height: 100%;
+      transition: transform var(--transition), border-color var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201,168,76,0.25);
+    }
+
+    .feature-card .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h5 {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      color: var(--clr-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .badge-soon {
+      background: rgba(201,168,76,0.15);
+      color: var(--clr-accent);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid rgba(201,168,76,0.2);
+    }
+
+    /* =========================================================================
+       Footer
+    ========================================================================= */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem 0;
+      color: var(--clr-muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======================================================================
+       NAVBAR
+  ====================================================================== -->
+  <nav class="navbar navbar-expand-lg sticky-top py-3">
+    <div class="container">
+      <a class="navbar-brand navbar-brand-text" href="/">
+        <i class="bi bi-diamond-fill me-2" style="color:var(--clr-accent);font-size:0.9rem;"></i>
+        SAHAL
+      </a>
+
+      <button class="navbar-toggler border-0" type="button"
+              data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <i class="bi bi-list" style="color:var(--clr-accent);font-size:1.5rem;"></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto gap-1">
+          <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Portfolio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        </ul>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-gold btn-sm ms-3">
+          Client Login
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======================================================================
+       HERO
+  ====================================================================== -->
+  <section class="hero">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-7">
+          <div class="hero-tag">
+            <i class="bi bi-broadcast me-1"></i> Phase 1 — Stack Verified
+          </div>
+          <h1>
+            SAHAL<br />
+            <span class="gold">BRANDING</span><br />
+            AGENCY
+          </h1>
+          <p class="lead mt-4">
+            Premium brand identity, digital strategy & creative design — built for
+            ambitious businesses that refuse to be ordinary.
+          </p>
+          <div class="d-flex gap-3 mt-5 flex-wrap">
+            <a href="#" class="btn btn-gold">Explore Services</a>
+            <a href="#" class="btn btn-outline-gold">View Portfolio</a>
+          </div>
+        </div>
+
+        <!-- Right column - system status panel -->
+        <div class="col-lg-5 mt-5 mt-lg-0">
+          <div class="ps-lg-4">
+            <p class="section-title mb-3">System Status</p>
+
+            <!-- DB Connection Status -->
+            <div class="status-card mb-3">
+              <div class="status-icon icon-success">
+                <i class="bi bi-database-check"></i>
+              </div>
+              <h6>Database Connection</h6>
+              {% if db_error %}
+                <p style="color:var(--clr-danger);">
+                  <i class="bi bi-x-circle me-1"></i>{{ db_error }}
+                </p>
+              {% elif db_record %}
+                <p style="color:var(--clr-success);">
+                  <i class="bi bi-check2-circle me-1"></i>{{ db_record.message }}
+                </p>
+              {% else %}
+                <p style="color:var(--clr-muted);">No record found — run migrations.</p>
+              {% endif %}
+            </div>
+
+            <!-- Flask + Device Info -->
+            <div class="status-card mb-3">
+              <div class="status-icon icon-gold">
+                <i class="bi bi-lightning-charge"></i>
+              </div>
+              <h6>Flask Stack</h6>
+              <p>⚡ Application running on port 5000</p>
+            </div>
+
+            <!-- Device Type -->
+            <div class="status-card">
+              <div class="status-icon icon-info">
+                <i class="bi bi-display"></i>
+              </div>
+              <h6>Detected Device</h6>
+              <p>🖥️ Serving <strong>Desktop</strong> template ({{ device_type }})</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       FUTURE MODULES — Structural preview
+  ====================================================================== -->
+  <section class="py-6 py-5">
+    <div class="container">
+      <p class="section-title">Architecture Roadmap</p>
+      <h2 class="fw-bold mb-4" style="font-size:2rem;">
+        Production-Ready <span style="color:var(--clr-accent);">Module Structure</span>
+      </h2>
+
+      <div class="row g-4">
+
+        <div class="col-md-6 col-xl-3">
+          <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <h5>Portfolio Module</h5>
+            <p>Showcase case studies, before-and-after visuals, and client success stories.</p>
+            <span class="badge-soon mt-2 d-inline-block">Phase 2</span>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+          <div class="feature-card">
+            <div class="feature-icon">📦</div>
+            <h5>Service Booking</h5>
+            <p>Package selection, requirement intake forms, and automated confirmation emails.</p>
+            <span class="badge-soon mt-2 d-inline-block">Phase 3</span>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h5>Order Tracking</h5>
+            <p>Real-time project milestone tracking with client and team notifications.</p>
+            <span class="badge-soon mt-2 d-inline-block">Phase 4</span>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+          <div class="feature-card">
+            <div class="feature-icon">⚙️</div>
+            <h5>Admin Workflow</h5>
+            <p>Team task management, client approvals, and analytics dashboard.</p>
+            <span class="badge-soon mt-2 d-inline-block">Phase 5</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       FOOTER
+  ====================================================================== -->
+  <footer>
+    <div class="container d-flex flex-wrap justify-content-between align-items-center">
+      <span>
+        © 2026 <strong style="color:var(--clr-accent);">SAHAL Branding Agency</strong>.
+        Phase 1 — Architecture initialized.
+      </span>
+      <span class="text-muted" style="font-size:0.78rem;">
+        Flask · SQLAlchemy · MySQL · Blueprints ·
+        <span style="color:var(--clr-success);">● Connected</span>
+      </span>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5.3 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          crossorigin="anonymous"></script>
+
+  <script>
+    /*
+     * Subtle scroll animation: add a 'scrolled' class to the body once
+     * the user scrolls past the hero. Future CSS can use this for nav
+     * style changes, parallax, etc.
+     */
+    window.addEventListener("scroll", () => {
+      document.body.classList.toggle("scrolled", window.scrollY > 80);
+    });
+  </script>
+</body>
+</html>

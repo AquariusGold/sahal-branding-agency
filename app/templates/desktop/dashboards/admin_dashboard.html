@@ -1,0 +1,102 @@
+{% extends "desktop/layouts/admin_base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+{% block nav_dashboard %}active{% endblock %}
+
+{% block header_title %}System Administration{% endblock %}
+{% block header_subtitle %}Overview of platform activity and metrics.{% endblock %}
+
+{% block content %}
+<!-- Top Metrics -->
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-center"
+            style="border-left: 4px solid var(--clr-cyan); transition: transform 0.3s ease;"
+            onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='none';">
+            <p class="text-muted mb-2 text-uppercase fw-bold" style="font-size:0.75rem; letter-spacing: 0.05em;">Total
+                Users</p>
+            <h2 class="mb-0 fw-bold">1</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-center"
+            style="border-left: 4px solid var(--clr-primary); transition: transform 0.3s ease;"
+            onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='none';">
+            <p class="text-muted mb-2 text-uppercase fw-bold" style="font-size:0.75rem; letter-spacing: 0.05em;">Active
+                Orders</p>
+            <h2 class="mb-0 fw-bold">0</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-center"
+            style="border-left: 4px solid var(--clr-accent); transition: transform 0.3s ease;"
+            onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='none';">
+            <p class="text-muted mb-2 text-uppercase fw-bold" style="font-size:0.75rem; letter-spacing: 0.05em;">Pending
+                Quotes</p>
+            <h2 class="mb-0 fw-bold text-accent">0</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-center"
+            style="border-left: 4px solid var(--clr-danger); transition: transform 0.3s ease;"
+            onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='none';">
+            <p class="text-muted mb-2 text-uppercase fw-bold" style="font-size:0.75rem; letter-spacing: 0.05em;">Unpaid
+                Invoices</p>
+            <h2 class="mb-0 fw-bold text-danger">0</h2>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Management Shortcuts -->
+<h5 class="fw-bold mb-3">Workspace Setup</h5>
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <a href="{{ url_for('admin.jobs') }}" class="glass-card p-4 text-center d-block text-decoration-none"
+            style="transition: border-color 0.2s ease;">
+            <i class="bi bi-kanban fs-2 text-primary mb-3 d-block"></i>
+            <h6 class="fw-bold text-white mb-1">Job List</h6>
+            <p class="text-muted small mb-0 lh-sm">Track active project status</p>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="{{ url_for('admin.quotations') }}"
+            class="glass-card p-4 text-center d-block text-decoration-none text-white">
+            <i class="bi bi-file-earmark-text fs-2 text-accent mb-3 d-block"></i>
+            <h6 class="fw-bold text-white mb-1">Quotations</h6>
+            <p class="text-muted small mb-0 lh-sm">Manage client proposals</p>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="{{ url_for('admin.invoices') }}" class="glass-card p-4 text-center d-block text-decoration-none">
+            <i class="bi bi-cash-coin fs-2 text-success mb-3 d-block"></i>
+            <h6 class="fw-bold text-white mb-1">Invoices</h6>
+            <p class="text-muted small mb-0 lh-sm">Billing and payments</p>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="{{ url_for('admin.reports') }}" class="glass-card p-4 text-center d-block text-decoration-none">
+            <i class="bi bi-bar-chart-line fs-2 text-info mb-3 d-block"></i>
+            <h6 class="fw-bold text-white mb-1">Reports</h6>
+            <p class="text-muted small mb-0 lh-sm">Agency performance metrics</p>
+        </a>
+    </div>
+</div>
+
+<div class="glass-card">
+    <div class="glass-card-header border-bottom border-dark">
+        <h6 class="mb-0 fw-bold">Recent System Activity</h6>
+    </div>
+    <div class="card-body text-center py-5 text-muted">
+        <i class="bi bi-activity fs-2 mb-3 d-block opacity-50"></i>
+        Activity feed module pending implementation.
+    </div>
+</div>
+<style>
+    .glass-card:hover {
+        border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+</style>
+{% endblock %}

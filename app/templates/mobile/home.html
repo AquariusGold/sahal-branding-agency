@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<!--
+=============================================================================
+  app/templates/mobile/home.html
+=============================================================================
+  WHY THIS FILE EXISTS:
+    Mobile visitors receive a fundamentally different UI:
+      - App-like full-screen sections (no multi-column grids)
+      - Thumb-friendly touch targets (min 44px)
+      - Bottom-sticky CTA bar (mirrors native app UI conventions)
+      - Tighter typography and taller spacing for small screens
+      - Compact navigation (hamburger or bottom bar)
+
+  HOW DEVICE ROUTING WORKS (end-to-end):
+    1. Browser sends GET / with a mobile User-Agent header.
+    2. main.index() calls is_mobile(request) → True.
+    3. render_template("mobile/home.html", ...) is called.
+    4. THIS FILE is rendered. Desktop template is never loaded.
+
+  STACK:
+    - Bootstrap 5.3 (mobile-first responsive utilities)
+    - Google Fonts: "Outfit"
+    - CSS Custom Properties shared with desktop (same brand colours)
+    - No sidebar/multi-column layout — vertical scroll app pattern
+=============================================================================
+-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <!--
+    viewport meta is CRITICAL on mobile:
+    - width=device-width: use the device's actual screen width
+    - initial-scale=1.0: no zoom applied on load
+    - Without this, mobile browsers render the desktop layout scaled down.
+  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="SAHAL Branding Agency — build a premium brand from your mobile." />
+    <meta name="theme-color" content="#0d0d0d" />
+    <title>SAHAL Branding Agency</title>
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        crossorigin="anonymous" />
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        /* =========================================================================
+       Brand Tokens (same as desktop — theming system is consistent)
+    ========================================================================= */
+        :root {
+            --clr-primary: #0d0d0d;
+            --clr-accent: #C9A84C;
+            --clr-accent-dark: #9e7a2e;
+            --clr-surface: #111111;
+            --clr-card: #1a1a1a;
+            --clr-text: #f0f0f0;
+            --clr-muted: #888888;
+            --clr-success: #2dce89;
+            --clr-danger: #f5365c;
+            --font-body: 'Outfit', sans-serif;
+            --radius: 14px;
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            /* iPhone notch */
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            font-family: var(--font-body);
+            background-color: var(--clr-primary);
+            color: var(--clr-text);
+            margin: 0;
+            padding: 0;
+            /* Bottom padding accounts for the sticky CTA bar */
+            padding-bottom: calc(72px + var(--safe-bottom));
+            overscroll-behavior-y: none;
+        }
+
+        scroll-behavior {
+            scroll-behavior: smooth;
+        }
+
+        /* =========================================================================
+       Top App Bar (mobile-style header)
+    ========================================================================= */
+        .app-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(13, 13, 13, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.12);
+            padding: 0.9rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-bar .brand {
+            font-weight: 900;
+            font-size: 1.15rem;
+            letter-spacing: 0.1em;
+            color: var(--clr-accent);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .app-bar .menu-btn {
+            background: rgba(201, 168, 76, 0.1);
+            border: none;
+            border-radius: 8px;
+            padding: 0.4rem 0.6rem;
+            color: var(--clr-accent);
+            font-size: 1.3rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        /* =========================================================================
+       Hero — full-screen, app-like splash
+    ========================================================================= */
+        .hero-mobile {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 2rem 1.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-mobile::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 60%, rgba(201, 168, 76, 0.1), transparent);
+            pointer-events: none;
+        }
+
+        .hero-tag-mobile {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(201, 168, 76, 0.1);
+            border: 1px solid rgba(201, 168, 76, 0.25);
+            color: var(--clr-accent);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.75rem;
+            border-radius: 50px;
+            margin-bottom: 1.75rem;
+        }
+
+        .hero-mobile h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin: 0 0 1rem;
+        }
+
+        .hero-mobile h1 .gold {
+            color: var(--clr-accent);
+        }
+
+        .hero-mobile p {
+            color: var(--clr-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            max-width: 340px;
+        }
+
+        /* =========================================================================
+       Status Chips (compact, mobile-friendly)
+    ========================================================================= */
+        .status-section {
+            padding: 1.5rem 1.25rem;
+        }
+
+        .chip {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.85rem;
+            background: var(--clr-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius);
+            padding: 1.1rem 1.1rem;
+            margin-bottom: 0.85rem;
+            transition: border-color 0.2s;
+        }
+
+        .chip.success {
+            border-left: 3px solid var(--clr-success);
+        }
+
+        .chip.gold {
+            border-left: 3px solid var(--clr-accent);
+        }
+
+        .chip.info {
+            border-left: 3px solid #8b9fff;
+        }
+
+        .chip .chip-icon {
+            font-size: 1.4rem;
+            line-height: 1.3;
+            flex-shrink: 0;
+        }
+
+        .chip .chip-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--clr-muted);
+            margin-bottom: 0.2rem;
+        }
+
+        .chip .chip-value {
+            font-size: 0.88rem;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* =========================================================================
+       Feature Cards (vertical list on mobile)
+    ========================================================================= */
+        .modules-section {
+            padding: 0.5rem 1.25rem 1rem;
+        }
+
+        .module-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--clr-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius);
+            padding: 1rem 1.1rem;
+            margin-bottom: 0.75rem;
+            transition: border-color 0.2s;
+        }
+
+        .module-row:active {
+            border-color: rgba(201, 168, 76, 0.3);
+        }
+
+        .module-row .mod-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .module-row .mod-info {
+            flex: 1;
+        }
+
+        .module-row .mod-title {
+            font-size: 0.92rem;
+            font-weight: 700;
+            margin: 0 0 0.15rem;
+        }
+
+        .module-row .mod-desc {
+            font-size: 0.78rem;
+            color: var(--clr-muted);
+            margin: 0;
+        }
+
+        .badge-phase {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: rgba(201, 168, 76, 0.12);
+            color: var(--clr-accent);
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        /* =========================================================================
+       Section Labels
+    ========================================================================= */
+        .label-sm {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--clr-accent);
+            padding: 0 0 0.5rem;
+        }
+
+        /* =========================================================================
+       Sticky Bottom CTA Bar
+    ========================================================================= */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            background: rgba(17, 17, 17, 0.96);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(201, 168, 76, 0.15);
+            padding: 0.85rem 1.25rem;
+            padding-bottom: calc(0.85rem + var(--safe-bottom));
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn-gold-full {
+            flex: 1;
+            background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-dark));
+            color: #0d0d0d;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            box-shadow: 0 4px 16px rgba(201, 168, 76, 0.25);
+        }
+
+        .btn-ghost-full {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--clr-text);
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 0.75rem;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ====================================================================
+       TOP APP BAR
+  ==================================================================== -->
+    <header class="app-bar">
+        <a class="brand" href="/">
+            <i class="bi bi-diamond-fill me-1" style="font-size:0.8rem;"></i>SAHAL
+        </a>
+        <button class="menu-btn" aria-label="Open menu">
+            <i class="bi bi-list"></i>
+        </button>
+    </header>
+
+    <!-- ====================================================================
+       HERO SECTION
+  ==================================================================== -->
+    <section class="hero-mobile">
+        <span class="hero-tag-mobile">
+            <i class="bi bi-broadcast"></i> Phase 1 — Stack Live
+        </span>
+
+        <h1>
+            SAHAL<br />
+            <span class="gold">BRANDING</span><br />
+            AGENCY
+        </h1>
+
+        <p>
+            Premium brand identity &amp; digital strategy — engineered for brands
+            that demand to stand out.
+        </p>
+    </section>
+
+    <!-- ====================================================================
+       SYSTEM STATUS CHIPS
+  ==================================================================== -->
+    <section class="status-section">
+        <p class="label-sm">System Status</p>
+
+        <!-- Database Connection -->
+        <div class="chip success">
+            <span class="chip-icon">🛢️</span>
+            <div>
+                <p class="chip-label">Database</p>
+                {% if db_error %}
+                <p class="chip-value" style="color:var(--clr-danger);">
+                    ❌ {{ db_error }}
+                </p>
+                {% elif db_record %}
+                <p class="chip-value" style="color:var(--clr-success);">
+                    {{ db_record.message }}
+                </p>
+                {% else %}
+                <p class="chip-value" style="color:var(--clr-muted);">
+                    No record — run migrations.
+                </p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Server Status -->
+        <div class="chip gold">
+            <span class="chip-icon">⚡</span>
+            <div>
+                <p class="chip-label">Flask Server</p>
+                <p class="chip-value">Running on port 5000</p>
+            </div>
+        </div>
+
+        <!-- Device Detection -->
+        <div class="chip info">
+            <span class="chip-icon">📱</span>
+            <div>
+                <p class="chip-label">Detected Device</p>
+                <p class="chip-value">Serving <strong>Mobile</strong> template ({{ device_type }})</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+       MODULE ROADMAP (vertical card list)
+  ==================================================================== -->
+    <section class="modules-section">
+        <p class="label-sm">Module Roadmap</p>
+
+        <div class="module-row">
+            <span class="mod-icon">🎨</span>
+            <div class="mod-info">
+                <p class="mod-title">Portfolio</p>
+                <p class="mod-desc">Case studies & visual showcase</p>
+            </div>
+            <span class="badge-phase">Phase 2</span>
+        </div>
+
+        <div class="module-row">
+            <span class="mod-icon">📦</span>
+            <div class="mod-info">
+                <p class="mod-title">Service Booking</p>
+                <p class="mod-desc">Package selection & intake forms</p>
+            </div>
+            <span class="badge-phase">Phase 3</span>
+        </div>
+
+        <div class="module-row">
+            <span class="mod-icon">📊</span>
+            <div class="mod-info">
+                <p class="mod-title">Order Tracking</p>
+                <p class="mod-desc">Real-time project milestones</p>
+            </div>
+            <span class="badge-phase">Phase 4</span>
+        </div>
+
+        <div class="module-row">
+            <span class="mod-icon">⚙️</span>
+            <div class="mod-info">
+                <p class="mod-title">Admin Workflow</p>
+                <p class="mod-desc">Team task & approval management</p>
+            </div>
+            <span class="badge-phase">Phase 5</span>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+       STICKY BOTTOM CTA BAR (native app convention)
+  ==================================================================== -->
+    <div class="bottom-bar">
+        <a href="{{ url_for('services.index') }}" class="btn-gold-full">
+            <i class="bi bi-briefcase"></i> Our Services
+        </a>
+        <a href="{{ url_for('auth.login') }}" class="btn-ghost-full">
+            <i class="bi bi-person"></i> Login
+        </a>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

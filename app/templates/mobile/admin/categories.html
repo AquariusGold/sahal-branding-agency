@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Manage Categories — SAHAL Mobile</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --clr-primary: #0d0d0d;
+            --clr-accent: #C9A84C;
+            --clr-card: #1a1a1a;
+            --clr-text: #f0f0f0;
+            --clr-danger: #f5365c;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--clr-primary);
+            background-image: radial-gradient(circle at 50% 0%, rgba(245, 54, 92, 0.15), transparent 70%);
+            color: var(--clr-text);
+            padding-bottom: 2rem;
+        }
+
+        .mobile-header {
+            background: #000;
+            padding: 1rem 1.5rem;
+            border-bottom: 2px solid var(--clr-danger);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-text {
+            color: #fff;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .nav-pills .nav-link {
+            color: #888;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: rgba(201, 168, 76, 0.15);
+            color: var(--clr-accent);
+            font-weight: 600;
+        }
+
+        .stat-card {
+            background: var(--clr-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 3px solid var(--clr-accent);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .stat-card.inactive {
+            border-left-color: var(--clr-danger);
+            opacity: 0.7;
+        }
+
+        .btn-fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 1.5rem;
+            background: var(--clr-accent);
+            color: #000;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(201, 168, 76, 0.3);
+            z-index: 1000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="mobile-header">
+        <a href="{{ url_for('admin.dashboard') }}" class="brand-text">SAHAL <span
+                style="color:var(--clr-danger);">HQ</span></a>
+        <a href="{{ url_for('auth.logout') }}" style="color:#fff;"><i class="bi bi-box-arrow-right fs-5"></i></a>
+    </header>
+
+    <div class="container-fluid pt-4 px-3">
+
+        <ul class="nav nav-pills mb-4 gap-2 d-flex justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ url_for('admin.list_categories') }}">Categories</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin.list_services') }}">Services</a>
+            </li>
+        </ul>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} p-2 small text-center rounded-3 mb-4">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% for cat in categories %}
+        <div class="stat-card {% if not cat.is_active %}inactive{% endif %}">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="mb-0 fw-bold">{{ cat.name }}</h5>
+                <div class="dropdown">
+                    <button class="btn btn-sm text-muted p-0" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-three-dots-vertical fs-5"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow">
+                        <li><a class="dropdown-item" href="{{ url_for('admin.edit_category', id=cat.id) }}">Edit
+                                Category</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <form action="{{ url_for('admin.toggle_category', id=cat.id) }}" method="POST"
+                                class="m-0 p-0">
+                                {% if cat.is_active %}
+                                <button type="submit" class="dropdown-item text-danger"
+                                    onclick="return confirm('Deactivate category?');">Deactivate</button>
+                                {% else %}
+                                <button type="submit" class="dropdown-item text-success">Activate</button>
+                                {% endif %}
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="text-muted small mb-3">{{ cat.description | truncate(80) or 'No description' }}</p>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="badge bg-dark border border-secondary">{{ cat.services|length }} Services</span>
+                <span class="small {% if cat.is_active %}text-success{% else %}text-danger{% endif %} fw-semibold">
+                    {{ "Active" if cat.is_active else "Inactive" }}
+                </span>
+            </div>
+        </div>
+        {% else %}
+        <div class="text-center py-5 text-muted">
+            <i class="bi bi-folder2-open d-block mb-2 fs-1 opacity-50"></i>
+            <p>No categories found</p>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <a href="{{ url_for('admin.create_category') }}" class="btn-fab">
+        <i class="bi bi-plus-lg"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

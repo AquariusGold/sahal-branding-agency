@@ -1,0 +1,132 @@
+{% extends "desktop/layouts/public_base.html" %}
+
+{% block title %}Our Services{% endblock %}
+{% block nav_services %}active{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        padding: 5rem 0 3rem;
+        border-bottom: 1px solid var(--clr-border);
+        background: linear-gradient(180deg, rgba(22, 22, 24, 0.4) 0%, transparent 100%);
+    }
+
+    .service-category-card {
+        background: var(--clr-card);
+        border: 1px solid var(--clr-border);
+        border-radius: var(--radius-md);
+        padding: 2.5rem;
+        height: 100%;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .service-category-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--clr-accent);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .category-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .service-category-card:hover .category-icon {
+        color: #fff !important;
+        background: transparent !important;
+        transform: scale(1.1);
+    }
+
+    .btn-view-services {
+        margin-top: auto;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.85rem;
+        transition: color 0.3s ease;
+    }
+
+    /* Hover color changes handled dynamically inline */
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header mb-5">
+    <div class="container text-center">
+        <h1 class="fw-bold mb-3" style="font-size: 3.5rem;">Our Services</h1>
+        <p class="text-muted fs-5 mx-auto" style="max-width: 700px;">Elevate your brand with our curated selection of
+            premium creative and experiential solutions.</p>
+    </div>
+</div>
+
+<div class="container py-4 mb-5">
+    <div class="row g-4">
+        {% for category in categories %}
+        {% set cat_color = 'cyan' %}
+        {% if 'Print' in category.name or 'Brand' in category.name %}{% set cat_color = 'cyan' %}
+        {% elif 'Event' in category.name %}{% set cat_color = 'magenta' %}
+        {% elif 'Interior' in category.name %}{% set cat_color = 'yellow' %}
+        {% elif 'LED' in category.name or 'Screen' in category.name %}{% set cat_color = 'green' %}
+        {% elif 'Multi' in category.name or 'Video' in category.name %}{% set cat_color = 'purple' %}
+        {% endif %}
+
+        <div class="col-lg-4 col-md-6">
+            <a href="{{ url_for('services.category_detail', slug=category.id) }}"
+                class="service-category-card group group-hover-{{ cat_color }}"
+                onmouseover="this.style.borderColor='var(--clr-{{ cat_color }})'; this.querySelector('.btn-view-services').style.color='var(--clr-{{ cat_color }})';"
+                onmouseout="this.style.borderColor=''; this.querySelector('.btn-view-services').style.color='var(--clr-muted)';">
+                <div class="category-icon text-{{ cat_color }} border-{{ cat_color }} bg-{{ cat_color }}-subtle">
+                    {# Use a dynamic icon based on category name or a generic one #}
+                    {% if 'Print' in category.name or 'Brand' in category.name %}
+                    <i class="bi bi-palette"></i>
+                    {% elif 'Event' in category.name %}
+                    <i class="bi bi-calendar-event"></i>
+                    {% elif 'Interior' in category.name %}
+                    <i class="bi bi-houses"></i>
+                    {% elif 'LED' in category.name or 'Screen' in category.name %}
+                    <i class="bi bi-display"></i>
+                    {% elif 'Multi' in category.name or 'Video' in category.name %}
+                    <i class="bi bi-camera-video"></i>
+                    {% else %}
+                    <i class="bi bi-star"></i>
+                    {% endif %}
+                </div>
+                <h3 class="fw-bold mb-3">{{ category.name }}</h3>
+                <p class="text-muted mb-4">{{ category.description or 'Explore our professional services tailored for
+                    your business needs and corporate image.' }}</p>
+                <div class="btn-view-services text-muted">
+                    View Services <i class="bi bi-arrow-right ms-2 transition-transform"></i>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="container mb-5 pb-5">
+    <div class="glass-card p-5 text-center d-flex flex-column align-items-center"
+        style="background: radial-gradient(circle at center, rgba(127,13,242,0.15), var(--clr-card) 60%); border-color: var(--clr-purple);">
+        <h3 class="fw-bold mb-3">Not sure where to start?</h3>
+        <p class="text-muted mb-4" style="max-width: 600px;">Book a free consultation with our creative directors to
+            discuss your business goals and find the perfect solution set.</p>
+        <a href="{{ url_for('services.booking_wizard') }}" class="btn-gradient px-4 py-3 text-decoration-none">Start a
+            Consultation Request</a>
+    </div>
+</div>
+{% endblock %}

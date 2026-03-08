@@ -1,0 +1,93 @@
+{% extends "mobile/layouts/public_base.html" %}
+
+{% block title %}{{ category.name }} — Services{% endblock %}
+{% block nav_services %}active{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        padding: 4rem 0 2rem;
+        border-bottom: 1px solid var(--clr-border);
+        background: var(--clr-surface);
+    }
+
+    .service-item-card {
+        background: var(--clr-card);
+        border: 1px solid var(--clr-border);
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .service-price-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header mb-4 text-center">
+    <div class="container">
+        <!-- Back Button -->
+        <div class="mb-3">
+            <a href="{{ url_for('services.index') }}" class="text-muted text-decoration-none small fw-bold"
+                style="letter-spacing: 0.05em;">
+                <i class="bi bi-chevron-left me-1"></i> BACK TO SERVICES
+            </a>
+        </div>
+
+        <h2 class="fw-bold mb-2">{{ category.name }}</h2>
+        <p class="text-muted small">{{ category.description }}</p>
+    </div>
+</div>
+
+<div class="container py-3 mb-5 pb-5">
+    {% set cat_color = 'cyan' %}
+    {% if 'Print' in category.name or 'Brand' in category.name %}{% set cat_color = 'cyan' %}
+    {% elif 'Event' in category.name %}{% set cat_color = 'magenta' %}
+    {% elif 'Interior' in category.name %}{% set cat_color = 'yellow' %}
+    {% elif 'LED' in category.name or 'Screen' in category.name %}{% set cat_color = 'green' %}
+    {% elif 'Multi' in category.name or 'Video' in category.name %}{% set cat_color = 'purple' %}
+    {% endif %}
+
+    {% set active_services = category.services | selectattr('is_active', 'equalto', true) | list %}
+
+    {% if active_services %}
+    <div class="row g-3">
+        {% for service in active_services %}
+        <div class="col-12">
+            <div class="service-item-card" onmouseover="this.style.borderColor='var(--clr-{{ cat_color }})';"
+                onmouseout="this.style.borderColor='';">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h6 class="fw-bold text-white mb-0" style="padding-right: 1rem;">{{ service.name }}</h6>
+                    <div
+                        class="service-price-badge text-{{ cat_color }} border-{{ cat_color }} bg-{{ cat_color }}-subtle m-0">
+                        ${{ "%.2f"|format(service.base_price) }}
+                    </div>
+                </div>
+                <p class="text-muted small mb-4">{{ service.description }}</p>
+
+                <form action="{{ url_for('services.create_order') }}" method="POST">
+                    <input type="hidden" name="service_id" value="{{ service.id }}">
+                    <input type="hidden" name="quantity" value="1">
+                    <button type="submit" class="btn-outline-glow w-100 py-2 fs-6">Order Service <i
+                            class="bi bi-arrow-right ms-2"></i></button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5 glass-card">
+        <i class="bi bi-inbox fs-2 text-muted mb-3 d-block"></i>
+        <h5 class="fw-bold text-white mb-2">No services active</h5>
+        <p class="text-muted small">We are updating our offerings for this category. Check back later.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends "desktop/layouts/client_base.html" %}
+
+{% block title %}Quotation #Q-{{ id }}{% endblock %}
+
+{% block header_title %}Quotation #Q-{{ id }}{% endblock %}
+{% block header_subtitle %}Review your project quotation and approve to begin work.{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <!-- Action Bar -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="{{ url_for('dashboards.client') }}" class="btn-outline-glow btn-sm"><i
+                    class="bi bi-arrow-left me-2"></i>Back to Dashboard</a>
+            <div>
+                <button class="btn btn-sm btn-outline-secondary me-2" disabled><i class="bi bi-download me-2"></i>Export
+                    PDF</button>
+            </div>
+        </div>
+
+        <!-- Quotation Document -->
+        <div class="glass-card p-4 p-md-5 mb-5" style="background-color: #121212;">
+
+            <!-- Header -->
+            <div class="row align-items-center border-bottom border-dark pb-4 mb-4">
+                <div class="col-md-6">
+                    <h2 class="fw-bold mb-0 text-white"><i class="bi bi-diamond-fill text-accent me-2"
+                            style="font-size: 1.5rem;"></i>SAHAL</h2>
+                    <p class="text-muted small mb-0 mt-1">Premium Branding Agency</p>
+                </div>
+                <div class="col-md-6 text-md-end mt-4 mt-md-0">
+                    <h3 class="fw-bold text-white mb-2">QUOTATION</h3>
+                    <p class="text-muted mb-1"><strong>Quote #:</strong> Q-{{ id }}</p>
+                    <p class="text-muted mb-1"><strong>Date:</strong> Oct 24, 2026</p>
+                    <p class="text-muted mb-0"><strong>Status:</strong> <span
+                            class="badge bg-warning text-dark px-2 rounded-pill ms-2">Pending Approval</span></p>
+                </div>
+            </div>
+
+            <!-- Client Info -->
+            <div class="row mb-5">
+                <div class="col-sm-6">
+                    <h6 class="text-muted small text-uppercase fw-bold mb-3">Prepared For:</h6>
+                    <h5 class="fw-bold text-white mb-1">{{ user.full_name }}</h5>
+                    <p class="text-muted mb-1">{{ user.email }}</p>
+                    <p class="text-muted mb-0">Client ID: {{ "%04d"|format(user.id) }}</p>
+                </div>
+                <div class="col-sm-6 text-sm-end mt-4 mt-sm-0">
+                    <h6 class="text-muted small text-uppercase fw-bold mb-3">Project:</h6>
+                    <p class="text-white mb-1">Premium Corporate Identity Package</p>
+                    <p class="text-muted small mb-0">Valid until: Nov 24, 2026</p>
+                </div>
+            </div>
+
+            <!-- Line Items -->
+            <div class="table-responsive mb-4">
+                <table class="table table-dark table-borderless align-middle mb-0">
+                    <thead class="border-bottom border-secondary border-opacity-50">
+                        <tr>
+                            <th class="text-muted small text-uppercase py-3">Description</th>
+                            <th class="text-muted small text-uppercase py-3 text-center">Qty</th>
+                            <th class="text-muted small text-uppercase py-3 text-end">Unit Price</th>
+                            <th class="text-muted small text-uppercase py-3 text-end">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-4">
+                                <h6 class="fw-bold text-white mb-1">Brand Strategy & Logo Design</h6>
+                                <p class="text-muted small mb-0">Includes 3 initial concepts, brand guidelines, and
+                                    vector files.</p>
+                            </td>
+                            <td class="text-center py-4 text-white">1</td>
+                            <td class="text-end py-4 text-white">$1,500.00</td>
+                            <td class="text-end py-4 fw-bold text-white">$1,500.00</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 border-top border-dark">
+                                <h6 class="fw-bold text-white mb-1">Business Card Printing (Premium)</h6>
+                                <p class="text-muted small mb-0">Matte finish with gold foil stamping, 500 units.</p>
+                            </td>
+                            <td class="text-center py-4 border-top border-dark text-white">5</td>
+                            <td class="text-end py-4 border-top border-dark text-white">$45.00</td>
+                            <td class="text-end py-4 border-top border-dark fw-bold text-white">$225.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Totals -->
+            <div class="row justify-content-end mb-5">
+                <div class="col-md-5">
+                    <div class="glass-card p-4 border border-dark">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Subtotal</span>
+                            <span class="text-white">$1,725.00</span>
+                        </div>
+                        <div
+                            class="d-flex justify-content-between mb-3 pb-3 border-bottom border-secondary border-opacity-50">
+                            <span class="text-muted">Tax (0%)</span>
+                            <span class="text-white">$0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-white fw-bold fs-5">Total</span>
+                            <span class="text-accent fw-bold fs-4">$1,725.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terms -->
+            <div class="border-top border-dark pt-4">
+                <h6 class="text-muted small fw-bold text-uppercase mb-2">Terms & Conditions</h6>
+                <p class="text-muted small lh-lg mb-0 text-justify">
+                    A 50% deposit is required to commence work. The remaining balance is due upon final delivery.
+                    Proposal valid for 30 days. Revisions outside the scope of work will be billed at our standard
+                    hourly rate.
+                </p>
+            </div>
+        </div>
+
+        <!-- Floating Action CTA for Approval -->
+        <div class="glass-card p-4 text-center sticky-bottom mb-5" style="bottom: 2rem; z-index: 10;">
+            <h5 class="fw-bold text-white mb-2">Ready to proceed?</h5>
+            <p class="text-muted small mb-4">By approving this quotation, you agree to the terms and authorize us to
+                begin.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <button class="btn-outline-glow px-4 py-2 text-danger border-danger">Decline</button>
+                <button class="btn-gold px-5 py-2 fs-5">Approve & Start Project <i
+                        class="bi bi-check-circle ms-2"></i></button>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,171 @@
+{% extends "desktop/layouts/public_base.html" %}
+
+{% block title %}Portfolio{% endblock %}
+{% block nav_portfolio %}active{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        padding: 5rem 0 3rem;
+        border-bottom: 1px solid var(--clr-border);
+        background: linear-gradient(180deg, rgba(22, 22, 24, 0.4) 0%, transparent 100%);
+    }
+
+    /* Portfolio Filters */
+    .portfolio-filters {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 3rem;
+    }
+
+    .filter-btn {
+        background: transparent;
+        border: 1px solid var(--clr-border);
+        color: var(--clr-muted);
+        padding: 0.5rem 1.5rem;
+        border-radius: 30px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+        background: linear-gradient(135deg, var(--clr-magenta), var(--clr-cyan));
+        color: #fff;
+        border-color: transparent;
+    }
+
+    /* Portfolio Item */
+    .portfolio-item {
+        margin-bottom: 2rem;
+    }
+
+    .portfolio-card {
+        background: var(--clr-card);
+        border: 1px solid var(--clr-border);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: block;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .portfolio-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border-color: var(--clr-magenta);
+    }
+
+    .portfolio-img-placeholder {
+        width: 100%;
+        height: 250px;
+        background: rgba(255, 255, 255, 0.02);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: var(--clr-border);
+        border-bottom: 1px solid var(--clr-border);
+    }
+
+    .portfolio-card:hover .portfolio-img-placeholder i {
+        color: var(--clr-magenta);
+        transform: scale(1.1);
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .portfolio-content {
+        padding: 1.5rem;
+    }
+
+    .portfolio-title {
+        font-weight: 700;
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        color: #fff;
+    }
+
+    .portfolio-category {
+        color: var(--clr-cyan);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header mb-5">
+    <div class="container text-center">
+        <h1 class="fw-bold mb-3" style="font-size: 3.5rem;">Our Work</h1>
+        <p class="text-muted fs-5 mx-auto" style="max-width: 700px;">A showcase of our premium branding, event
+            production, interior design, and digital delivery projects.</p>
+    </div>
+</div>
+
+<div class="container py-4 mb-5">
+    <!-- Filter UI Placeholder -->
+    <div class="portfolio-filters">
+        <button class="filter-btn active">All Projects</button>
+        <button class="filter-btn">Printing & Branding</button>
+        <button class="filter-btn">Events</button>
+        <button class="filter-btn">Interior</button>
+        <button class="filter-btn">LED Displays</button>
+        <button class="filter-btn">Multimedia</button>
+    </div>
+
+    <!-- Portfolio Grid -->
+    <div class="row g-4">
+        {% for item in items %}
+        <div class="col-lg-4 col-md-6 portfolio-item">
+            <a href="#" class="portfolio-card d-block">
+                {% if item.image_url %}
+                <div class="portfolio-img-placeholder p-0 bg-transparent" style="height: 250px;">
+                    <img src="{{ item.image_url }}" alt="{{ item.title }}" class="w-100 h-100 object-fit-cover">
+                </div>
+                {% else %}
+                <div class="portfolio-img-placeholder">
+                    <i class="bi bi-image"></i>
+                </div>
+                {% endif %}
+                <div class="portfolio-content">
+                    <div class="portfolio-category mb-2">{{ item.category }}</div>
+                    <h3 class="portfolio-title">{{ item.title }}</h3>
+                    <p class="text-muted small mb-0">{{ item.client_name or 'Independent Project' }} • {{
+                        item.created_at.strftime('%Y') }}</p>
+                </div>
+            </a>
+        </div>
+        {% else %}
+        <div class="col-12 text-center py-5 glass-card">
+            <i class="bi bi-images fs-1 text-muted d-block mb-3 opacity-50"></i>
+            <h4 class="text-white">Our portfolio is currently being updated</h4>
+            <p class="text-muted">Check back soon to see our latest works of art.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="text-center mt-5 pt-4">
+        <button class="btn-outline-glow px-4 py-2">Load More Projects</button>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="container mb-5 pb-5">
+    <div class="glass-card p-5 text-center position-relative overflow-hidden" style="border-color: var(--clr-purple);">
+        <div class="position-absolute top-0 end-0 bottom-0 start-0"
+            style="background: radial-gradient(circle at top right, rgba(127,13,242,0.15), transparent 60%); z-index: 0;">
+        </div>
+        <div class="position-relative z-1">
+            <h2 class="fw-bold mb-3">Inspired to start your own project?</h2>
+            <p class="text-muted mb-4">Let's collaborate to bring your vision to life.</p>
+            <a href="{{ url_for('services.booking_wizard') }}"
+                class="btn-gradient px-4 py-2 text-decoration-none">Request a Quote</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "mobile/layouts/admin_base.html" %}
+
+{% block title %}Reports{% endblock %}
+
+{% block header_title %}Reports{% endblock %}
+{% block header_subtitle %}Agency performance metrics.{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-2 py-3 mb-5">
+
+    <div class="glass-card mb-3">
+        <div class="glass-card-header border-bottom border-dark p-3">
+            <h6 class="mb-0 fw-bold text-white" style="font-size: 0.9rem;">Revenue Overview</h6>
+        </div>
+        <div class="card-body py-4 text-center text-muted">
+            <i class="bi bi-bar-chart-line fs-1 mb-2 d-block opacity-50" style="color: var(--clr-cyan)"></i>
+            <span class="small">Pending in Phase 5</span>
+        </div>
+    </div>
+
+    <div class="glass-card mb-3">
+        <div class="glass-card-header border-bottom border-dark p-3">
+            <h6 class="mb-0 fw-bold text-white" style="font-size: 0.9rem;">Orders by Status</h6>
+        </div>
+        <div class="card-body py-4 text-center text-muted">
+            <i class="bi bi-pie-chart fs-1 mb-2 d-block opacity-50" style="color: var(--clr-accent)"></i>
+            <span class="small">Distribution chart pending</span>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

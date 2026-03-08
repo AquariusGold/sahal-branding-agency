@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Our Services — SAHAL Mobile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --clr-primary: #0d0d0d;
+            --clr-accent: #C9A84C;
+            --clr-card: #1a1a1a;
+            --clr-text: #f0f0f0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--clr-primary);
+            color: var(--clr-text);
+            padding-bottom: 5rem;
+        }
+
+        .mobile-header {
+            background: #000;
+            padding: 1rem 1.5rem;
+            border-bottom: 2px solid var(--clr-accent);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .service-card {
+            background: var(--clr-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-badge {
+            background: rgba(201, 168, 76, 0.1);
+            color: var(--clr-accent);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .btn-gold {
+            background: var(--clr-accent);
+            color: #000;
+            font-weight: 700;
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: none;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="mobile-header d-flex justify-content-between align-items-center">
+        <a href="/" class="fw-black text-uppercase text-decoration-none" style="color:var(--clr-accent);"><i
+                class="bi bi-diamond-fill me-2"></i>SAHAL</a>
+        <a href="{{ url_for('auth.logout') }}" style="color:#fff;"><i class="bi bi-box-arrow-right fs-5"></i></a>
+    </header>
+
+    <div class="container-fluid pt-4 px-3">
+        <h2 class="fw-black mb-1">Our Services</h2>
+        <p class="text-white-50 small mb-5">Select a package to start your project.</p>
+
+        {% for category in categories %}
+        <div class="mb-5">
+            <h5 class="fw-bold mb-3 d-flex align-items-center">
+                <span class="me-2" style="width:20px; height:2px; background:var(--clr-accent);"></span>
+                {{ category.name }}
+            </h5>
+
+            {% for service in category.services if service.is_active %}
+            <div class="service-card">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h6 class="fw-bold mb-0">{{ service.name }}</h6>
+                    <span class="price-badge">${{ "%.2f"|format(service.base_price) }}</span>
+                </div>
+                <p class="text-white-50 small mb-3">{{ service.description | truncate(100) }}</p>
+                <form action="{{ url_for('services.create_order') }}" method="POST">
+                    <input type="hidden" name="service_id" value="{{ service.id }}">
+                    <input type="hidden" name="quantity" value="1">
+                    <button type="submit" class="btn btn-gold btn-sm">Request Booking</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

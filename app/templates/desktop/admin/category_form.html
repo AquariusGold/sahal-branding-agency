@@ -1,0 +1,68 @@
+{% extends "desktop/layouts/admin_base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block nav_categories %}active{% endblock %}
+{% block header_title %}Category Management{% endblock %}
+{% block header_subtitle %}Create or edit service categories.{% endblock %}
+
+{% block page_header %}
+<header class="admin-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h3 class="fw-bold mb-1">{{ title }}</h3>
+        </div>
+        <div>
+            <a href="{{ url_for('admin.list_categories') }}" class="btn btn-sm btn-outline-light"><i
+                    class="bi bi-arrow-left me-1"></i> Back to Categories</a>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="glass-card mx-auto" style="max-width: 600px; border-top: 3px solid var(--clr-accent);">
+    <div class="card-body p-5">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-4">
+                <label class="form-label" style="color: var(--clr-muted); font-weight: 600; font-size: 0.9rem;">{{
+                    form.name.label.text }}</label>
+                {{ form.name(class="form-control", style="background:#000; color:#fff; border-color:var(--clr-border);",
+                placeholder="e.g. Brand Identity") }}
+                {% if form.name.errors %}
+                <div class="text-danger small mt-1">{% for error in form.name.errors %}{{ error }}{% endfor %}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label" style="color: var(--clr-muted); font-weight: 600; font-size: 0.9rem;">{{
+                    form.description.label.text }}</label>
+                {{ form.description(class="form-control", style="background:#000; color:#fff;
+                border-color:var(--clr-border);", rows="4", placeholder="Explain what falls under this category...") }}
+                {% if form.description.errors %}
+                <div class="text-danger small mt-1">{% for error in form.description.errors %}{{ error }}{% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-4 form-check form-switch">
+                {{ form.is_active(class="form-check-input", role="switch", id="isActiveSwitch", style="background-color:
+                var(--clr-border); border-color: var(--clr-border);") }}
+                <label class="form-check-label ms-2 text-muted" for="isActiveSwitch">Category is active and visible to
+                    admins</label>
+            </div>
+
+            <hr style="border-color:var(--clr-border); margin: 2rem 0;">
+
+            <div class="d-flex justify-content-end gap-3">
+                <a href="{{ url_for('admin.list_categories') }}"
+                    class="btn btn-link text-muted text-decoration-none">Cancel</a>
+                {{ form.submit(class="btn fw-bold text-white", style="background:var(--clr-accent); box-shadow: 0 4px
+                15px var(--clr-accent-glow); border:none;") }}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Login — SAHAL Desktop</title>
+
+    <!-- Bootstrap 5.3 + Icons + Fonts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --clr-primary: #0d0d0d;
+            --clr-accent: #C9A84C;
+            --clr-accent-dark: #9e7a2e;
+            --clr-card: #1a1a1a;
+            --clr-text: #f0f0f0;
+            --clr-muted: #888888;
+            --font-body: 'Outfit', sans-serif;
+            --radius: 12px;
+            --transition: 0.25s ease;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--clr-primary);
+            color: var(--clr-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image: radial-gradient(ellipse at 50% 50%, rgba(201, 168, 76, 0.05) 0%, transparent 60%);
+        }
+
+        .auth-card {
+            background: var(--clr-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius);
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .brand-logo {
+            color: var(--clr-accent);
+            font-weight: 900;
+            font-size: 1.5rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-decoration: none;
+            display: block;
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--clr-text);
+            border-radius: 8px;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--clr-accent);
+            box-shadow: 0 0 0 0.25rem rgba(201, 168, 76, 0.25);
+            color: var(--clr-text);
+        }
+
+        .form-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--clr-muted);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Password Toggle Specific Styles */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--clr-muted);
+            cursor: pointer;
+            z-index: 10;
+            transition: color var(--transition);
+        }
+
+        .password-toggle:hover {
+            color: var(--clr-accent);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-dark));
+            color: #0d0d0d;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: all var(--transition);
+            width: 100%;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201, 168, 76, 0.3);
+            color: #0d0d0d;
+        }
+
+        .form-text,
+        .auth-link {
+            color: var(--clr-muted);
+            font-size: 0.85rem;
+        }
+
+        .auth-link {
+            color: var(--clr-accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity var(--transition);
+        }
+
+        .auth-link:hover {
+            opacity: 0.8;
+            color: var(--clr-accent);
+        }
+
+        .alert {
+            border: none;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth-card">
+        <a href="/" class="brand-logo">
+            <i class="bi bi-diamond-fill me-2" style="font-size:1rem;"></i>SAHAL
+        </a>
+
+        <h4 class="mb-1 fw-bold text-center">Welcome Back</h4>
+        <p class="text-center text-muted mb-4" style="font-size:0.9rem;">Sign in to your client dashboard</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('auth.login') }}">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control", placeholder="name@company.com") }}
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label d-flex justify-content-between">
+                    <span>Password</span>
+                    <a href="#" class="auth-link" style="font-size:0.75rem;">Forgot?</a>
+                </label>
+                <div class="password-wrapper">
+                    {{ form.password(class="form-control", placeholder="••••••••", id="password") }}
+                    <i class="bi bi-eye-slash password-toggle" id="togglePassword" title="Show password"></i>
+                </div>
+            </div>
+
+            <div class="mb-4 form-check">
+                {{ form.remember(class="form-check-input") }}
+                {{ form.remember.label(class="form-check-label text-muted", style="font-size:0.85rem;") }}
+            </div>
+
+            {{ form.submit(class="btn btn-gold") }}
+        </form>
+
+        <div class="text-center mt-4">
+            <span class="form-text">New to SAHAL?</span>
+            <a href="{{ url_for('auth.register') }}" class="auth-link ms-1">Create an account</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Password toggle functionality
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function (e) {
+            // Toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            // Toggle the icon
+            this.classList.toggle('bi-eye');
+            this.classList.toggle('bi-eye-slash');
+
+            // Update title for accessibility
+            this.title = type === 'password' ? 'Show password' : 'Hide password';
+        });
+    </script>
+</body>
+
+</html>

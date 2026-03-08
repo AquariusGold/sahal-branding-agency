@@ -1,0 +1,25 @@
+{% extends "mobile/layouts/admin_base.html" %}
+
+{% block title %}Job List{% endblock %}
+
+{% block header_title %}Job List{% endblock %}
+{% block header_subtitle %}Track active client orders.{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-2 py-3 mb-5">
+
+    <!-- Filters -->
+    <div class="mb-3 px-1 no-scrollbar" style="overflow-x: auto; white-space: nowrap;">
+        <button class="btn btn-sm btn-outline-secondary rounded-pill me-1 active px-3">Pending (0)</button>
+        <button class="btn btn-sm btn-outline-secondary rounded-pill me-1 px-3">In Progress (0)</button>
+        <button class="btn btn-sm btn-outline-secondary rounded-pill me-1 px-3">QC (0)</button>
+    </div>
+
+    <!-- Job List Feed -->
+    <div class="glass-card p-4 text-center text-muted mb-4">
+        <i class="bi bi-inbox fs-1 mb-2 d-block opacity-50"></i>
+        <p class="mb-0 small">No active jobs in this status.</p>
+    </div>
+
+</div>
+{% endblock %}

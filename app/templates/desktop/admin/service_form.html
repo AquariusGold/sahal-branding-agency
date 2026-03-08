@@ -1,0 +1,108 @@
+{% extends "desktop/layouts/admin_base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block nav_services %}active{% endblock %}
+
+{% block page_header %}
+<header class="admin-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h3 class="fw-bold mb-1">{{ title }}</h3>
+        </div>
+        <div>
+            <a href="{{ url_for('admin.list_services') }}" class="btn btn-sm btn-outline-light"><i
+                    class="bi bi-arrow-left me-1"></i> Back to Services</a>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="glass-card mx-auto" style="max-width: 800px; border-top: 3px solid var(--clr-accent);">
+    <div class="card-body p-5">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label class="form-label" style="color: var(--clr-muted); font-weight: 600; font-size: 0.9rem;">{{
+                        form.category.label.text }}</label>
+                    {{ form.category(class="form-select", style="background:#000; color:#fff;
+                    border-color:var(--clr-border);") }}
+                    {% if form.category.errors %}
+                    <div class="text-danger small mt-1">{% for error in form.category.errors %}{{ error }}{% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label class="form-label" style="color: var(--clr-muted); font-weight: 600; font-size: 0.9rem;">{{
+                        form.name.label.text }}</label>
+                    {{ form.name(class="form-control", style="background:#000; color:#fff;
+                    border-color:var(--clr-border);", placeholder="e.g. Logo Design") }}
+                    {% if form.name.errors %}
+                    <div class="text-danger small mt-1">{% for error in form.name.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label" style="color: var(--clr-muted); font-weight: 600; font-size: 0.9rem;">{{
+                    form.description.label.text }}</label>
+                {{ form.description(class="form-control", style="background:#000; color:#fff;
+                border-color:var(--clr-border);", rows="4", placeholder="Detailed breakdown of the service offering...")
+                }}
+                {% if form.description.errors %}
+                <div class="text-danger small mt-1">{% for error in form.description.errors %}{{ error }}{% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label class="form-label" style="color: var(--clr-muted); font-weight: 600; font-size: 0.9rem;">{{
+                        form.base_price.label.text }}</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-black border-secondary text-white border-end-0">$</span>
+                        {{ form.base_price(class="form-control border-start-0", style="background:#000; color:#fff;
+                        border-color:var(--clr-border);", placeholder="0.00") }}
+                    </div>
+                    {% if form.base_price.errors %}
+                    <div class="text-danger small mt-1">{% for error in form.base_price.errors %}{{ error }}{% endfor %}
+                    </div>
+                    {% endif %}
+                    <small class="text-muted mt-1 d-block" style="font-size:0.75rem;">Enter 0 if Custom Quote</small>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label class="form-label" style="color: var(--clr-muted); font-weight: 600; font-size: 0.9rem;">{{
+                        form.pricing_type.label.text }}</label>
+                    {{ form.pricing_type(class="form-select", style="background:#000; color:#fff;
+                    border-color:var(--clr-border);") }}
+                    {% if form.pricing_type.errors %}
+                    <div class="text-danger small mt-1">{% for error in form.pricing_type.errors %}{{ error }}{% endfor
+                        %}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="mb-4 form-check form-switch">
+                {{ form.is_active(class="form-check-input", role="switch", id="isActiveSwitch", style="background-color:
+                var(--clr-border); border-color: var(--clr-border);") }}
+                <label class="form-check-label ms-2 text-muted" for="isActiveSwitch">Service is active and open for
+                    booking</label>
+            </div>
+
+            <hr style="border-color:var(--clr-border); margin: 2rem 0;">
+
+            <div class="d-flex justify-content-end gap-3">
+                <a href="{{ url_for('admin.list_services') }}"
+                    class="btn btn-link text-muted text-decoration-none">Cancel</a>
+                {{ form.submit(class="btn fw-bold text-white", style="background:var(--clr-accent); box-shadow: 0 4px
+                15px var(--clr-accent-glow); border:none;") }}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

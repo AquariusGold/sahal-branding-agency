@@ -1,0 +1,114 @@
+{% extends "mobile/layouts/public_base.html" %}
+
+{% block title %}Our Services{% endblock %}
+{% block nav_services %}active{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        padding: 4rem 0 2rem;
+        border-bottom: 1px solid var(--clr-border);
+        background: var(--clr-surface);
+        text-align: center;
+    }
+
+    .service-category-card {
+        background: var(--clr-card);
+        border: 1px solid var(--clr-border);
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        margin-bottom: 1rem;
+    }
+
+    .category-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .btn-view-services {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.8rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header mb-4">
+    <div class="container">
+        <h1 class="fw-bold mb-2">Our Services</h1>
+        <p class="text-muted small">Curated selection of premium creative and experiential solutions.</p>
+    </div>
+</div>
+
+<div class="container py-3 mb-5">
+    <div class="row g-3">
+        {% for category in categories %}
+        <div class="col-12">
+            {% set cat_color = 'cyan' %}
+            {% if 'Print' in category.name or 'Brand' in category.name %}{% set cat_color = 'cyan' %}
+            {% elif 'Event' in category.name %}{% set cat_color = 'magenta' %}
+            {% elif 'Interior' in category.name %}{% set cat_color = 'yellow' %}
+            {% elif 'LED' in category.name or 'Screen' in category.name %}{% set cat_color = 'green' %}
+            {% elif 'Multi' in category.name or 'Video' in category.name %}{% set cat_color = 'purple' %}
+            {% endif %}
+
+            <a href="{{ url_for('services.category_detail', slug=category.id) }}" class="service-category-card"
+                onmouseover="this.style.borderColor='var(--clr-{{ cat_color }})';"
+                onmouseout="this.style.borderColor='';">
+
+                <div class="d-flex align-items-center mb-3">
+                    <div
+                        class="category-icon text-{{ cat_color }} border-{{ cat_color }} bg-{{ cat_color }}-subtle me-3 flex-shrink-0">
+                        {% if 'Print' in category.name or 'Brand' in category.name %}
+                        <i class="bi bi-palette"></i>
+                        {% elif 'Event' in category.name %}
+                        <i class="bi bi-calendar-event"></i>
+                        {% elif 'Interior' in category.name %}
+                        <i class="bi bi-houses"></i>
+                        {% elif 'LED' in category.name or 'Screen' in category.name %}
+                        <i class="bi bi-display"></i>
+                        {% elif 'Multi' in category.name or 'Video' in category.name %}
+                        <i class="bi bi-camera-video"></i>
+                        {% else %}
+                        <i class="bi bi-star"></i>
+                        {% endif %}
+                    </div>
+                    <h5 class="fw-bold mb-0 text-white">{{ category.name }}</h5>
+                </div>
+                <p class="text-muted small mb-0">{{ category.description or 'Explore our professional services tailored
+                    for your business needs.' | truncate(80) }}</p>
+                <div class="btn-view-services justify-content-between text-{{ cat_color }}">
+                    View Options <i class="bi bi-chevron-right"></i>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="container mb-5 pb-5">
+    <div class="glass-card p-4 text-center">
+        <h4 class="fw-bold mb-2">Not sure where to start?</h4>
+        <p class="text-muted small mb-4">Book a free consultation with our creative directors to discuss your business
+            goals.</p>
+        <a href="{{ url_for('services.booking_wizard') }}"
+            class="btn-gradient py-2 w-100 fs-6 text-decoration-none d-block">Request Consultation</a>
+    </div>
+</div>
+{% endblock %}

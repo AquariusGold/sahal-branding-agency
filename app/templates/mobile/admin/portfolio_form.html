@@ -1,0 +1,85 @@
+{% extends "mobile/layouts/admin_base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block nav_portfolio %}active{% endblock %}
+
+{% block header_title %}{{ title }}{% endblock %}
+{% block header_subtitle %}Set project details.{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-2 py-3 mb-5">
+    <div class="glass-card mb-4 overflow-hidden position-relative p-3">
+        <!-- Top accent -->
+        <div class="position-absolute top-0 start-0 w-100"
+            style="height: 3px; background: linear-gradient(90deg, var(--clr-primary), var(--clr-cyan));"></div>
+
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                <label class="form-label text-white small fw-bold">Project Title</label>
+                {{ form.title(class="form-control bg-dark text-white border-secondary", placeholder="e.g. MegaCorp
+                Rebrand") }}
+                {% for error in form.title.errors %}
+                <span class="text-danger small">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-white small fw-bold">Category</label>
+                {{ form.category(class="form-control bg-dark text-white border-secondary", placeholder="e.g. UX/UI
+                Design") }}
+                {% for error in form.category.errors %}
+                <span class="text-danger small">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-white small fw-bold">Client Name (Optional)</label>
+                {{ form.client_name(class="form-control bg-dark text-white border-secondary", placeholder="e.g. MegaCorp
+                Inc.") }}
+                {% for error in form.client_name.errors %}
+                <span class="text-danger small">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-white small fw-bold">Image URL</label>
+                {{ form.image_url(class="form-control bg-dark text-white border-secondary",
+                placeholder="https://domain.com/img.jpg") }}
+                {% for error in form.image_url.errors %}
+                <span class="text-danger small">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label text-white small fw-bold">Description</label>
+                {{ form.description(class="form-control bg-dark text-white border-secondary", rows="5",
+                placeholder="Describe the project...") }}
+                {% for error in form.description.errors %}
+                <span class="text-danger small">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <!-- Active Toggle -->
+            <div class="mb-4 p-3 border border-secondary rounded bg-dark bg-opacity-25">
+                <div class="form-check form-switch mb-0 d-flex align-items-center">
+                    {{ form.is_active(class="form-check-input border-secondary me-3", style="width: 2.5rem; height:
+                    1.25rem;") }}
+                    <label class="form-check-label small fw-bold text-white mb-0" style="line-height:1.2;">
+                        Visible Publicly<br>
+                        <span class="text-muted fw-normal" style="font-size: 0.7rem;">Toggle off to hide from main
+                            site.</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                {{ form.submit(class="btn py-3 fw-bold shadow-lg", style="background: var(--clr-accent); color: white;")
+                }}
+                <a href="{{ url_for('admin.list_portfolio') }}" class="btn btn-outline-light py-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

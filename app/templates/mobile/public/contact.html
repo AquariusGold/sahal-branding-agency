@@ -1,0 +1,156 @@
+{% extends "mobile/layouts/public_base.html" %}
+
+{% block title %}Contact Us{% endblock %}
+{% block nav_contact %}active{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        padding: 4rem 0 2rem;
+        border-bottom: 1px solid var(--clr-border);
+        background: var(--clr-surface);
+        text-align: center;
+    }
+
+    .contact-form .form-control,
+    .contact-form .form-select {
+        background-color: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--clr-border);
+        color: #fff;
+        padding: 0.9rem 1rem;
+        border-radius: var(--radius-md);
+    }
+
+    .contact-form .form-control:focus,
+    .contact-form .form-select:focus {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-color: var(--clr-cyan);
+        box-shadow: 0 0 0 0.25rem rgba(0, 240, 255, 0.25);
+    }
+
+    .contact-form .form-label {
+        color: var(--clr-muted);
+        font-weight: 500;
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .contact-info-card {
+        background: var(--clr-card);
+        border: 1px solid var(--clr-border);
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+    }
+
+    .contact-icon-box {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+
+    .contact-icon-box.text-cyan {
+        background: rgba(0, 240, 255, 0.1);
+        border: 1px solid var(--clr-cyan);
+    }
+
+    .contact-icon-box.text-magenta {
+        background: rgba(255, 0, 85, 0.1);
+        border: 1px solid var(--clr-magenta);
+    }
+
+    .contact-icon-box.text-purple {
+        background: rgba(127, 13, 242, 0.1);
+        border: 1px solid var(--clr-purple);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header mb-4">
+    <div class="container">
+        <h1 class="fw-bold mb-2">Let's Connect</h1>
+        <p class="text-muted small">Reach out to our team of experts and let's build something exceptional together.</p>
+    </div>
+</div>
+
+<div class="container py-3 mb-5">
+    <!-- Contact Info Cards -->
+    <div class="row g-3 mb-5">
+        <div class="col-12">
+            <div class="contact-info-card d-flex align-items-center">
+                <div class="contact-icon-box text-cyan me-3 flex-shrink-0">
+                    <i class="bi bi-geo-alt"></i>
+                </div>
+                <div>
+                    <h6 class="fw-bold text-white mb-1">Our Office</h6>
+                    <p class="text-muted small mb-0">123 Brand Avenue, Tech Hub</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="contact-info-card d-flex align-items-center">
+                <div class="contact-icon-box text-magenta me-3 flex-shrink-0">
+                    <i class="bi bi-telephone"></i>
+                </div>
+                <div>
+                    <h6 class="fw-bold text-white mb-1">Call Us</h6>
+                    <p class="text-muted small mb-0">+1 (555) 123-4567</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="contact-info-card d-flex align-items-center">
+                <div class="contact-icon-box text-purple me-3 flex-shrink-0">
+                    <i class="bi bi-envelope"></i>
+                </div>
+                <div>
+                    <h6 class="fw-bold text-white mb-1">Email Us</h6>
+                    <p class="text-muted small mb-0">hello@sahal.agency</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="glass-card p-4">
+        <h4 class="fw-bold mb-4">Send a Message</h4>
+        <form class="contact-form">
+            <div class="row g-3">
+                <div class="col-12">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-control" placeholder="John Doe">
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-control" placeholder="john@example.com">
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" placeholder="+1 (555) 000-0000">
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Subject</label>
+                    <select class="form-select">
+                        <option value="">Select inquiry type</option>
+                        <option value="branding">Printing & Branding</option>
+                        <option value="events">Event Organizing</option>
+                        <option value="interior">Interior Design</option>
+                        <option value="other">General Inquiry</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Message</label>
+                    <textarea class="form-control" rows="4" placeholder="Tell us about your project..."></textarea>
+                </div>
+                <div class="col-12 mt-4">
+                    <button type="button" class="btn-gradient w-100 py-3">Send Message</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

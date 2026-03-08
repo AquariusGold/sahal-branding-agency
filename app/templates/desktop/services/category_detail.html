@@ -1,0 +1,102 @@
+{% extends "desktop/layouts/public_base.html" %}
+
+{% block title %}{{ category.name }} — Services{% endblock %}
+{% block nav_services %}active{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        padding: 5rem 0 3rem;
+        border-bottom: 1px solid var(--clr-border);
+        background: linear-gradient(180deg, rgba(22, 22, 24, 0.4) 0%, transparent 100%);
+    }
+
+    .service-item-card {
+        background: var(--clr-card);
+        border: 1px solid var(--clr-border);
+        border-radius: var(--radius-md);
+        padding: 2rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .service-item-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(201, 168, 76, 0.3);
+    }
+
+    .service-price-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header mb-5">
+    <div class="container text-center">
+        <!-- Back Button -->
+        <div class="mb-4">
+            <a href="{{ url_for('services.index') }}" class="text-muted text-decoration-none fw-bold"
+                style="letter-spacing: 0.05em;"><i class="bi bi-arrow-left me-2"></i> BACK TO SERVICES</a>
+        </div>
+
+        <h1 class="fw-bold mb-3" style="font-size: 3rem;">{{ category.name }}</h1>
+        <p class="text-muted fs-5 mx-auto" style="max-width: 700px;">{{ category.description }}</p>
+    </div>
+</div>
+
+<div class="container py-4 mb-5 pb-5">
+    {% set cat_color = 'cyan' %}
+    {% if 'Print' in category.name or 'Brand' in category.name %}{% set cat_color = 'cyan' %}
+    {% elif 'Event' in category.name %}{% set cat_color = 'magenta' %}
+    {% elif 'Interior' in category.name %}{% set cat_color = 'yellow' %}
+    {% elif 'LED' in category.name or 'Screen' in category.name %}{% set cat_color = 'green' %}
+    {% elif 'Multi' in category.name or 'Video' in category.name %}{% set cat_color = 'purple' %}
+    {% endif %}
+
+    {% set active_services = category.services | selectattr('is_active', 'equalto', true) | list %}
+
+    {% if active_services %}
+    <div class="row g-4">
+        {% for service in active_services %}
+        <div class="col-lg-4 col-md-6">
+            <div class="service-item-card group" onmouseover="this.style.borderColor='var(--clr-{{ cat_color }})';"
+                onmouseout="this.style.borderColor='';">
+                <div>
+                    <div
+                        class="service-price-badge text-{{ cat_color }} border-{{ cat_color }} bg-{{ cat_color }}-subtle">
+                        ${{ "%.2f"|format(service.base_price) }} <small class="fw-normal text-muted ms-1 text-uppercase"
+                            style="font-size:0.75rem;">Base</small>
+                    </div>
+                    <h4 class="fw-bold mb-3">{{ service.name }}</h4>
+                    <p class="text-muted mb-4 pb-3">{{ service.description }}</p>
+                </div>
+
+                <div class="mt-auto">
+                    <form action="{{ url_for('services.create_order') }}" method="POST">
+                        <input type="hidden" name="service_id" value="{{ service.id }}">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="btn-outline-glow w-100 py-2">Order This Service <i
+                                class="bi bi-cart-plus ms-2"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5 glass-card">
+        <i class="bi bi-inbox fs-1 text-muted mb-3 d-block"></i>
+        <h4 class="fw-bold text-white mb-2">No services active</h4>
+        <p class="text-muted">We are currently updating our offerings for this category. Please check back later.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

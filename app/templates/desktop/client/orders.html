@@ -1,0 +1,85 @@
+{% extends "desktop/layouts/client_base.html" %}
+
+{% block title %}My Orders{% endblock %}
+
+{% block nav_orders %}active{% endblock %}
+
+{% block header_title %}My Orders{% endblock %}
+{% block header_subtitle %}Track your branding projects and history.{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-end mb-4">
+    <a href="/services" class="btn btn-primary-glow">
+        <i class="bi bi-plus-lg me-2"></i>New Project
+    </a>
+</div>
+
+<div class="glass-card">
+    {% if orders %}
+    <div class="table-responsive">
+        <table class="table table-hover mb-0" style="color: var(--clr-text); border-color: var(--clr-border);">
+            <thead>
+                <tr>
+                    <th class="py-3 px-4"
+                        style="background: rgba(5,5,5,0.8); color: #fff; border-bottom: 2px solid var(--clr-accent);">
+                        Order ID</th>
+                    <th class="py-3 px-4"
+                        style="background: rgba(5,5,5,0.8); color: #fff; border-bottom: 2px solid var(--clr-accent);">
+                        Date</th>
+                    <th class="py-3 px-4 text-center"
+                        style="background: rgba(5,5,5,0.8); color: #fff; border-bottom: 2px solid var(--clr-accent);">
+                        Status</th>
+                    <th class="py-3 px-4 text-end"
+                        style="background: rgba(5,5,5,0.8); color: #fff; border-bottom: 2px solid var(--clr-accent);">
+                        Total</th>
+                    <th class="py-3 px-4 text-end"
+                        style="background: rgba(5,5,5,0.8); color: #fff; border-bottom: 2px solid var(--clr-accent);">
+                        Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr style="transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'"
+                    onmouseout="this.style.background='transparent'">
+                    <td class="py-3 px-4 fw-bold text-white border-bottom border-light border-opacity-10">#{{ order.id
+                        }}</td>
+                    <td class="py-3 px-4 text-white-50 border-bottom border-light border-opacity-10">{{
+                        order.created_at.strftime('%b %d, %Y') }}</td>
+                    <td class="py-3 px-4 text-center border-bottom border-light border-opacity-10">
+                        {% if order.status.name == 'pending' %}
+                        <span class="badge bg-warning text-black badge-status">Awaiting Review</span>
+                        {% elif order.status.name == 'confirmed' %}
+                        <span class="badge bg-info text-dark badge-status">Confirmed</span>
+                        {% elif order.status.name == 'in_progress' %}
+                        <span class="badge bg-primary text-white badge-status">In Progress</span>
+                        {% elif order.status.name == 'quality_check' %}
+                        <span class="badge bg-secondary text-white badge-status">Quality Check</span>
+                        {% elif order.status.name == 'completed' %}
+                        <span class="badge bg-success text-white badge-status">Completed</span>
+                        {% else %}
+                        <span class="badge bg-danger text-white badge-status">Cancelled</span>
+                        {% endif %}
+                    </td>
+                    <td class="py-3 px-4 text-end fw-bold text-white border-bottom border-light border-opacity-10">${{
+                        "%.2f"|format(order.total_price) }}</td>
+                    <td class="py-3 px-4 text-end border-bottom border-light border-opacity-10">
+                        <a href="{{ url_for('services.order_detail', id=order.id) }}"
+                            class="btn btn-sm btn-outline-light rounded-pill px-3">
+                            View Details
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-stars d-block mb-3 fs-1" style="color:var(--clr-accent);"></i>
+        <h5 class="fw-bold">No active projects yet.</h5>
+        <p class="text-muted mb-4">Start your branding journey with SAHAL today.</p>
+        <a href="/services" class="btn btn-primary-glow">Explore Services</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

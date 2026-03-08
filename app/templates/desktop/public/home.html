@@ -1,0 +1,539 @@
+{% extends "desktop/layouts/public_base.html" %}
+
+{% block title %}Brand Design & Creative Agency{% endblock %}
+{% block nav_home %}active{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .hero-section {
+        min-height: calc(100vh - 80px);
+        /* 80px approx navbar height */
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding: 4rem 0;
+    }
+
+    .hero-title {
+        font-size: 4.5rem;
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        color: var(--clr-muted);
+        max-width: 600px;
+        margin-bottom: 2.5rem;
+        line-height: 1.6;
+    }
+
+    /* Scroll Sequence Animation Overrides */
+    .hero-sequence-container {
+        height: 400vh;
+        /* Scroll runway */
+        position: relative;
+        background: #000;
+        /* Pull container up under the transparent navbar so sticky engages instantly */
+        margin-top: -85px;
+        padding-top: 0;
+    }
+
+    .hero-sticky-layer {
+        position: sticky;
+        top: 0;
+        /* Changed from 80px offset since we want it to cover the screen */
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+    }
+
+    #hero-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Fallback for older browsers (we calculate scale in JS) */
+        z-index: 0;
+    }
+
+    .hero-canvas-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, rgba(8, 8, 12, 0.95) 0%, rgba(8, 8, 12, 0.6) 40%, transparent 100%);
+        z-index: 1;
+    }
+
+    /* Ensure text overlays canvas */
+    .hero-section-content {
+        position: relative;
+        z-index: 2;
+        /* 80px offset was causing the jump, center it natively with flex instead */
+        padding-top: 0;
+    }
+
+    /* Process Flow */
+    .process-step {
+        position: relative;
+        padding: 2rem;
+        text-align: center;
+        z-index: 1;
+    }
+
+    .process-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--clr-card);
+        border: 1px solid var(--clr-border);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin: 0 auto 1.5rem;
+        position: relative;
+    }
+
+    /* Arrows between steps */
+    .col-md-3:not(:last-child) .process-icon::after {
+        content: '\F138';
+        /* bi-arrow-right */
+        font-family: bootstrap-icons;
+        position: absolute;
+        top: 50%;
+        right: -55px;
+        transform: translateY(-50%);
+        font-size: 1.5rem;
+        color: var(--clr-border);
+    }
+
+    .process-title {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #fff;
+    }
+
+    .process-desc {
+        color: var(--clr-muted);
+        font-size: 0.9rem;
+    }
+
+    /* Services Section */
+    .service-card {
+        height: 100%;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .service-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        background: var(--clr-card);
+        border-top: 1px solid var(--clr-border);
+        border-bottom: 1px solid var(--clr-border);
+        padding: 6rem 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 50% 50%, rgba(127, 13, 242, 0.2) 0%, transparent 60%);
+        pointer-events: none;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    /**
+     * High-Performance Scroll-Linked Canvas Animation
+     * Renders a sequence of 145 JPG images based on the user's scroll position.
+     */
+    document.addEventListener("DOMContentLoaded", () => {
+        const canvas = document.getElementById("hero-canvas");
+        if (!canvas) return;
+
+        const ctx = canvas.getContext("2d", { alpha: false }); // Disable alpha for better performance
+        const sequenceContainer = document.getElementById("hero-sequence");
+
+        // Config
+        const frameCount = 174;
+        const imgFolder = "{{ url_for('static', filename='image sequence sahal') }}";
+        // The filename maps dynamically: e.g. ezgif-frame-001.jpg
+        const currentFrame = index => `${imgFolder}/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
+
+        // State
+        const images = [];
+        let imagesLoaded = 0;
+        let canvasRect = canvas.getBoundingClientRect();
+        let currentRenderedIndex = -1;
+
+        // 1. Preload Array
+        for (let i = 1; i <= frameCount; i++) {
+            const img = new Image();
+            img.src = currentFrame(i);
+            images.push(img);
+
+            // Keep track of loading, paint the first frame immediately when ready
+            if (i === 1) {
+                img.onload = () => {
+                    resizeCanvas();
+                    requestAnimationFrame(() => updateCanvas(0));
+                };
+            }
+        }
+
+        // 2. Dynamic Canvas Resizing to mirror object-fit constraints
+        function resizeCanvas() {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            // Adjust native pixel sizes for crispness
+            canvas.width = w;
+            canvas.height = h;
+
+            // Force a redraw of the current frame on resize
+            if (currentRenderedIndex >= 0) {
+                updateCanvas(currentRenderedIndex);
+            }
+        }
+
+        // 3. Draw Image Logic (simulating object-fit: cover)
+        function updateCanvas(index) {
+            if (!images[index] || !images[index].complete) return;
+
+            currentRenderedIndex = index;
+
+            const img = images[index];
+            const canvasRatio = canvas.width / canvas.height;
+            const imgRatio = img.width / img.height;
+
+            let renderWidth, renderHeight, offsetX = 0, offsetY = 0;
+
+            if (canvasRatio > imgRatio) {
+                // Screen is wider than image aspect ratio (e.g. ultrawide)
+                renderWidth = canvas.width;
+                renderHeight = canvas.width / imgRatio;
+                offsetY = (canvas.height - renderHeight) / 2;
+            } else {
+                // Screen is taller than image aspect ratio (e.g. tall desktop or mobile)
+                renderHeight = canvas.height;
+                renderWidth = canvas.height * imgRatio;
+                offsetX = (canvas.width - renderWidth) / 2;
+            }
+
+            ctx.drawImage(img, offsetX, offsetY, renderWidth, renderHeight);
+        }
+
+        // 4. Scroll Tracking & Auto-Play Logic
+        let scrollY = window.scrollY;
+        let ticking = false;
+
+        // Auto-play State
+        let idleTimer = null;
+        let isAutoPlaying = false;
+        let autoPlayInterval = null;
+        let autoPlayFrame = -1;
+        const FPS = 24;
+        const IDLE_DELAY_MS = 1000;
+
+        function startAutoPlay() {
+            if (isAutoPlaying) return;
+            isAutoPlaying = true;
+
+            // Start from current frame or 0 if somehow invalid
+            autoPlayFrame = currentRenderedIndex >= 0 ? currentRenderedIndex : 0;
+
+            autoPlayInterval = setInterval(() => {
+                autoPlayFrame = (autoPlayFrame + 1) % frameCount;
+                updateCanvas(autoPlayFrame);
+            }, 1000 / FPS);
+        }
+
+        function stopAutoPlay() {
+            if (!isAutoPlaying) return;
+            isAutoPlaying = false;
+            if (autoPlayInterval) clearInterval(autoPlayInterval);
+
+            // Snap back immediately to the scroll-based frame to resume normal behavior
+            requestAnimationFrame(renderScrollFrame);
+        }
+
+        function resetIdleTimer() {
+            stopAutoPlay();
+            if (idleTimer) clearTimeout(idleTimer);
+
+            // Only restart the timer if the mouse is currently hovering the section
+            if (isMouseHoveringHero) {
+                idleTimer = setTimeout(startAutoPlay, IDLE_DELAY_MS);
+            }
+        }
+
+        // Mouse Hover Tracking
+        let isMouseHoveringHero = false;
+        const heroSection = document.getElementById("hero-sequence");
+
+        heroSection.addEventListener("mouseenter", () => {
+            isMouseHoveringHero = true;
+            resetIdleTimer();
+        });
+
+        heroSection.addEventListener("mousemove", () => {
+            resetIdleTimer();
+        });
+
+        heroSection.addEventListener("mouseleave", () => {
+            isMouseHoveringHero = false;
+            stopAutoPlay();
+            if (idleTimer) clearTimeout(idleTimer);
+        });
+
+        // Fast passive scroll listener assigns raw scroll value
+        window.addEventListener('scroll', () => {
+            scrollY = window.scrollY;
+            // Any scroll movement should cancel the idle autoplay state
+            resetIdleTimer();
+            if (!ticking && !isAutoPlaying) {
+                window.requestAnimationFrame(renderScrollFrame);
+                ticking = true;
+            }
+        }, { passive: true });
+
+        window.addEventListener('resize', resizeCanvas);
+
+        function renderScrollFrame() {
+            if (isAutoPlaying) return; // Don't override canvas with scroll position while autoplaying
+
+            // Find our relative scroll position within the runway container
+            const rect = sequenceContainer.getBoundingClientRect();
+            const containerTop = rect.top + window.scrollY; // Absolute document position
+            const maxScroll = rect.height - window.innerHeight;
+
+            // How far have we scrolled past the top of the container?
+            const relativeScroll = scrollY - containerTop;
+
+            let fraction = relativeScroll / maxScroll;
+
+            // Clamp fraction between 0 and 1
+            fraction = Math.max(0, Math.min(1, fraction));
+
+            // Calculate the target frame (Math.floor bounds 0 to 144)
+            const frameIndex = Math.min(
+                frameCount - 1,
+                Math.floor(fraction * frameCount)
+            );
+
+            if (frameIndex !== currentRenderedIndex) {
+                updateCanvas(frameIndex);
+            }
+
+            ticking = false;
+        }
+
+        // Initial check in case user loaded page halfway down
+        renderScrollFrame();
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section with Scroll Animation -->
+<section class="hero-sequence-container" id="hero-sequence">
+    <div class="hero-sticky-layer">
+        <!-- Canvas for high-performance sequence rendering -->
+        <canvas id="hero-canvas"></canvas>
+
+        <!-- Dark overlay to ensure text contrast -->
+        <div class="hero-canvas-overlay"></div>
+
+        <div class="container hero-section-content w-100">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <span class="badge mb-3 px-3 py-2"
+                        style="background: rgba(201,168,76,0.1); color: var(--clr-accent); border: 1px solid rgba(201,168,76,0.3); font-weight: 600; text-shadow: 0 0 10px rgba(0,0,0,0.5);">PREMIUM
+                        CREATIVE AGENCY</span>
+                    <h1 class="hero-title pt-2">Elevate Your Brand.<br>Inspire Your Audience.</h1>
+                    <p class="hero-subtitle text-light">We are a full-service creative agency specializing in premium
+                        branding, event
+                        management, interior design, and digital multimedia.</p>
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="{{ url_for('services.booking_wizard') }}"
+                            class="btn-gradient btn-lg px-4 py-3 shadow-lg">Start a
+                            Project</a>
+                        <a href="{{ url_for('services.index') }}"
+                            class="btn-outline-glow btn-lg px-4 py-3 bg-dark bg-opacity-50">Explore
+                            Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Services (5 Pillars) -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-5">
+            <div>
+                <h2 class="fw-bold mb-2">Our Expertise</h2>
+                <p class="text-muted mb-0">Comprehensive solutions for modern brands.</p>
+            </div>
+            <a href="{{ url_for('services.index') }}" class="btn-outline-glow">View All <i
+                    class="bi bi-arrow-right ms-2"></i></a>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <a href="{{ url_for('services.index') }}" class="glass-card service-card p-4 text-center">
+                    <div class="mx-auto mb-4 bg-dark rounded-circle d-flex align-items-center justify-content-center"
+                        style="width: 80px; height: 80px; border: 1px solid var(--clr-cyan); box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);">
+                        <i class="bi bi-palette service-icon text-cyan mb-0"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Printing & Branding</h4>
+                    <p class="text-muted mb-0">Logo design, business cards, uniforms, banners, and complete visual
+                        identities.</p>
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <a href="{{ url_for('services.index') }}" class="glass-card service-card p-4 text-center">
+                    <div class="mx-auto mb-4 bg-dark rounded-circle d-flex align-items-center justify-content-center"
+                        style="width: 80px; height: 80px; border: 1px solid var(--clr-magenta); box-shadow: 0 0 20px rgba(255, 0, 85, 0.1);">
+                        <i class="bi bi-calendar-event service-icon text-magenta mb-0"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Event Organizing</h4>
+                    <p class="text-muted mb-0">Conferences, product launches, exhibitions, and premium private events.
+                    </p>
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <a href="{{ url_for('services.index') }}" class="glass-card service-card p-4 text-center">
+                    <div class="mx-auto mb-4 bg-dark rounded-circle d-flex align-items-center justify-content-center"
+                        style="width: 80px; height: 80px; border: 1px solid var(--clr-yellow); box-shadow: 0 0 20px rgba(255, 170, 0, 0.1);">
+                        <i class="bi bi-houses service-icon text-yellow mb-0"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Interior Design</h4>
+                    <p class="text-muted mb-0">Office fit-outs, restaurant design, 3D layouts, and decorative wall
+                        finishes.</p>
+                </a>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <a href="{{ url_for('services.index') }}" class="glass-card service-card p-4 d-flex align-items-center">
+                    <div class="bg-dark rounded-circle flex-shrink-0 d-flex align-items-center justify-content-center me-4"
+                        style="width: 80px; height: 80px; border: 1px solid var(--clr-green); box-shadow: 0 0 20px rgba(0, 255, 102, 0.1);">
+                        <i class="bi bi-display service-icon text-green mb-0"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-2">LED Screen Solutions</h4>
+                        <p class="text-muted mb-0">Indoor/outdoor rentals, installations, and video wall maintenance.
+                        </p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <a href="{{ url_for('services.index') }}" class="glass-card service-card p-4 d-flex align-items-center">
+                    <div class="bg-dark rounded-circle flex-shrink-0 d-flex align-items-center justify-content-center me-4"
+                        style="width: 80px; height: 80px; border: 1px solid var(--clr-purple); box-shadow: 0 0 20px rgba(127, 13, 242, 0.1);">
+                        <i class="bi bi-camera-video service-icon text-purple mb-0"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-2">Multimedia & Digital</h4>
+                        <p class="text-muted mb-0">Video production, motion graphics, photography, and social media
+                            campaigns.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works (Workflow Alignment) -->
+<section class="py-5 my-5">
+    <div class="container">
+        <h2 class="fw-bold text-center mb-5">Seamless Process. Outstanding Results.</h2>
+
+        <div class="row g-4 position-relative">
+            <div class="col-md-3">
+                <div class="process-step">
+                    <div class="process-icon"
+                        style="border-color: var(--clr-cyan); color: var(--clr-cyan); box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);">
+                        <i class="bi bi-chat-square-dots"></i>
+                    </div>
+                    <h5 class="process-title">1. Request</h5>
+                    <p class="process-desc">Select your services and send us your project details via our portal.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="process-step">
+                    <div class="process-icon"
+                        style="border-color: var(--clr-magenta); color: var(--clr-magenta); box-shadow: 0 0 20px rgba(255, 0, 85, 0.1);">
+                        <i class="bi bi-file-earmark-text"></i>
+                    </div>
+                    <h5 class="process-title">2. Quote</h5>
+                    <p class="process-desc">We review the requirements and provide a detailed quotation for approval.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="process-step">
+                    <div class="process-icon"
+                        style="border-color: var(--clr-yellow); color: var(--clr-yellow); box-shadow: 0 0 20px rgba(255, 170, 0, 0.1);">
+                        <i class="bi bi-tools"></i>
+                    </div>
+                    <h5 class="process-title">3. Execute</h5>
+                    <p class="process-desc">Our team gets to work, providing clear timeline updates in your dashboard.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="process-step">
+                    <div class="process-icon"
+                        style="border-color: var(--clr-green); color: var(--clr-green); box-shadow: 0 0 20px rgba(0, 255, 102, 0.1);">
+                        <i class="bi bi-check2-circle"></i>
+                    </div>
+                    <h5 class="process-title">4. Deliver</h5>
+                    <p class="process-desc">Final delivery, invoicing, and support. Project completed successfully.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section mt-5">
+    <div class="container position-relative z-1">
+        <h2 class="fw-bold mb-4" style="font-size: 3rem;">Ready to build something amazing?</h2>
+        <p class="text-muted mb-5 fs-5">Join forward-thinking brands that trust SAHAL with their vision.</p>
+        <a href="{{ url_for('services.booking_wizard') }}" class="btn-gradient btn-lg px-5 py-3 fs-5 rounded-pill">Start
+            Your Project Now
+            <i class="bi bi-arrow-right ms-2"></i></a>
+    </div>
+</section>
+
+{% endblock %}

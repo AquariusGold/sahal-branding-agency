@@ -1,0 +1,93 @@
+{% extends "mobile/layouts/client_base.html" %}
+
+{% block title %}Invoice #INV-{{ id }}{% endblock %}
+
+{% block header_title %}Invoice #INV-{{ id }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-2 py-3 mb-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-3 px-1">
+        <a href="{{ url_for('dashboards.client') }}" class="text-muted small text-decoration-none fw-bold"><i
+                class="bi bi-chevron-left me-1"></i> BACK</a>
+    </div>
+
+    <!-- Invoice Card -->
+    <div class="glass-card p-3 mb-4" style="background-color: #121212;">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-start border-bottom border-dark pb-3 mb-3">
+            <div>
+                <h4 class="fw-bold text-white mb-0"><i class="bi bi-diamond-fill text-accent me-1"
+                        style="font-size: 1rem;"></i>SAHAL</h4>
+                <p class="text-muted mb-0" style="font-size: 0.65rem;">Premium Branding Agency</p>
+            </div>
+            <div class="text-end">
+                <h6 class="fw-bold text-white mb-1">INVOICE</h6>
+                <p class="text-muted mb-0" style="font-size: 0.75rem;">INV-{{ id }}</p>
+            </div>
+        </div>
+
+        <!-- Details -->
+        <div class="mb-4">
+            <div class="d-flex justify-content-between mb-1">
+                <span class="text-muted small">Due Date:</span>
+                <span class="text-white small">Nov 07, 2026</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <span class="text-muted small">Status:</span>
+                <span class="badge bg-danger text-white" style="font-size: 0.6rem;">Unpaid</span>
+            </div>
+
+            <div class="p-2 border border-dark rounded bg-dark bg-opacity-25">
+                <span class="text-muted text-uppercase fw-bold mb-1 d-block" style="font-size: 0.65rem;">Billed
+                    To</span>
+                <h6 class="text-white fw-bold mb-0" style="font-size: 0.9rem;">{{ user.full_name }}</h6>
+                <span class="text-muted" style="font-size: 0.75rem;">{{ user.email }}</span>
+            </div>
+        </div>
+
+        <!-- Items -->
+        <h6 class="text-muted text-uppercase fw-bold border-bottom border-dark pb-2 mb-2" style="font-size: 0.7rem;">
+            Line Items</h6>
+
+        <div class="border-bottom border-dark pb-2 mb-3">
+            <div class="d-flex justify-content-between mb-1">
+                <span class="text-white fw-bold" style="font-size: 0.85rem;">Brand Strategy & Logo Design</span>
+                <span class="text-white fw-bold" style="font-size: 0.85rem;">$1,500.00</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="text-muted" style="font-size: 0.75rem;">Qty: 1</span>
+                <span class="text-muted" style="font-size: 0.75rem;">$1,500.00 / ea</span>
+            </div>
+        </div>
+
+        <!-- Totals -->
+        <div class="p-3 border border-dark rounded bg-dark bg-opacity-50 mb-4">
+            <div class="d-flex justify-content-between mb-1">
+                <span class="text-muted small">Subtotal</span>
+                <span class="text-white small">$1,500.00</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-dark">
+                <span class="text-white fw-bold">Total</span>
+                <span class="text-white fw-bold fs-6">$1,500.00</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="text-white fw-bold">Amount Due</span>
+                <span class="text-danger fw-bold fs-4">$1,500.00</span>
+            </div>
+        </div>
+
+        <!-- Payment Info -->
+        <h6 class="text-muted text-uppercase fw-bold pb-2 mb-2" style="font-size: 0.7rem;">Payment Method</h6>
+        <div class="p-2 border border-dark rounded bg-dark bg-opacity-25">
+            <span class="text-white small fw-bold d-block mb-1">Bank Transfer</span>
+            <span class="text-muted d-block" style="font-size: 0.75rem;">Bank Name: Global Trust Bank</span>
+            <span class="text-muted d-block" style="font-size: 0.75rem;">Acct Name: SAHAL Agency</span>
+            <span class="text-muted d-block" style="font-size: 0.75rem;">Acct Info: 1234567890</span>
+        </div>
+    </div>
+
+    <button class="btn btn-gold w-100 py-3 mb-4 fw-bold shadow-lg">Pay Invoice Now</button>
+
+</div>
+{% endblock %}

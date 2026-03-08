@@ -1,0 +1,169 @@
+{% extends "desktop/layouts/public_base.html" %}
+
+{% block title %}Contact Us{% endblock %}
+{% block nav_contact %}active{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        padding: 5rem 0 3rem;
+        border-bottom: 1px solid var(--clr-border);
+        background: linear-gradient(180deg, rgba(22, 22, 24, 0.4) 0%, transparent 100%);
+    }
+
+    .contact-form .form-control,
+    .contact-form .form-select {
+        background-color: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--clr-border);
+        color: #fff;
+        padding: 1rem 1.25rem;
+        border-radius: var(--radius-md);
+        transition: all 0.3s ease;
+    }
+
+    .contact-form .form-control:focus,
+    .contact-form .form-select:focus {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-color: var(--clr-cyan);
+        box-shadow: 0 0 0 0.25rem rgba(0, 240, 255, 0.25);
+    }
+
+    .contact-form .form-label {
+        color: var(--clr-muted);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .contact-info-card {
+        background: var(--clr-card);
+        border: 1px solid var(--clr-border);
+        border-radius: var(--radius-md);
+        padding: 2.5rem;
+        height: 100%;
+    }
+
+    .contact-icon-box {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header mb-5">
+    <div class="container text-center">
+        <h1 class="fw-bold mb-3" style="font-size: 3.5rem;">Let's Connect</h1>
+        <p class="text-muted fs-5 mx-auto" style="max-width: 700px;">Have a project in mind? Reach out to our team of
+            experts and let's build something exceptional together.</p>
+    </div>
+</div>
+
+<div class="container py-4 mb-5 pb-5">
+    <div class="row g-5">
+        <!-- Contact Form -->
+        <div class="col-lg-7">
+            <div class="glass-card p-4 p-md-5">
+                <h3 class="fw-bold mb-4">Send a Message</h3>
+                <form class="contact-form">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-control" placeholder="John">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-control" placeholder="Doe">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" placeholder="john@example.com">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" placeholder="+1 (555) 000-0000">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Subject</label>
+                            <select class="form-select">
+                                <option value="">Select an inquiry type</option>
+                                <option value="branding">Printing & Branding</option>
+                                <option value="events">Event Organizing</option>
+                                <option value="interior">Interior Design</option>
+                                <option value="led">LED Screens</option>
+                                <option value="multimedia">Multimedia Services</option>
+                                <option value="other">General Inquiry</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Message</label>
+                            <textarea class="form-control" rows="5"
+                                placeholder="Tell us about your project..."></textarea>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <button type="button" class="btn-gradient w-100 py-3 fs-5">Send Message</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="col-lg-5">
+            <div class="contact-info-card">
+                <h3 class="fw-bold mb-5">Information</h3>
+
+                <div class="d-flex mb-4">
+                    <div class="contact-icon-box text-cyan me-4 flex-shrink-0"
+                        style="background: rgba(0,240,255,0.1); border: 1px solid var(--clr-cyan);">
+                        <i class="bi bi-geo-alt"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold text-white mb-2">Our Office</h5>
+                        <p class="text-muted mb-0">123 Brand Avenue, Tech Hub District<br>Innovation City, 10001</p>
+                    </div>
+                </div>
+
+                <div class="d-flex mb-4">
+                    <div class="contact-icon-box text-magenta me-4 flex-shrink-0"
+                        style="background: rgba(255,0,85,0.1); border: 1px solid var(--clr-magenta);">
+                        <i class="bi bi-envelope"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold text-white mb-2">Email Us</h5>
+                        <p class="text-muted mb-0">hello@sahal.agency<br>support@sahal.agency</p>
+                    </div>
+                </div>
+
+                <div class="d-flex mb-5">
+                    <div class="contact-icon-box text-purple me-4 flex-shrink-0"
+                        style="background: rgba(127,13,242,0.1); border: 1px solid var(--clr-purple);">
+                        <i class="bi bi-telephone"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold text-white mb-2">Call Us</h5>
+                        <p class="text-muted mb-0">+1 (555) 123-4567<br>Mon-Fri, 9am - 6pm</p>
+                    </div>
+                </div>
+
+                <hr class="border-secondary opacity-25 my-4">
+
+                <div class="text-center bg-dark p-4 rounded-3 border border-secondary border-opacity-25"
+                    style="background: rgba(0,0,0,0.3) !important;">
+                    <i class="bi bi-person-workspace fs-1 mb-3 text-muted"></i>
+                    <h5 class="fw-bold text-white mb-2">Already a client?</h5>
+                    <p class="text-muted small mb-3">Access your dashboard to check project status, quotations, and
+                        invoices.</p>
+                    <a href="{{ url_for('auth.login') }}" class="btn-outline-glow w-100 text-decoration-none">Go to
+                        Client Portal <i class="bi bi-box-arrow-in-right ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

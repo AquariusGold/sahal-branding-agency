@@ -1,0 +1,123 @@
+{% extends "mobile/layouts/public_base.html" %}
+
+{% block title %}About Us{% endblock %}
+{% block nav_about %}active{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        padding: 4rem 0 2rem;
+        border-bottom: 1px solid var(--clr-border);
+        background: var(--clr-surface);
+        text-align: center;
+    }
+
+    .value-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+    }
+
+    .team-member {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .team-img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: var(--clr-card);
+        border: 2px solid var(--clr-border);
+        margin: 0 auto 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        color: var(--clr-muted);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header mb-4">
+    <div class="container">
+        <h1 class="fw-bold mb-2">Who We Are</h1>
+        <p class="text-muted small">We are a collective of designers, thinkers, and builders elevating brands through
+            premium creative execution.</p>
+    </div>
+</div>
+
+<div class="container py-3">
+    <div class="mb-5">
+        <h2 class="fw-bold mb-3 fs-3">Our Mission</h2>
+        <p class="text-muted lh-base">To provide unmatched branding and event solutions that empower businesses to
+            communicate their unique value. We believe in the power of design to transform organizations and create
+            lasting impact.</p>
+    </div>
+
+    <div class="mb-5 pb-3 border-bottom border-dark">
+        <h2 class="fw-bold mb-3 fs-3">Our Vision</h2>
+        <p class="text-muted lh-base">To be the region's leading creative agency, known for uncompromising quality,
+            innovative multimedia strategies, and flawless execution.</p>
+    </div>
+
+    <!-- Core Values -->
+    <h3 class="fw-bold mb-4 text-center">Core Values</h3>
+    <div class="row g-3 mb-5">
+        <div class="col-12">
+            <div class="glass-card p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="value-icon bg-cyan-subtle text-cyan border-cyan mb-0 me-3"><i class="bi bi-gem"></i>
+                    </div>
+                    <h5 class="fw-bold mb-0">Excellence</h5>
+                </div>
+                <p class="text-muted small mb-0">We never compromise on quality. Every pixel, print, and design is
+                    crafted to perfection.</p>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="glass-card p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="value-icon bg-magenta-subtle text-magenta border-magenta mb-0 me-3"><i
+                            class="bi bi-lightbulb"></i></div>
+                    <h5 class="fw-bold mb-0">Innovation</h5>
+                </div>
+                <p class="text-muted small mb-0">We stay ahead of trends to provide modern, forward-thinking solutions
+                    for our clients.</p>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="glass-card p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="value-icon bg-purple-subtle text-purple border-purple mb-0 me-3"><i
+                            class="bi bi-shield-check"></i></div>
+                    <h5 class="fw-bold mb-0">Reliability</h5>
+                </div>
+                <p class="text-muted small mb-0">We deliver on time and communicate transparently. When we make a
+                    promise, we keep it.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Placeholder -->
+    <h3 class="fw-bold mb-4 text-center">Leadership</h3>
+    <div class="row g-3">
+        {% set colors = ['magenta', 'cyan', 'purple', 'yellow'] %}
+        {% for i in range(4) %}
+        <div class="col-6">
+            <div class="team-member">
+                <div class="team-img border-{{ colors[i] }} text-{{ colors[i] }}"><i class="bi bi-person"></i></div>
+                <h6 class="fw-bold mb-1">Executive Name</h6>
+                <p class="text-muted small mb-0">Department Role</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

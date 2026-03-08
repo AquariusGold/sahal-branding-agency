@@ -1,0 +1,99 @@
+{% extends "mobile/layouts/client_base.html" %}
+
+{% block title %}Client Dashboard{% endblock %}
+{% block nav_dashboard %}active{% endblock %}
+
+{% block header_title %}Overview{% endblock %}
+{% block header_subtitle %}Welcome back, {{ user.full_name }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-3 pt-3 pb-5">
+
+    <!-- Account Summary Card -->
+    <div class="glass-card mb-4 p-3 d-flex align-items-center">
+        <div class="bg-dark rounded-circle d-flex align-items-center justify-content-center text-accent fw-bold fs-3 me-3 flex-shrink-0"
+            style="width: 60px; height: 60px; border: 1px solid var(--clr-border);">
+            {{ user.full_name[:1]|upper }}
+        </div>
+        <div>
+            <h6 class="fw-bold mb-1 text-white">{{ user.full_name }}</h6>
+            <span class="text-muted small d-block mb-1">{{ user.email }}</span>
+            <span class="text-muted text-uppercase" style="font-size: 0.65rem; letter-spacing: 0.05em;">Client
+                Portal</span>
+        </div>
+    </div>
+
+    <!-- Active Projects -->
+    <div class="glass-card mb-4">
+        <div class="glass-card-header d-flex justify-content-between align-items-center p-3 border-bottom border-dark">
+            <h6 class="fw-bold mb-0 text-white">Active Projects</h6>
+            <a href="{{ url_for('services.list_orders') }}" class="text-accent text-decoration-none small">View All</a>
+        </div>
+        <div class="p-0">
+            {% set active_orders = user.orders | selectattr('status', 'in', ['pending', 'confirmed', 'in_progress',
+            'quality_check']) | list %}
+
+            {% if active_orders %}
+            <ul class="list-group list-group-flush bg-transparent">
+                {% for order in active_orders[:3] %}
+                <li class="list-group-item bg-transparent border-bottom border-dark p-3">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <a href="{{ url_for('services.order_detail', order_id=order.id) }}"
+                            class="text-white text-decoration-none fw-bold" style="font-size: 0.95rem;">
+                            {{ order.service.name }}
+                        </a>
+                        <span class="text-muted small">#{{ "%04d"|format(order.id) }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <span class="text-muted small">{{ order.created_at.strftime('%b %d') }}</span>
+                        {% set bg_class = 'bg-secondary' %}
+                        {% set text_class = 'text-white' %}
+                        {% if order.status == 'pending' %}
+                        {% set bg_class = 'bg-warning' %}
+                        {% set text_class = 'text-dark' %}
+                        {% elif order.status == 'confirmed' %}
+                        {% set bg_class = 'bg-info' %}
+                        {% set text_class = 'text-dark' %}
+                        {% elif order.status == 'in_progress' %}
+                        {% set bg_class = 'bg-primary' %}
+                        {% set text_class = 'text-white' %}
+                        {% elif order.status == 'quality_check' %}
+                        {% set bg_class = 'bg-secondary' %}
+                        {% set text_class = 'text-white' %}
+                        {% endif %}
+                        <span class="badge {{ bg_class }} {{ text_class }} px-2 py-1 rounded-pill"
+                            style="font-size: 0.7rem;">{{ order.status|replace('_', ' ')|title }}</span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <div class="text-center py-4">
+                <p class="text-muted small mb-2">No active projects right now.</p>
+                <a href="{{ url_for('services.booking_wizard') }}" class="btn-outline-glow btn-sm d-inline-block">Start
+                    a Project</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Quotations & Invoices (2 Column Grid) -->
+    <div class="row g-3 mb-4">
+        <div class="col-6">
+            <div class="glass-card h-100 p-3 text-center d-flex flex-column justify-content-center">
+                <i class="bi bi-file-earmark-text text-accent fs-3 mb-2 d-block"></i>
+                <h6 class="fw-bold text-white mb-1" style="font-size: 0.9rem;">Quotations</h6>
+                <span class="badge bg-dark border border-secondary text-muted rounded-pill mt-auto">0 Pending</span>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="glass-card h-100 p-3 text-center d-flex flex-column justify-content-center">
+                <i class="bi bi-cash-coin text-accent fs-3 mb-2 d-block"></i>
+                <h6 class="fw-bold text-white mb-1" style="font-size: 0.9rem;">Invoices</h6>
+                <span class="badge bg-dark border border-secondary text-muted rounded-pill mt-auto">0 Unpaid</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

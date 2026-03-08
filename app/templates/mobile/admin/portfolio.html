@@ -1,0 +1,79 @@
+{% extends "mobile/layouts/admin_base.html" %}
+
+{% block title %}Manage Portfolio{% endblock %}
+{% block nav_portfolio %}active{% endblock %}
+
+{% block header_title %}Portfolio{% endblock %}
+{% block header_subtitle %}Manage your showcase projects.{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-2 py-3 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5 class="fw-bold mb-0 text-white">Projects <span class="badge bg-primary rounded-pill text-white">{{
+                items|length }}</span></h5>
+        <a href="{{ url_for('admin.create_portfolio') }}" class="btn btn-sm"
+            style="background: var(--clr-accent); color: white;">
+            <i class="bi bi-plus-lg me-1"></i>Add
+        </a>
+    </div>
+
+    <!-- Mobile Card List -->
+    <div class="d-flex flex-column gap-3">
+        {% for item in items %}
+        <div class="glass-card p-3 position-relative overflow-hidden">
+            {% if not item.is_active %}
+            <div class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-50" style="z-index: 1;"></div>
+            {% endif %}
+
+            <div class="d-flex position-relative" style="z-index: 2;">
+                <!-- Thumbnail -->
+                <div class="me-3 flex-shrink-0">
+                    {% if item.image_url %}
+                    <img src="{{ item.image_url }}" alt="{{ item.title }}" class="rounded-3"
+                        style="width: 70px; height: 70px; object-fit: cover; border: 1px solid var(--clr-border);">
+                    {% else %}
+                    <div class="rounded-3 bg-dark d-flex align-items-center justify-content-center"
+                        style="width: 70px; height: 70px; border: 1px solid var(--clr-border);">
+                        <i class="bi bi-image text-muted fs-4"></i>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Details -->
+                <div class="flex-grow-1">
+                    <h6 class="fw-bold text-white mb-1">{{ item.title }}</h6>
+                    <div class="mb-2">
+                        <span class="badge bg-dark border border-secondary text-light" style="font-size: 0.65rem;">{{
+                            item.category }}</span>
+                    </div>
+                    <p class="text-muted small mb-0"><i class="bi bi-person me-1"></i>{{ item.client_name or 'No Client'
+                        }}</p>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="d-flex justify-content-end gap-2 mt-3 pt-3 border-top border-secondary position-relative"
+                style="z-index: 3;">
+                <a href="{{ url_for('admin.edit_portfolio', id=item.id) }}"
+                    class="btn btn-sm btn-outline-light px-3 py-1">
+                    Edit
+                </a>
+                <form action="{{ url_for('admin.toggle_portfolio', id=item.id) }}" method="POST" class="d-inline">
+                    <button type="submit"
+                        class="btn btn-sm {% if item.is_active %}btn-outline-danger{% else %}btn-success{% endif %} px-3 py-1">
+                        {% if item.is_active %}Hide{% else %}Show{% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <div class="text-center py-5 glass-card">
+            <i class="bi bi-images fs-2 text-muted mb-3 d-block opacity-50"></i>
+            <h6 class="text-white">No Portfolio Projects</h6>
+            <p class="text-muted small mb-4 px-3">You haven't added any projects to your portfolio yet.</p>
+            <a href="{{ url_for('admin.create_portfolio') }}" class="btn btn-sm btn-outline-light">Add Project</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

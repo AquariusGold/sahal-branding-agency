@@ -1,0 +1,110 @@
+{% extends "desktop/layouts/client_base.html" %}
+
+{% block title %}Receipt #{{ order.id }}{% endblock %}
+
+{% block nav_orders %}active{% endblock %}
+
+{% block header_title %}Receipt{% endblock %}
+{% block header_subtitle %}Order #{{ order.id }} &bull; Billed to {{ order.user.full_name }}{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="glass-card mb-4 mb-lg-0">
+            <div class="glass-card-header d-flex justify-content-between align-items-center">
+                <span>Order Summary</span>
+                <div class="text-end">
+                    <h6 class="fw-bold mb-0">SAHAL Branding</h6>
+                    <small class="text-muted">Mogadishu, Somalia</small>
+                </div>
+            </div>
+
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0"
+                        style="color: var(--clr-text); border-color: var(--clr-border);">
+                        <thead>
+                            <tr>
+                                <th class="py-3 px-4"
+                                    style="background: rgba(5,5,5,0.8); color: #fff; border-bottom: 1px solid var(--clr-border);">
+                                    Item Description</th>
+                                <th class="py-3 px-4 text-center"
+                                    style="background: rgba(5,5,5,0.8); color: #fff; border-bottom: 1px solid var(--clr-border);">
+                                    Qty</th>
+                                <th class="py-3 px-4 text-end"
+                                    style="background: rgba(5,5,5,0.8); color: #fff; border-bottom: 1px solid var(--clr-border);">
+                                    Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items %}
+                            <tr>
+                                <td class="py-3 px-4 border-bottom border-light border-opacity-10">
+                                    <div class="fw-bold fs-6 text-white">{{ item.service.name }}</div>
+                                    <small class="text-white-50">{{ item.service.category.name }}</small>
+                                </td>
+                                <td
+                                    class="py-3 px-4 text-center align-middle border-bottom border-light border-opacity-10">
+                                    {{ item.quantity }}</td>
+                                <td
+                                    class="py-3 px-4 text-end align-middle fw-bold border-bottom border-light border-opacity-10">
+                                    ${{ "%.2f"|format(item.subtotal) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-body pt-4 border-top border-light border-opacity-10 text-end">
+                <p class="text-white-50 mb-1">Total Amount Payable</p>
+                <h2 class="fw-black mb-0" style="color:var(--clr-accent);">${{ "%.2f"|format(order.total_price) }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="glass-card h-100 d-flex flex-column justify-content-center p-4"
+            style="background: radial-gradient(circle at top right, rgba(127, 13, 242, 0.1), transparent 70%);">
+            <div class="mb-4 text-center">
+                <p class="text-uppercase small fw-bold mb-3" style="color:var(--clr-accent); letter-spacing: 0.1em;">
+                    Project Status</p>
+
+                {% if order.status.name == 'pending' %}
+                <i class="bi bi-clock-history d-block mb-3 fs-1 text-warning"></i>
+                <h3 class="fw-bold">Awaiting Review</h3>
+                <p class="text-white-50 small">Our designers are reviewing your request. We'll confirm shortly.</p>
+                {% elif order.status.name == 'confirmed' %}
+                <i class="bi bi-check2-circle d-block mb-3 fs-1 text-info"></i>
+                <h3 class="fw-bold">Order Confirmed</h3>
+                <p class="text-white-50 small">Your project has been confirmed and added to our production queue.</p>
+                {% elif order.status.name == 'in_progress' %}
+                <i class="bi bi-gear-wide-connected d-block mb-3 fs-1 text-primary"></i>
+                <h3 class="fw-bold">In Production</h3>
+                <p class="text-white-50 small">We are currently executing the design phase of your project.</p>
+                {% elif order.status.name == 'quality_check' %}
+                <i class="bi bi-search d-block mb-3 fs-1 text-secondary"></i>
+                <h3 class="fw-bold">Quality Review</h3>
+                <p class="text-white-50 small">Performing final internal quality checks before delivery.</p>
+                {% elif order.status.name == 'completed' %}
+                <i class="bi bi-award d-block mb-3 fs-1 text-success"></i>
+                <h3 class="fw-bold text-success">Completed</h3>
+                <p class="text-white-50 small">All deliverables have been handed over. Project finished.</p>
+                {% else %}
+                <i class="bi bi-x-circle d-block mb-3 fs-1 text-danger"></i>
+                <h3 class="fw-bold text-danger">Cancelled</h3>
+                <p class="text-white-50 small">This project has been cancelled.</p>
+                {% endif %}
+            </div>
+
+            <hr class="border-light border-opacity-10 my-4">
+
+            <div class="text-center">
+                <p class="text-white-50 small mb-3">Need help with this order?</p>
+                <a href="mailto:support@sahal.com" class="btn btn-outline-light rounded-pill btn-sm px-4">Contact
+                    Support</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

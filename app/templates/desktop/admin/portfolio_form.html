@@ -1,0 +1,92 @@
+{% extends "desktop/layouts/admin_base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block nav_portfolio %}active{% endblock %}
+
+{% block header_title %}{{ title }}{% endblock %}
+{% block header_subtitle %}Input project details for the showcase grid.{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="glass-card p-4 p-md-5 position-relative overflow-hidden">
+            <!-- Decorative accent -->
+            <div class="position-absolute top-0 start-0 w-100"
+                style="height: 4px; background: linear-gradient(90deg, var(--clr-primary), var(--clr-cyan));"></div>
+
+            <form method="POST">
+                {{ form.hidden_tag() }}
+
+                <!-- Title & Category Row -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label text-muted fw-bold small text-uppercase mb-2">Project Title</label>
+                        {{ form.title(class="form-control bg-dark text-white border-secondary", placeholder="e.g.
+                        MegaCorp Rebrand") }}
+                        {% for error in form.title.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted fw-bold small text-uppercase mb-2">Category</label>
+                        {{ form.category(class="form-control bg-dark text-white border-secondary", placeholder="e.g.
+                        UX/UI Design") }}
+                        {% for error in form.category.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Client & Image Row -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label text-muted fw-bold small text-uppercase mb-2">Client Name
+                            (Optional)</label>
+                        {{ form.client_name(class="form-control bg-dark text-white border-secondary", placeholder="e.g.
+                        MegaCorp Inc.") }}
+                        {% for error in form.client_name.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted fw-bold small text-uppercase mb-2">Image URL</label>
+                        {{ form.image_url(class="form-control bg-dark text-white border-secondary",
+                        placeholder="https://example.com/project-thumb.jpg") }}
+                        {% for error in form.image_url.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-4">
+                    <label class="form-label text-muted fw-bold small text-uppercase mb-2">Project Description</label>
+                    {{ form.description(class="form-control bg-dark text-white border-secondary", rows="4",
+                    placeholder="Describe the challenge and the solution...") }}
+                    {% for error in form.description.errors %}
+                    <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Visibility Toggle -->
+                <div class="mb-4 border border-secondary p-3 rounded-3 bg-dark bg-opacity-25">
+                    <div class="form-check form-switch d-flex align-items-center mb-0">
+                        {{ form.is_active(class="form-check-input bg-dark border-secondary me-3", style="width: 3rem;
+                        height: 1.5rem;", role="switch", id="isActiveSwitch") }}
+                        <label class="form-check-label fw-bold" for="isActiveSwitch">
+                            Visible on Public Portfolio
+                            <span class="d-block fw-normal text-muted small mt-1">If unchecked, this project will be
+                                hidden from the public website.</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-5">
+                    <a href="{{ url_for('admin.list_portfolio') }}" class="btn btn-outline-light px-4">Cancel</a>
+                    {{ form.submit(class="btn btn-primary-glow px-5 shadow-lg") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

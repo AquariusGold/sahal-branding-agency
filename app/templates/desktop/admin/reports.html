@@ -1,0 +1,68 @@
+{% extends "desktop/layouts/admin_base.html" %}
+
+{% block title %}Reports & Analytics{% endblock %}
+
+{% block header_title %}Reports & Analytics{% endblock %}
+{% block header_subtitle %}Insights into agency performance and revenue.{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <!-- Revenue Chart Placeholder -->
+    <div class="col-lg-8">
+        <div class="glass-card h-100">
+            <div class="glass-card-header d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold">Revenue Overview</h6>
+                <select class="form-select form-select-sm bg-dark text-white border-secondary" style="width: auto;">
+                    <option>This Year</option>
+                    <option>Last 6 Months</option>
+                </select>
+            </div>
+            <div class="card-body py-5 d-flex flex-column align-items-center justify-content-center text-muted"
+                style="min-height: 350px;">
+                <i class="bi bi-bar-chart-line fs-1 mb-3 opacity-50" style="color: var(--clr-cyan)"></i>
+                <p class="mb-0">Revenue charting available in Phase 5.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orders by Status Placeholder -->
+    <div class="col-lg-4">
+        <div class="glass-card h-100">
+            <div class="glass-card-header">
+                <h6 class="mb-0 fw-bold">Orders by Status</h6>
+            </div>
+            <div class="card-body py-5 d-flex flex-column align-items-center justify-content-center text-muted">
+                <i class="bi bi-pie-chart fs-1 mb-3 opacity-50" style="color: var(--clr-accent)"></i>
+                <p class="mb-0">Distribution chart pending.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Services Placeholder -->
+    <div class="col-lg-6">
+        <div class="glass-card">
+            <div class="glass-card-header">
+                <h6 class="mb-0 fw-bold">Top Performing Services</h6>
+            </div>
+            <div class="card-body py-5 text-center text-muted">
+                <i class="bi bi-graph-up-arrow fs-1 mb-3 d-block opacity-50"></i>
+                Service analytics pending.
+            </div>
+        </div>
+    </div>
+
+    <!-- Monthly Trend Placeholder -->
+    <div class="col-lg-6">
+        <div class="glass-card">
+            <div class="glass-card-header">
+                <h6 class="mb-0 fw-bold">Order Volume Trend</h6>
+            </div>
+            <div class="card-body py-5 text-center text-muted">
+                <i class="bi bi-graph-up fs-1 mb-3 d-block opacity-50"></i>
+                Trend analytics pending.
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "desktop/layouts/admin_base.html" %}
+
+{% block title %}Invoices{% endblock %}
+
+{% block header_title %}Invoices{% endblock %}
+{% block header_subtitle %}Manage billing and payment statuses.{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <div class="glass-card-header d-flex justify-content-between align-items-center">
+        <h6 class="mb-0 fw-bold">All Invoices</h6>
+        <button class="btn btn-sm btn-primary-glow"><i class="bi bi-plus-lg me-2"></i>New Invoice</button>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover mb-0 align-middle">
+                <thead>
+                    <tr>
+                        <th class="ps-4 py-3 text-muted small text-uppercase">Invoice #</th>
+                        <th class="py-3 text-muted small text-uppercase">Client</th>
+                        <th class="py-3 text-muted small text-uppercase">Due Date</th>
+                        <th class="py-3 text-muted small text-uppercase text-end">Amount</th>
+                        <th class="py-3 text-muted small text-uppercase text-center">Status</th>
+                        <th class="pe-4 py-3 text-muted small text-uppercase text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Placeholder Row -->
+                    <tr>
+                        <td class="ps-4 fw-bold">INV-0000</td>
+                        <td>Demo Client</td>
+                        <td>Nov 07, 2026</td>
+                        <td class="text-end fw-bold text-white">$0.00</td>
+                        <td class="text-center">
+                            <span class="badge bg-danger rounded-pill">Unpaid</span>
+                        </td>
+                        <td class="pe-4 text-end">
+                            <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-eye"></i></button>
+                            <button class="btn btn-sm btn-outline-secondary ms-1"><i
+                                    class="bi bi-envelope"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

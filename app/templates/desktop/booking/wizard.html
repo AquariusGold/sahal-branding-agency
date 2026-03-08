@@ -1,0 +1,447 @@
+{% extends "desktop/layouts/public_base.html" %}
+
+{% block title %}Start a Project (Wizard){% endblock %}
+
+{% block extra_css %}
+<style>
+    .wizard-container {
+        max-width: 800px;
+        margin: 4rem auto;
+    }
+
+    /* Stepper UI */
+    .stepper {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+
+    .stepper::before {
+        content: '';
+        position: absolute;
+        top: 24px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--clr-border);
+        z-index: 1;
+    }
+
+    .step {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        width: 100px;
+    }
+
+    .step-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--clr-primary);
+        border: 2px solid var(--clr-border);
+        color: var(--clr-muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin: 0 auto 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .step.active .step-circle {
+        border-color: var(--clr-cyan);
+        color: var(--clr-cyan);
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+    }
+
+    .step.completed .step-circle {
+        background: linear-gradient(135deg, var(--clr-magenta), var(--clr-cyan));
+        border-color: transparent;
+        color: #fff;
+    }
+
+    .step-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: var(--clr-muted);
+        letter-spacing: 0.05em;
+    }
+
+    .step.active .step-label {
+        color: #fff;
+    }
+
+    /* Wizard Content Panels */
+    .wizard-panel {
+        display: none;
+        animation: fadeIn 0.4s ease;
+    }
+
+    .wizard-panel.active {
+        display: block;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Selectable Cards */
+    .selectable-card {
+        background: var(--clr-card);
+        border: 1px solid var(--clr-border);
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        height: 100%;
+    }
+
+    .selectable-card:hover {
+        border-color: rgba(0, 240, 255, 0.5);
+    }
+
+    .selectable-card.selected {
+        border-color: var(--clr-cyan);
+        background: rgba(0, 240, 255, 0.05);
+        position: relative;
+    }
+
+    .selectable-card.selected::before {
+        content: '\F633';
+        /* bi-check-circle-fill */
+        font-family: bootstrap-icons;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        color: var(--clr-cyan);
+        font-size: 1.25rem;
+    }
+
+    /* Form Elements */
+    .form-control,
+    .form-select {
+        background-color: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--clr-border);
+        color: #fff;
+        padding: 0.8rem 1rem;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-color: var(--clr-cyan);
+        box-shadow: 0 0 0 0.25rem rgba(0, 240, 255, 0.25);
+        color: #fff;
+    }
+
+    .summary-box {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--clr-border);
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container wizard-container">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold fs-2">Start a Project</h1>
+        <p class="text-muted">Complete the steps below to request a service quotation.</p>
+    </div>
+
+    <!-- Stepper -->
+    <div class="stepper">
+        <div class="step active" id="stepIndicator1">
+            <div class="step-circle">1</div>
+            <div class="step-label">Category</div>
+        </div>
+        <div class="step" id="stepIndicator2">
+            <div class="step-circle">2</div>
+            <div class="step-label">Service</div>
+        </div>
+        <div class="step" id="stepIndicator3">
+            <div class="step-circle">3</div>
+            <div class="step-label">Details</div>
+        </div>
+        <div class="step" id="stepIndicator4">
+            <div class="step-circle">4</div>
+            <div class="step-label">Review</div>
+        </div>
+    </div>
+
+    <!-- Wizard Form -->
+    <form id="bookingWizardForm" action="{{ url_for('services.create_order') }}" method="POST">
+
+        <!-- STEP 1: Select Category -->
+        <div class="wizard-panel active" id="wizardStep1">
+            <h4 class="fw-bold mb-4">What type of project is this?</h4>
+            <div class="row g-3 mb-4">
+                {% for category in categories %}
+                <div class="col-md-6">
+                    <div class="selectable-card category-card" data-category-id="{{ category.id }}">
+                        <h5 class="fw-bold text-white mb-2">{{ category.name }}</h5>
+                        <p class="text-muted small mb-0">{{ category.description | truncate(60) }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Hidden inputs to hold selections -->
+            <input type="hidden" name="category_id" id="inputCategoryId">
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn-gradient" id="btnNext1" disabled>Next Step <i
+                        class="bi bi-arrow-right ms-2"></i></button>
+            </div>
+        </div>
+
+        <!-- STEP 2: Select Service -->
+        <div class="wizard-panel" id="wizardStep2">
+            <h4 class="fw-bold mb-4">Select a specific service</h4>
+            <div id="servicesContainer" class="row g-3 mb-4">
+                <div class="col-12 text-muted">Please select a category first.</div>
+            </div>
+            <input type="hidden" name="service_id" id="inputServiceId">
+
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn-outline-glow px-4" id="btnPrev2"><i class="bi bi-arrow-left me-2"></i>
+                    Back</button>
+                <button type="button" class="btn-gradient" id="btnNext2" disabled>Next Step <i
+                        class="bi bi-arrow-right ms-2"></i></button>
+            </div>
+        </div>
+
+        <!-- STEP 3: Project Details -->
+        <div class="wizard-panel" id="wizardStep3">
+            <h4 class="fw-bold mb-4">Project Details</h4>
+            <div class="glass-card p-4 border border-dark mb-4">
+                <div class="row g-4">
+                    <div class="col-12">
+                        <label class="form-label text-muted fw-bold small text-uppercase">Project Quantity</label>
+                        <input type="number" name="quantity" id="inputQuantity" class="form-control" value="1" min="1"
+                            required>
+                        <div class="form-text text-muted">Number of units/items required. Default is 1.</div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label text-muted fw-bold small text-uppercase">Additional Notes /
+                            Requirements</label>
+                        <textarea name="notes" id="inputNotes" class="form-control" rows="5"
+                            placeholder="Please describe your specific requirements, timeline, and any other details we should know..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn-outline-glow px-4" id="btnPrev3"><i class="bi bi-arrow-left me-2"></i>
+                    Back</button>
+                <button type="button" class="btn-gradient" id="btnNext3">Review Order <i
+                        class="bi bi-arrow-right ms-2"></i></button>
+            </div>
+        </div>
+
+        <!-- STEP 4: Review & Submit -->
+        <div class="wizard-panel" id="wizardStep4">
+            <h4 class="fw-bold mb-4">Review Your Request</h4>
+
+            <div class="summary-box mb-4">
+                <div class="row mb-3">
+                    <div class="col-4 text-muted small text-uppercase">Service</div>
+                    <div class="col-8 fw-bold" id="summaryServiceName">--</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4 text-muted small text-uppercase">Base Price</div>
+                    <div class="col-8 text-cyan fw-bold" id="summaryServicePrice">--</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4 text-muted small text-uppercase">Quantity</div>
+                    <div class="col-8 text-white" id="summaryQuantity">1</div>
+                </div>
+                <div class="row">
+                    <div class="col-4 text-muted small text-uppercase">Notes</div>
+                    <div class="col-8 text-white small" id="summaryNotes">--</div>
+                </div>
+            </div>
+
+            <div class="alert alert-dark border-secondary text-muted small mb-4">
+                <i class="bi bi-info-circle text-magenta me-2"></i>
+                By submitting this request, an initial order will be created. Our team will review your requirements and
+                provide a formal quotation for your approval before work begins.
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn-outline-glow px-4" id="btnPrev4"><i class="bi bi-arrow-left me-2"></i>
+                    Back</button>
+                <button type="submit" class="btn-gradient px-5 py-2 fs-6">Submit Request <i
+                        class="bi bi-check2 ms-2"></i></button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Raw data for JS filtering -->
+<script>
+    const servicesData = [
+        {% for category in categories %}
+        {% for service in category.services if service.is_active %}
+        {
+            id: {{ service.id }},
+            categoryId: {{ category.id }},
+            name: "{{ service.name|safe }}",
+            description: "{{ service.description|replace('\n', ' ')|replace('\r', '')|safe }}",
+            basePrice: {{ service.base_price }}
+        },
+        {% endfor %}
+        {% endfor %}
+    ];
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let currentStep = 1;
+
+        // Step Elements
+        const s1 = document.getElementById('wizardStep1');
+        const s2 = document.getElementById('wizardStep2');
+        const s3 = document.getElementById('wizardStep3');
+        const s4 = document.getElementById('wizardStep4');
+
+        const ind1 = document.getElementById('stepIndicator1');
+        const ind2 = document.getElementById('stepIndicator2');
+        const ind3 = document.getElementById('stepIndicator3');
+        const ind4 = document.getElementById('stepIndicator4');
+
+        // Button Elements
+        const btnNext1 = document.getElementById('btnNext1');
+        const btnPrev2 = document.getElementById('btnPrev2');
+        const btnNext2 = document.getElementById('btnNext2');
+        const btnPrev3 = document.getElementById('btnPrev3');
+        const btnNext3 = document.getElementById('btnNext3');
+        const btnPrev4 = document.getElementById('btnPrev4');
+
+        // Inputs
+        const inputCatId = document.getElementById('inputCategoryId');
+        const inputSvcId = document.getElementById('inputServiceId');
+        const inputQty = document.getElementById('inputQuantity');
+        const inputNotes = document.getElementById('inputNotes');
+
+        // Containers
+        const servicesContainer = document.getElementById('servicesContainer');
+
+        // Card selections
+        const catCards = document.querySelectorAll('.category-card');
+
+        catCards.forEach(card => {
+            card.addEventListener('click', function () {
+                catCards.forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                inputCatId.value = this.getAttribute('data-category-id');
+                btnNext1.disabled = false;
+            });
+        });
+
+        // Navigation logic
+        btnNext1.addEventListener('click', () => { goStep(2); populateServices(); });
+        btnPrev2.addEventListener('click', () => { goStep(1); });
+        btnNext2.addEventListener('click', () => { goStep(3); });
+        btnPrev3.addEventListener('click', () => { goStep(2); });
+        btnNext3.addEventListener('click', () => { populateSummary(); goStep(4); });
+        btnPrev4.addEventListener('click', () => { goStep(3); });
+
+        function goStep(target) {
+            // Hide all
+            [s1, s2, s3, s4].forEach(el => el.classList.remove('active'));
+            // Reset indicators
+            [ind1, ind2, ind3, ind4].forEach(el => {
+                el.classList.remove('active');
+                el.classList.remove('completed');
+            });
+
+            currentStep = target;
+
+            // Show target
+            if (target === 1) { s1.classList.add('active'); ind1.classList.add('active'); }
+            if (target === 2) {
+                s2.classList.add('active');
+                ind1.classList.add('completed');
+                ind2.classList.add('active');
+            }
+            if (target === 3) {
+                s3.classList.add('active');
+                ind1.classList.add('completed');
+                ind2.classList.add('completed');
+                ind3.classList.add('active');
+            }
+            if (target === 4) {
+                s4.classList.add('active');
+                ind1.classList.add('completed');
+                ind2.classList.add('completed');
+                ind3.classList.add('completed');
+                ind4.classList.add('active');
+            }
+        }
+
+        function populateServices() {
+            const rawCatId = document.getElementById('inputCategoryId').value;
+            const catId = String(rawCatId).trim();
+            const filtered = servicesData.filter(s => String(s.categoryId) === catId);
+
+            servicesContainer.innerHTML = '';
+            inputSvcId.value = '';
+            btnNext2.disabled = true;
+
+            if (!catId || filtered.length === 0) {
+                servicesContainer.innerHTML = '<div class="col-12 text-muted">No services available for this category. Please select another.</div>';
+                return;
+            }
+
+            filtered.forEach(svc => {
+                const html = `
+                <div class="col-md-6">
+                    <div class="selectable-card service-card" data-service-id="${svc.id}" data-service-name="${svc.name}" data-service-price="${svc.basePrice}">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h6 class="fw-bold text-white mb-0">${svc.name}</h6>
+                            <span class="text-cyan fw-bold">$${svc.basePrice.toFixed(2)}</span>
+                        </div>
+                        <p class="text-muted small mb-0">${svc.description}</p>
+                    </div>
+                </div>
+            `;
+                servicesContainer.insertAdjacentHTML('beforeend', html);
+            });
+
+            // Add event listeners to new cards
+            const svcCards = document.querySelectorAll('.service-card');
+            svcCards.forEach(card => {
+                card.addEventListener('click', function () {
+                    svcCards.forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    inputSvcId.value = this.dataset.serviceId;
+
+                    // Store data for summary
+                    inputSvcId.dataset.name = this.dataset.serviceName;
+                    inputSvcId.dataset.price = this.dataset.servicePrice;
+
+                    btnNext2.disabled = false;
+                });
+            });
+        }
+
+        function populateSummary() {
+            document.getElementById('summaryServiceName').innerText = inputSvcId.dataset.name || '--';
+            const price = parseFloat(inputSvcId.dataset.price || '0');
+            document.getElementById('summaryServicePrice').innerText = '$' + price.toFixed(2);
+            document.getElementById('summaryQuantity').innerText = inputQty.value;
+            document.getElementById('summaryNotes').innerText = inputNotes.value || 'No additional notes provided.';
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends "desktop/layouts/admin_base.html" %}
+
+{% block title %}Order Detail{% endblock %}
+
+{% block nav_orders %}active{% endblock %}
+{% block header_title %}Order #{{ order.id }}{% endblock %}
+{% block header_subtitle %}Client: <span class="text-white fw-bold">{{ order.user.full_name }}</span> &bull; Placed on
+{{ order.created_at.strftime('%B %d, %Y') }}{% endblock %}
+
+{% block page_header %}
+<header class="admin-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h3 class="fw-bold mb-1">Order #{{ order.id }}</h3>
+            <p class="text-muted mb-0">Client: <span class="text-white fw-bold">{{ order.user.full_name }}</span> &bull;
+                Placed on {{ order.created_at.strftime('%B %d, %Y') }}</p>
+        </div>
+        <div>
+            <a href="{{ url_for('admin.list_orders') }}" class="btn btn-sm btn-outline-light me-3"><i
+                    class="bi bi-arrow-left me-1"></i> Back to Orders</a>
+            {% if order.status.name == 'pending' %}
+            <div class="badge bg-warning text-black px-3 py-2" style="font-size: 0.9rem;">Status: Pending</div>
+            {% elif order.status.name == 'confirmed' %}
+            <div class="badge bg-info text-black px-3 py-2" style="font-size: 0.9rem;">Status: Confirmed</div>
+            {% elif order.status.name == 'in_progress' %}
+            <div class="badge bg-primary text-white px-3 py-2" style="font-size: 0.9rem;">Status: In Progress</div>
+            {% elif order.status.name == 'quality_check' %}
+            <div class="badge bg-secondary text-white px-3 py-2" style="font-size: 0.9rem;">Status: Quality Check</div>
+            {% elif order.status.name == 'completed' %}
+            <div class="badge bg-success text-white px-3 py-2" style="font-size: 0.9rem;">Status: Completed</div>
+            {% else %}
+            <div class="badge bg-danger text-white px-3 py-2" style="font-size: 0.9rem;">Status: Cancelled</div>
+            {% endif %}
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Line Items Table -->
+        <div class="glass-card mb-4">
+            <div class="glass-card-header" style="color: var(--clr-accent);">LINE ITEMS</div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-dark mb-0" style="background: transparent;">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-3"
+                                    style="color: var(--clr-muted); font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--clr-border);">
+                                    SERVICE</th>
+                                <th class="text-center py-3"
+                                    style="color: var(--clr-muted); font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--clr-border);">
+                                    QUANTITY</th>
+                                <th class="text-end py-3"
+                                    style="color: var(--clr-muted); font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--clr-border);">
+                                    UNIT PRICE</th>
+                                <th class="text-end px-4 py-3"
+                                    style="color: var(--clr-muted); font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--clr-border);">
+                                    SUBTOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items %}
+                            <tr>
+                                <td class="px-4 py-3 border-bottom border-secondary" style="background: transparent;">
+                                    <div class="fw-bold text-white">{{ item.service.name }}</div>
+                                    <small class="text-white-50">{{ item.service.category.name }}</small>
+                                </td>
+                                <td class="text-center align-middle py-3 border-bottom border-secondary"
+                                    style="background: transparent;">{{ item.quantity }}</td>
+                                <td class="text-end align-middle py-3 border-bottom border-secondary"
+                                    style="background: transparent;">${{ "%.2f"|format(item.unit_price) }}</td>
+                                <td class="text-end align-middle px-4 py-3 fw-bold border-bottom border-secondary"
+                                    style="color:var(--clr-accent); background: transparent;">${{
+                                    "%.2f"|format(item.subtotal) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-end py-4 fw-bold text-white-50"
+                                    style="background: transparent; border: none;">ORDER TOTAL</td>
+                                <td class="text-end px-4 py-4" style="background: transparent; border: none;">
+                                    <h3 class="fw-bold mb-0 text-white">${{ "%.2f"|format(order.total_price) }}</h3>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Details -->
+        <div class="glass-card mb-4 mb-lg-0">
+            <div class="glass-card-header" style="color: var(--clr-accent);">CLIENT INFORMATION</div>
+            <div class="card-body p-4">
+                <div class="row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <label class="text-muted small fw-bold text-uppercase mb-1 d-block">Full Name</label>
+                        <p class="mb-0 text-white">{{ order.user.full_name }}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="text-muted small fw-bold text-uppercase mb-1 d-block">Email Address</label>
+                        <p class="mb-0"><a href="mailto:{{ order.user.email }}"
+                                style="color:var(--clr-accent); text-decoration: none;">{{ order.user.email }}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workflow Management -->
+    <div class="col-lg-4">
+        <div class="glass-card" style="border-top: 3px solid var(--clr-accent);">
+            <div class="glass-card-header" style="color: var(--clr-accent);">WORKFLOW MANAGEMENT</div>
+            <div class="card-body p-4">
+                <form action="{{ url_for('admin.update_order_status', id=order.id) }}" method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-4">
+                        <label class="form-label mb-2 text-white-50">Update Order Status</label>
+                        {{ form.status(class="form-select", style="background:#000; color:#fff;
+                        border-color:var(--clr-border);") }}
+                        <small class="text-muted mt-2 d-block">Changing the status will notify the client via their
+                            dashboard.</small>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn fw-bold py-3 text-white"
+                            style="background:var(--clr-accent); border:none; box-shadow: 0 4px 15px var(--clr-accent-glow);">
+                            <i class="bi bi-arrow-repeat me-2"></i> Update Status
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

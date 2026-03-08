@@ -1,0 +1,96 @@
+{% extends "mobile/layouts/admin_base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+{% block nav_dashboard %}active{% endblock %}
+
+{% block header_title %}System Admin{% endblock %}
+{% block header_subtitle %}Overview of platform activity.{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-2 py-3 mb-5">
+
+    <!-- Top Metrics Grid -->
+    <div class="row g-2 mb-4">
+        <div class="col-6">
+            <div class="glass-card p-3 text-center h-100" style="border-left: 3px solid var(--clr-cyan);">
+                <p class="text-muted mb-1 text-uppercase fw-bold" style="font-size:0.65rem;">Total Users</p>
+                <h3 class="mb-0 fw-bold">1</h3>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="glass-card p-3 text-center h-100" style="border-left: 3px solid var(--clr-primary);">
+                <p class="text-muted mb-1 text-uppercase fw-bold" style="font-size:0.65rem;">Active Orders</p>
+                <h3 class="mb-0 fw-bold">0</h3>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="glass-card p-3 text-center h-100" style="border-left: 3px solid var(--clr-accent);">
+                <p class="text-muted mb-1 text-uppercase fw-bold" style="font-size:0.65rem;">Pending Quotes</p>
+                <h3 class="mb-0 fw-bold text-accent">0</h3>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="glass-card p-3 text-center h-100" style="border-left: 3px solid var(--clr-danger);">
+                <p class="text-muted mb-1 text-uppercase fw-bold" style="font-size:0.65rem;">Unpaid Invoices</p>
+                <h3 class="mb-0 fw-bold text-danger">0</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Management Shortcuts -->
+    <h6 class="fw-bold mb-2 ps-1 text-white">Workspace Setup</h6>
+    <div class="row g-2 mb-4">
+        <div class="col-6">
+            <a href="{{ url_for('admin.jobs') }}" class="glass-card p-3 text-center d-block text-decoration-none">
+                <i class="bi bi-kanban fs-3 text-primary mb-2 d-block"></i>
+                <h6 class="fw-bold text-white mb-0" style="font-size: 0.85rem;">Job List</h6>
+                <p class="text-muted small mb-0" style="font-size: 0.65rem;">Track workflows</p>
+            </a>
+        </div>
+        <div class="col-6">
+            <a href="{{ url_for('admin.quotations') }}" class="glass-card p-3 text-center d-block text-decoration-none">
+                <i class="bi bi-file-earmark-text fs-3 text-accent mb-2 d-block"></i>
+                <h6 class="fw-bold text-white mb-0" style="font-size: 0.85rem;">Quotations</h6>
+                <p class="text-muted small mb-0" style="font-size: 0.65rem;">Manage proposals</p>
+            </a>
+        </div>
+        <div class="col-6">
+            <a href="{{ url_for('admin.invoices') }}" class="glass-card p-3 text-center d-block text-decoration-none">
+                <i class="bi bi-cash-coin fs-3 text-success mb-2 d-block"></i>
+                <h6 class="fw-bold text-white mb-0" style="font-size: 0.85rem;">Invoices</h6>
+                <p class="text-muted small mb-0" style="font-size: 0.65rem;">Billing & payments</p>
+            </a>
+        </div>
+        <div class="col-6">
+            <a href="{{ url_for('admin.reports') }}" class="glass-card p-3 text-center d-block text-decoration-none">
+                <i class="bi bi-bar-chart-fill fs-3 text-warning mb-2 d-block"></i>
+                <h6 class="fw-bold text-white mb-0" style="font-size: 0.85rem;">Reports</h6>
+                <p class="text-muted small mb-0" style="font-size: 0.65rem;">View analytics</p>
+            </a>
+        </div>
+        <div class="col-12 mt-3">
+            <h6 class="fw-bold mb-2 ps-1 text-white">Content Verification</h6>
+        </div>
+        <div class="col-6">
+            <a href="{{ url_for('admin.list_portfolio') }}"
+                class="glass-card p-3 text-center d-block text-decoration-none"
+                style="border-color: rgba(0, 240, 255, 0.3);">
+                <i class="bi bi-images fs-3 mb-2 d-block" style="color: #00f0ff;"></i>
+                <h6 class="fw-bold text-white mb-0" style="font-size: 0.85rem;">Portfolio</h6>
+                <p class="text-muted small mb-0" style="font-size: 0.65rem;">Showcase projects</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="glass-card mb-4">
+        <div class="glass-card-header border-bottom border-dark p-3">
+            <h6 class="mb-0 fw-bold text-white" style="font-size: 0.9rem;">Recent Activity</h6>
+        </div>
+        <div class="card-body text-center py-4 text-muted">
+            <i class="bi bi-activity fs-2 mb-2 d-block opacity-50"></i>
+            <span class="small">Pending implementation.</span>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
