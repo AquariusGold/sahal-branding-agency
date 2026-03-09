@@ -30,6 +30,13 @@ class UserRole(enum.Enum):
     staff = "staff"
     client = "client"
 
+class AccountType(enum.Enum):
+    """
+    Enum for Account Types during registration.
+    """
+    personal = "personal"
+    business = "business"
+
 
 class User(db.Model, UserMixin):
     """
@@ -48,6 +55,19 @@ class User(db.Model, UserMixin):
     
     # Role dictates permissions. Default is 'client' for self-registered users.
     role = db.Column(db.Enum(UserRole), default=UserRole.client, nullable=False)
+
+    # -------------------------------------------------------------------------
+    # Account Type & Registration Fields
+    # -------------------------------------------------------------------------
+    account_type = db.Column(db.Enum(AccountType), default=AccountType.personal, nullable=False)
+    
+    # Personal & Business Shared Optional
+    phone_number = db.Column(db.String(20), nullable=True)
+    
+    # Business Specific Optional
+    company_name = db.Column(db.String(120), nullable=True)
+    company_website = db.Column(db.String(255), nullable=True)
+    industry = db.Column(db.String(120), nullable=True)
     
     # Soft delete or suspension support
     is_active = db.Column(db.Boolean, default=True, nullable=False)

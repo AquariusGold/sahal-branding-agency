@@ -12,7 +12,7 @@ from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required, current_user
 from app.auth import auth
 from app.auth.forms import LoginForm, RegistrationForm
-from app.models.user import User, UserRole
+from app.models.user import User, UserRole, AccountType
 from app.extensions import db
 from app.utils.device import is_mobile
 
@@ -78,11 +78,23 @@ def register():
             flash("Email already registered. Please log in.", "warning")
             return redirect(url_for("auth.register"))
 
+        # Determine AccountType enum from form data
+        acc_type = AccountType.business if form.account_type.data == "business" else AccountType.personal
+
         user = User(
             full_name=form.full_name.data,
             email=form.email.data,
-            role=UserRole.client # By default, new registrations are clients
+            role=UserRole.client, # By default, new registrations are clients
+            account_type=acc_type,
+            phone_number=form.phone_number.data if form.phone_number.data else None
         )
+        
+        # Add business specific fields if it's a business account
+        if acc_type == AccountType.business:
+            user.company_name = form.company_name.data
+            user.company_website = form.company_website.data if form.company_website.data else None
+            user.industry = form.industry.data if form.industry.data else None
+
         user.set_password(form.password.data)
         
         db.session.add(user)

@@ -150,6 +150,38 @@
             color: #f5365c;
             font-size: 0.8rem;
         }
+        
+        /* Account Type Tabs */
+        .account-type-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.5rem;
+            text-align: center;
+            color: var(--clr-muted);
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all var(--transition);
+        }
+
+        .tab-btn.active {
+            background: var(--clr-accent);
+            color: #0d0d0d;
+        }
+        
+        /* Hide fields by default */
+        .business-fields {
+            display: none;
+        }
     </style>
 </head>
 
@@ -174,8 +206,19 @@
         {% endif %}
         {% endwith %}
 
-        <form method="POST" action="{{ url_for('auth.register') }}">
+        <form method="POST" action="{{ url_for('auth.register') }}" id="registerForm">
             {{ form.hidden_tag() }}
+            
+            <!-- Hidden radio buttons handled by WTForms entirely replaced by custom UI -->
+            <div class="d-none">
+                {{ form.account_type() }}
+            </div>
+
+            <!-- Custom Tab Toggle -->
+            <div class="account-type-tabs">
+                <div class="tab-btn active" data-type="personal" id="tabPersonal">Personal</div>
+                <div class="tab-btn" data-type="business" id="tabBusiness">Business</div>
+            </div>
 
             <div class="mb-3">
                 {{ form.full_name.label(class="form-label") }}
@@ -191,6 +234,41 @@
                 {% for error in form.email.errors %}
                 <span class="invalid-feedback">{{ error }}</span>
                 {% endfor %}
+            </div>
+            
+            <div class="mb-3">
+                {{ form.phone_number.label(class="form-label") }}
+                {{ form.phone_number(class="form-control", placeholder="+1 234 567 890") }}
+                {% for error in form.phone_number.errors %}
+                <span class="invalid-feedback">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <!-- Business Specific Fields -->
+            <div class="business-fields" id="businessFieldsSection">
+                <div class="mb-3">
+                    {{ form.company_name.label(class="form-label") }}
+                    {{ form.company_name(class="form-control", placeholder="Acme Corp") }}
+                    {% for error in form.company_name.errors %}
+                    <span class="invalid-feedback">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form.company_website.label(class="form-label") }}
+                    {{ form.company_website(class="form-control", placeholder="https://www.acmecorp.com") }}
+                    {% for error in form.company_website.errors %}
+                    <span class="invalid-feedback">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form.industry.label(class="form-label") }}
+                    {{ form.industry(class="form-control", placeholder="Technology") }}
+                    {% for error in form.industry.errors %}
+                    <span class="invalid-feedback">{{ error }}</span>
+                    {% endfor %}
+                </div>
             </div>
 
             <div class="mb-3">
@@ -248,6 +326,47 @@
         // Setup both toggles on the registration form
         setupPasswordToggle('#togglePassword1', '#password');
         setupPasswordToggle('#togglePassword2', '#confirm_password');
+        
+        // Tab switching logic
+        const tabPersonal = document.getElementById('tabPersonal');
+        const tabBusiness = document.getElementById('tabBusiness');
+        const businessFields = document.getElementById('businessFieldsSection');
+        const WTFormsRadios = document.querySelectorAll('input[name="account_type"]');
+
+        function switchTab(type) {
+            if (type === 'personal') {
+                tabPersonal.classList.add('active');
+                tabBusiness.classList.remove('active');
+                businessFields.style.display = 'none';
+                
+                // Select personal radio
+                const personalRadio = document.querySelector('input[name="account_type"][value="personal"]');
+                if(personalRadio) {
+                    personalRadio.checked = true;
+                }
+            } else {
+                tabBusiness.classList.add('active');
+                tabPersonal.classList.remove('active');
+                businessFields.style.display = 'block';
+                
+                // Select business radio
+                const businessRadio = document.querySelector('input[name="account_type"][value="business"]');
+                if(businessRadio) {
+                    businessRadio.checked = true;
+                }
+            }
+        }
+
+        tabPersonal.addEventListener('click', () => switchTab('personal'));
+        tabBusiness.addEventListener('click', () => switchTab('business'));
+
+        // Initialize correct tab based on server-side validation/selection
+        const selectedRadio = document.querySelector('input[name="account_type"]:checked');
+        if (selectedRadio && selectedRadio.value === 'business') {
+            switchTab('business');
+        } else {
+            switchTab('personal');
+        }
     </script>
 </body>
 

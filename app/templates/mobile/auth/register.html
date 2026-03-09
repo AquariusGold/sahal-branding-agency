@@ -115,6 +115,38 @@
             margin-bottom: 1rem;
             padding-left: 0.5rem;
         }
+
+        /* Account Type Tabs */
+        .account-type-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.75rem;
+            text-align: center;
+            color: var(--clr-muted);
+            cursor: pointer;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--clr-accent);
+            color: #000;
+        }
+
+        /* Hide fields by default */
+        .business-fields {
+            display: none;
+        }
     </style>
 </head>
 
@@ -125,8 +157,19 @@
         <p class="text-muted mt-2 small">Create your account</p>
     </div>
 
-    <form method="POST" action="{{ url_for('auth.register') }}">
+    <form method="POST" action="{{ url_for('auth.register') }}" id="registerForm">
         {{ form.hidden_tag() }}
+
+        <!-- Hidden radio buttons handled by WTForms entirely replaced by custom UI -->
+        <div class="d-none">
+            {{ form.account_type() }}
+        </div>
+
+        <!-- Custom Tab Toggle -->
+        <div class="account-type-tabs">
+            <div class="tab-btn active" data-type="personal" id="tabPersonal">Personal</div>
+            <div class="tab-btn" data-type="business" id="tabBusiness">Business</div>
+        </div>
 
         {{ form.full_name(class="form-control", placeholder="Full Name") }}
         {% for error in form.full_name.errors %}
@@ -137,6 +180,29 @@
         {% for error in form.email.errors %}
         <span class="invalid-feedback">{{ error }}</span>
         {% endfor %}
+
+        {{ form.phone_number(class="form-control", placeholder="Phone Number (Optional)") }}
+        {% for error in form.phone_number.errors %}
+        <span class="invalid-feedback">{{ error }}</span>
+        {% endfor %}
+
+        <!-- Business Specific Fields -->
+        <div class="business-fields" id="businessFieldsSection">
+            {{ form.company_name(class="form-control", placeholder="Company Name") }}
+            {% for error in form.company_name.errors %}
+            <span class="invalid-feedback">{{ error }}</span>
+            {% endfor %}
+
+            {{ form.company_website(class="form-control", placeholder="Company Website (Optional)") }}
+            {% for error in form.company_website.errors %}
+            <span class="invalid-feedback">{{ error }}</span>
+            {% endfor %}
+
+            {{ form.industry(class="form-control", placeholder="Industry (Optional)") }}
+            {% for error in form.industry.errors %}
+            <span class="invalid-feedback">{{ error }}</span>
+            {% endfor %}
+        </div>
 
         <div class="password-wrapper">
             {{ form.password(class="form-control", placeholder="Password (Min. 8 chars)", id="password") }}
@@ -176,6 +242,47 @@
 
         setupMobileToggle('#togglePassword1', '#password');
         setupMobileToggle('#togglePassword2', '#confirm_password');
+
+        // Tab switching logic
+        const tabPersonal = document.getElementById('tabPersonal');
+        const tabBusiness = document.getElementById('tabBusiness');
+        const businessFields = document.getElementById('businessFieldsSection');
+        const WTFormsRadios = document.querySelectorAll('input[name="account_type"]');
+
+        function switchTab(type) {
+            if (type === 'personal') {
+                tabPersonal.classList.add('active');
+                tabBusiness.classList.remove('active');
+                businessFields.style.display = 'none';
+                
+                // Select personal radio
+                const personalRadio = document.querySelector('input[name="account_type"][value="personal"]');
+                if(personalRadio) {
+                    personalRadio.checked = true;
+                }
+            } else {
+                tabBusiness.classList.add('active');
+                tabPersonal.classList.remove('active');
+                businessFields.style.display = 'block';
+                
+                // Select business radio
+                const businessRadio = document.querySelector('input[name="account_type"][value="business"]');
+                if(businessRadio) {
+                    businessRadio.checked = true;
+                }
+            }
+        }
+
+        tabPersonal.addEventListener('click', () => switchTab('personal'));
+        tabBusiness.addEventListener('click', () => switchTab('business'));
+
+        // Initialize correct tab based on server-side validation/selection
+        const selectedRadio = document.querySelector('input[name="account_type"]:checked');
+        if (selectedRadio && selectedRadio.value === 'business') {
+            switchTab('business');
+        } else {
+            switchTab('personal');
+        }
     </script>
 </body>
 
