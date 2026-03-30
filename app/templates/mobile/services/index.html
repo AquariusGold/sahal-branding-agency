@@ -90,8 +90,21 @@
                     </div>
                     <h5 class="fw-bold mb-0 text-white">{{ category.name }}</h5>
                 </div>
-                <p class="text-muted small mb-0">{{ category.description or 'Explore our professional services tailored
-                    for your business needs.' | truncate(80) }}</p>
+                <p class="text-muted small mb-3">{{ category.description or 'Explore our professional services tailored for your business needs.' | truncate(80) }}</p>
+                
+                <ul class="list-unstyled mb-3">
+                    {% for service in category.services if service.is_active %}
+                    <li class="mb-2 d-flex justify-content-between text-muted border-bottom border-dark pb-1" style="font-size: 0.8rem;">
+                        <span><i class="bi bi-dot text-{{ cat_color }}"></i>{{ service.name }}</span>
+                        {% if service.base_price is not none %}
+                        <span class="text-white fw-bold">${{ "%.2f"|format(service.base_price) }}</span>
+                        {% else %}
+                        <span class="text-{{ cat_color }} fst-italic" style="font-size: 0.75rem;">Price not available yet</span>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+
                 <div class="btn-view-services justify-content-between text-{{ cat_color }}">
                     View Options <i class="bi bi-chevron-right"></i>
                 </div>

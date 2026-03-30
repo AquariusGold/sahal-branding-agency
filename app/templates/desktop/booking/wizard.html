@@ -297,7 +297,7 @@
             categoryId: {{ category.id }},
             name: "{{ service.name|safe }}",
             description: "{{ service.description|replace('\n', ' ')|replace('\r', '')|safe }}",
-            basePrice: {{ service.base_price }}
+            basePrice: {{ service.base_price if service.base_price is not none else 'null' }}
         },
         {% endfor %}
         {% endfor %}
@@ -404,12 +404,19 @@
             }
 
             filtered.forEach(svc => {
+                let priceHtml = '';
+                if (svc.basePrice !== null) {
+                    priceHtml = `<span class="text-cyan fw-bold">$${svc.basePrice.toFixed(2)}</span>`;
+                } else {
+                    priceHtml = `<span class="text-secondary fst-italic" style="font-size: 0.85rem;">Price not available yet</span>`;
+                }
+                
                 const html = `
                 <div class="col-md-6">
                     <div class="selectable-card service-card" data-service-id="${svc.id}" data-service-name="${svc.name}" data-service-price="${svc.basePrice}">
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <h6 class="fw-bold text-white mb-0">${svc.name}</h6>
-                            <span class="text-cyan fw-bold">$${svc.basePrice.toFixed(2)}</span>
+                            ${priceHtml}
                         </div>
                         <p class="text-muted small mb-0">${svc.description}</p>
                     </div>
@@ -437,8 +444,19 @@
 
         function populateSummary() {
             document.getElementById('summaryServiceName').innerText = inputSvcId.dataset.name || '--';
-            const price = parseFloat(inputSvcId.dataset.price || '0');
-            document.getElementById('summaryServicePrice').innerText = '$' + price.toFixed(2);
+            
+            const priceEl = document.getElementById('summaryServicePrice');
+            if (inputSvcId.dataset.price === 'null') {
+                priceEl.innerText = 'Price not available yet';
+                priceEl.classList.remove('text-cyan');
+                priceEl.classList.add('text-secondary', 'fst-italic');
+            } else {
+                const price = parseFloat(inputSvcId.dataset.price || '0');
+                priceEl.innerText = '$' + price.toFixed(2);
+                priceEl.classList.remove('text-secondary', 'fst-italic');
+                priceEl.classList.add('text-cyan');
+            }
+            
             document.getElementById('summaryQuantity').innerText = inputQty.value;
             document.getElementById('summaryNotes').innerText = inputNotes.value || 'No additional notes provided.';
         }

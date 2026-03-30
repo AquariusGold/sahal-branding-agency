@@ -107,9 +107,22 @@
                     {% endif %}
                 </div>
                 <h3 class="fw-bold mb-3">{{ category.name }}</h3>
-                <p class="text-muted mb-4">{{ category.description or 'Explore our professional services tailored for
-                    your business needs and corporate image.' }}</p>
-                <div class="btn-view-services text-muted">
+                <p class="text-muted mb-4">{{ category.description or 'Explore our professional services tailored for your business needs and corporate image.' }}</p>
+
+                <ul class="list-unstyled mb-4">
+                    {% for service in category.services if service.is_active %}
+                    <li class="mb-2 d-flex justify-content-between text-muted border-bottom border-secondary pb-1" style="font-size: 0.9rem;">
+                        <span><i class="bi bi-check2 text-{{ cat_color }} me-2"></i>{{ service.name }}</span>
+                        {% if service.base_price is not none %}
+                        <span class="text-white fw-bold">${{ "%.2f"|format(service.base_price) }}</span>
+                        {% else %}
+                        <span class="text-{{ cat_color }} fst-italic" style="font-size: 0.8rem;">Price not available yet</span>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="btn-view-services text-muted mt-auto">
                     View Services <i class="bi bi-arrow-right ms-2 transition-transform"></i>
                 </div>
             </a>

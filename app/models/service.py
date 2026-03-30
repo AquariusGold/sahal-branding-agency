@@ -43,6 +43,7 @@ class ServiceCategory(db.Model):
     __tablename__ = "sahal_service_categories"
 
     id = db.Column(db.Integer, primary_key=True)
+    json_id = db.Column(db.String(100), unique=True, nullable=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
     description = db.Column(db.Text, nullable=True)
     is_active = db.Column(db.Boolean, default=True, nullable=False)
@@ -67,6 +68,7 @@ class Service(db.Model):
     __tablename__ = "sahal_services"
 
     id = db.Column(db.Integer, primary_key=True)
+    json_id = db.Column(db.String(100), unique=True, nullable=True)
     
     # Foreign Key linking this service to its parent category
     category_id = db.Column(db.Integer, db.ForeignKey("sahal_service_categories.id"), nullable=False)
@@ -75,7 +77,7 @@ class Service(db.Model):
     description = db.Column(db.Text, nullable=False)
     
     # Numeric(10, 2) means up to 10 digits total, 2 of which are after the decimal (e.g., 99999999.99)
-    base_price = db.Column(db.Numeric(10, 2), nullable=False)
+    base_price = db.Column(db.Numeric(10, 2), nullable=True)
     
     pricing_type = db.Column(db.Enum(PricingType), default=PricingType.fixed, nullable=False)
     is_active = db.Column(db.Boolean, default=True, nullable=False)
