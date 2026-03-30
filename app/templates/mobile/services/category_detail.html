@@ -67,7 +67,11 @@
                     <h6 class="fw-bold text-white mb-0" style="padding-right: 1rem;">{{ service.name }}</h6>
                     <div
                         class="service-price-badge text-{{ cat_color }} border-{{ cat_color }} bg-{{ cat_color }}-subtle m-0">
+                        {% if service.base_price is not none %}
                         ${{ "%.2f"|format(service.base_price) }}
+                        {% else %}
+                        <span class="fst-italic" style="font-size: 0.85rem;">Price not available yet</span>
+                        {% endif %}
                     </div>
                 </div>
                 <p class="text-muted small mb-4">{{ service.description }}</p>
