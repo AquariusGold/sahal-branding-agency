@@ -6,43 +6,59 @@
 {% block extra_css %}
 <style>
     .page-header {
-        padding: 4rem 0 2rem;
-        border-bottom: 1px solid var(--clr-border);
-        background: var(--clr-surface);
-        text-align: center;
+        padding: 4rem 1.5rem 3rem;
+        background: #ffffff;
+        border-bottom: 2px solid var(--clr-bg-cream);
+        text-align: left;
     }
 
     .service-category-card {
-        background: var(--clr-card);
+        background: #ffffff;
         border: 1px solid var(--clr-border);
-        border-radius: var(--radius-md);
-        padding: 1.5rem;
+        border-radius: var(--radius-lg);
+        padding: 1.75rem;
         display: block;
         text-decoration: none;
         color: inherit;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0, 39, 102, 0.05);
+        transition: var(--transition);
+    }
+
+    .service-category-card:active {
+        transform: scale(0.97);
+        background: var(--clr-bg-cream);
     }
 
     .category-icon {
-        width: 50px;
-        height: 50px;
-        border-radius: 12px;
+        width: 60px;
+        height: 60px;
+        border-radius: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5rem;
+        font-size: 1.75rem;
+        background: var(--clr-bg-cream);
+        color: var(--clr-primary);
+        border: 1px solid var(--clr-accent);
     }
 
     .btn-view-services {
-        margin-top: 1rem;
-        padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        font-weight: 600;
+        margin-top: 1.25rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--clr-border);
+        font-weight: 800;
         display: flex;
         align-items: center;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+        color: var(--clr-primary);
+        font-family: var(--font-heading);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-heading);
     }
 </style>
 {% endblock %}
@@ -50,63 +66,53 @@
 {% block content %}
 <div class="page-header mb-4">
     <div class="container">
-        <h1 class="fw-bold mb-2">Our Services</h1>
-        <p class="text-muted small">Curated selection of premium creative and experiential solutions.</p>
+        <span class="premium-badge mb-2 d-inline-block">Strategic Creative</span>
+        <h1 class="fw-800 mb-2" style="color: var(--clr-primary);">Our <span style="color:var(--clr-accent);">Services</span></h1>
+        <p class="text-muted small">Curated selection of premium creative and experiential solutions for modern brands.</p>
     </div>
 </div>
 
-<div class="container py-3 mb-5">
+<div class="container py-2 mb-4">
     <div class="row g-3">
         {% for category in categories %}
         <div class="col-12">
-            {% set cat_color = 'cyan' %}
-            {% if 'Print' in category.name or 'Brand' in category.name %}{% set cat_color = 'cyan' %}
-            {% elif 'Event' in category.name %}{% set cat_color = 'magenta' %}
-            {% elif 'Interior' in category.name %}{% set cat_color = 'yellow' %}
-            {% elif 'LED' in category.name or 'Screen' in category.name %}{% set cat_color = 'green' %}
-            {% elif 'Multi' in category.name or 'Video' in category.name %}{% set cat_color = 'purple' %}
-            {% endif %}
-
-            <a href="{{ url_for('services.category_detail', slug=category.id) }}" class="service-category-card"
-                onmouseover="this.style.borderColor='var(--clr-{{ cat_color }})';"
-                onmouseout="this.style.borderColor='';">
-
-                <div class="d-flex align-items-center mb-3">
-                    <div
-                        class="category-icon text-{{ cat_color }} border-{{ cat_color }} bg-{{ cat_color }}-subtle me-3 flex-shrink-0">
+            <a href="{{ url_for('services.category_detail', slug=category.id) }}" class="service-category-card">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="category-icon me-3 flex-shrink-0">
                         {% if 'Print' in category.name or 'Brand' in category.name %}
-                        <i class="bi bi-palette"></i>
+                        <i class="bi bi-patch-check"></i>
                         {% elif 'Event' in category.name %}
-                        <i class="bi bi-calendar-event"></i>
+                        <i class="bi bi-briefcase"></i>
                         {% elif 'Interior' in category.name %}
-                        <i class="bi bi-houses"></i>
+                        <i class="bi bi-building"></i>
                         {% elif 'LED' in category.name or 'Screen' in category.name %}
-                        <i class="bi bi-display"></i>
+                        <i class="bi bi-cpu"></i>
                         {% elif 'Multi' in category.name or 'Video' in category.name %}
-                        <i class="bi bi-camera-video"></i>
+                        <i class="bi bi-command"></i>
                         {% else %}
-                        <i class="bi bi-star"></i>
+                        <i class="bi bi-shield-check"></i>
                         {% endif %}
                     </div>
-                    <h5 class="fw-bold mb-0 text-white">{{ category.name }}</h5>
+                    <h5 class="fw-800 mb-0" style="color: var(--clr-primary);">{{ category.name }}</h5>
                 </div>
-                <p class="text-muted small mb-3">{{ category.description or 'Explore our professional services tailored for your business needs.' | truncate(80) }}</p>
                 
-                <ul class="list-unstyled mb-3">
+                <p class="text-muted small mb-4" style="line-height: 1.5;">{{ category.description or 'Explore our professional services tailored for your business needs.' | truncate(100) }}</p>
+                
+                <ul class="list-unstyled mb-0">
                     {% for service in category.services if service.is_active %}
-                    <li class="mb-2 d-flex justify-content-between text-muted border-bottom border-dark pb-1" style="font-size: 0.8rem;">
-                        <span><i class="bi bi-dot text-{{ cat_color }}"></i>{{ service.name }}</span>
+                    <li class="mb-2 d-flex justify-content-between text-muted border-bottom pb-2" style="font-size: 0.85rem;">
+                        <span><i class="bi bi-check2-circle text-primary me-2"></i>{{ service.name }}</span>
                         {% if service.base_price is not none %}
-                        <span class="text-white fw-bold">${{ "%.2f"|format(service.base_price) }}</span>
+                        <span class="fw-800" style="color: var(--clr-primary);">${{ "%.2f"|format(service.base_price) }}</span>
                         {% else %}
-                        <span class="text-{{ cat_color }} fst-italic" style="font-size: 0.75rem;">Price not available yet</span>
+                        <span class="text-muted fst-italic" style="font-size: 0.75rem;">Enquire</span>
                         {% endif %}
                     </li>
                     {% endfor %}
                 </ul>
 
-                <div class="btn-view-services justify-content-between text-{{ cat_color }}">
-                    View Options <i class="bi bi-chevron-right"></i>
+                <div class="btn-view-services justify-content-between">
+                    Explore Details <i class="bi bi-chevron-right"></i>
                 </div>
             </a>
         </div>
@@ -116,12 +122,13 @@
 
 <!-- CTA -->
 <div class="container mb-5 pb-5">
-    <div class="glass-card p-4 text-center">
-        <h4 class="fw-bold mb-2">Not sure where to start?</h4>
-        <p class="text-muted small mb-4">Book a free consultation with our creative directors to discuss your business
-            goals.</p>
+    <div class="p-4 text-center rounded-4" style="background: var(--clr-primary); border: 1px solid var(--clr-accent);">
+        <h4 class="fw-800 mb-2 text-white">Strategy Session</h4>
+        <p class="text-white-50 small mb-4">Book a free professional consultation with our creative strategy team.</p>
         <a href="{{ url_for('services.booking_wizard') }}"
-            class="btn-gradient py-2 w-100 fs-6 text-decoration-none d-block">Request Consultation</a>
+            class="btn-cta bg-accent text-primary py-3 w-100 fs-6 text-decoration-none d-block">
+            Request Consultation
+        </a>
     </div>
 </div>
 {% endblock %}

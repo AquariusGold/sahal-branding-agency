@@ -6,117 +6,183 @@
 {% block extra_css %}
 <style>
     .page-header {
-        padding: 5rem 0 3rem;
+        padding: 6rem 0 4rem;
+        background: #ffffff;
         border-bottom: 1px solid var(--clr-border);
-        background: linear-gradient(180deg, rgba(22, 22, 24, 0.4) 0%, transparent 100%);
+    }
+
+    .value-card {
+        background: #ffffff;
+        border: 1px solid var(--clr-border);
+        border-radius: var(--radius-lg);
+        padding: 3rem;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        text-align: center;
+        height: 100%;
+        box-shadow: 0 10px 30px rgba(0, 39, 102, 0.05);
+    }
+
+    .value-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--clr-primary);
+        box-shadow: 0 30px 60px rgba(0, 39, 102, 0.12);
     }
 
     .value-icon {
-        width: 60px;
-        height: 60px;
-        border-radius: 12px;
+        width: 70px;
+        height: 70px;
+        border-radius: 16px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
+        font-size: 2rem;
+        margin: 0 auto 2rem;
+        background: var(--clr-bg-cream);
+        color: var(--clr-primary);
+        border: 1px solid var(--clr-accent);
+        transition: all 0.3s ease;
+    }
+
+    .value-card:hover .value-icon {
+        background: var(--clr-primary);
+        color: white;
+        transform: scale(1.1);
     }
 
     .team-member {
         text-align: center;
+        padding: 2rem;
+        background: #ffffff;
+        border: 1px solid var(--clr-border);
+        border-radius: var(--radius-lg);
+        transition: all 0.4s ease;
+    }
+
+    .team-member:hover {
+        border-color: var(--clr-accent);
+        background: var(--clr-bg-cream);
     }
 
     .team-img {
-        width: 150px;
-        height: 150px;
+        width: 140px;
+        height: 140px;
         border-radius: 50%;
-        background: var(--clr-card);
-        border: 2px solid var(--clr-border);
+        background: #f8f9fa;
+        border: 3px solid var(--clr-bg-cream);
         margin: 0 auto 1.5rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 3rem;
-        color: var(--clr-muted);
+        font-size: 3.5rem;
+        color: var(--clr-primary);
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .team-member:hover .team-img {
+        border-color: var(--clr-primary);
+        transform: scale(1.05);
+    }
+
+    .premium-badge {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        background: var(--clr-bg-cream);
+        color: var(--clr-primary);
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 1.5rem;
+        border: 1px solid var(--clr-accent);
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="page-header mb-5">
-    <div class="container">
-        <h1 class="fw-bold mb-3" style="font-size: 3.5rem;">Who We Are</h1>
-        <p class="text-muted fs-5" style="max-width: 700px;">We are a collective of designers, thinkers, and builders
-            dedicated to elevating brands through premium creative execution.</p>
+    <div class="container text-center">
+        <span class="premium-badge">Our Legacy</span>
+        <h1 class="display-3 fw-800 mb-3" style="color: var(--clr-primary);">Who We <span style="color:var(--clr-accent);">Are</span></h1>
+        <p class="text-muted fs-5 mx-auto" style="max-width: 750px;">
+            We are a strategic collective of designers, thinkers, and builders dedicated 
+            to elevating brands through premium creative execution.
+        </p>
     </div>
 </div>
 
 <div class="container py-5">
-    <div class="row mb-5 pb-5">
+    <div class="row mb-5 pb-5 align-items-center">
         <div class="col-lg-6 mb-4 mb-lg-0">
-            <h2 class="fw-bold mb-4">Our Mission</h2>
-            <p class="text-muted fs-5 lh-lg">To provide unmatched branding and event solutions that empower businesses
-                to communicate their unique value. We believe in the power of design to transform organizations and
-                create lasting impact.</p>
+            <span class="text-primary fw-800 text-uppercase mb-2 d-block" style="letter-spacing: 0.1em;">Our Commitment</span>
+            <h2 class="display-5 fw-800 mb-4" style="color: var(--clr-primary);">The Mission</h2>
+            <p class="text-muted fs-5 lh-lg">
+                To provide unmatched branding and event solutions that empower businesses 
+                to communicate their unique value. We believe in the power of strategic 
+                design to transform organizations and create lasting global impact.
+            </p>
         </div>
         <div class="col-lg-6">
-            <h2 class="fw-bold mb-4">Our Vision</h2>
-            <p class="text-muted fs-5 lh-lg">To be the region's leading creative agency, known for uncompromising
-                quality, innovative multimedia strategies, and flawless execution across digital and physical
-                touchpoints.</p>
+            <span class="text-primary fw-800 text-uppercase mb-2 d-block" style="letter-spacing: 0.1em;">Future Focused</span>
+            <h2 class="display-5 fw-800 mb-4" style="color: var(--clr-primary);">The Vision</h2>
+            <p class="text-muted fs-5 lh-lg">
+                To be the region's leading creative partner, known for uncompromising 
+                quality, innovative strategies, and flawless execution across all 
+                digital and physical touchpoints.
+            </p>
         </div>
     </div>
 
     <!-- Core Values -->
-    <h3 class="fw-bold mb-5 text-center">Core Values</h3>
+    <div class="text-center mb-5">
+        <span class="premium-badge">Foundations</span>
+        <h3 class="display-6 fw-800" style="color: var(--clr-primary);">Core Values</h3>
+    </div>
     <div class="row g-4 mb-5 pb-5">
         <div class="col-md-4">
-            <div class="glass-card p-4 h-100">
-                <div class="value-icon text-cyan mb-3"
-                    style="background: rgba(0, 240, 255, 0.1); border: 1px solid var(--clr-cyan); box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);">
-                    <i class="bi bi-gem"></i>
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="bi bi-patch-check"></i>
                 </div>
-                <h4 class="fw-bold mb-3">Excellence</h4>
-                <p class="text-muted mb-0">We never compromise on quality. Every pixel, print, and pixel is crafted to
-                    perfection.</p>
+                <h4 class="fw-800 mb-3" style="color: var(--clr-primary);">Excellence</h4>
+                <p class="text-muted mb-0">We never compromise on quality. Every strategic deliverable is crafted to perfection for maximum impact.</p>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="glass-card p-4 h-100">
-                <div class="value-icon text-magenta mb-3"
-                    style="background: rgba(255, 0, 85, 0.1); border: 1px solid var(--clr-magenta); box-shadow: 0 0 15px rgba(255, 0, 85, 0.1);">
-                    <i class="bi bi-lightbulb"></i>
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="bi bi-cpu"></i>
                 </div>
-                <h4 class="fw-bold mb-3">Innovation</h4>
-                <p class="text-muted mb-0">We stay ahead of trends to provide modern, forward-thinking solutions for our
-                    clients.</p>
+                <h4 class="fw-800 mb-3" style="color: var(--clr-primary);">Innovation</h4>
+                <p class="text-muted mb-0">We stay ahead of global trends to provide forward-thinking solutions that keep our clients competitive.</p>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="glass-card p-4 h-100">
-                <div class="value-icon text-yellow mb-3"
-                    style="background: rgba(255, 170, 0, 0.1); border: 1px solid var(--clr-yellow); box-shadow: 0 0 15px rgba(255, 170, 0, 0.1);">
+            <div class="value-card">
+                <div class="value-icon">
                     <i class="bi bi-shield-check"></i>
                 </div>
-                <h4 class="fw-bold mb-3">Reliability</h4>
-                <p class="text-muted mb-0">We deliver on time and communicate transparently. When we make a promise, we
-                    keep it.</p>
+                <h4 class="fw-800 mb-3" style="color: var(--clr-primary);">Reliability</h4>
+                <p class="text-muted mb-0">We deliver on our promises with transparent communication and professional accountability at every turn.</p>
             </div>
         </div>
     </div>
 
     <!-- Team Placeholder -->
-    <h3 class="fw-bold mb-5 text-center">Leadership Team</h3>
+    <div class="text-center mb-5">
+        <span class="premium-badge">Our Experts</span>
+        <h3 class="display-6 fw-800" style="color: var(--clr-primary);">Leadership Team</h3>
+    </div>
     <div class="row g-4">
         {% for i in range(4) %}
-        {% set colors = ['cyan', 'magenta', 'yellow', 'green'] %}
         <div class="col-lg-3 col-md-6">
             <div class="team-member">
-                <div class="team-img"
-                    style="border-color: var(--clr-{{ colors[i] }}); color: var(--clr-{{ colors[i] }});"><i
-                        class="bi bi-person"></i></div>
-                <h5 class="fw-bold">Executive Name</h5>
-                <p class="text-{{ colors[i] }} mb-0">Department Role</p>
+                <div class="team-img">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+                <h5 class="fw-800 mb-1" style="color: var(--clr-primary);">Executive Partner</h5>
+                <p class="text-muted small text-uppercase fw-700" style="letter-spacing: 0.1em;">Strategic Leadership</p>
             </div>
         </div>
         {% endfor %}

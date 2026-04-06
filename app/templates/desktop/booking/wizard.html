@@ -5,7 +5,7 @@
 {% block extra_css %}
 <style>
     .wizard-container {
-        max-width: 800px;
+        max-width: 900px;
         margin: 4rem auto;
     }
 
@@ -13,16 +13,16 @@
     .stepper {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 3rem;
+        margin-bottom: 4rem;
         position: relative;
     }
 
     .stepper::before {
         content: '';
         position: absolute;
-        top: 24px;
-        left: 0;
-        right: 0;
+        top: 25px;
+        left: 50px;
+        right: 50px;
         height: 2px;
         background: var(--clr-border);
         z-index: 1;
@@ -32,52 +32,62 @@
         position: relative;
         z-index: 2;
         text-align: center;
-        width: 100px;
+        width: 120px;
     }
 
     .step-circle {
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background: var(--clr-primary);
+        background: #ffffff;
         border: 2px solid var(--clr-border);
-        color: var(--clr-muted);
+        color: var(--clr-text-muted);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 700;
-        margin: 0 auto 0.5rem;
-        transition: all 0.3s ease;
+        font-weight: 800;
+        font-family: var(--font-heading);
+        margin: 0 auto 0.75rem;
+        transition: var(--transition);
+        box-shadow: 0 4px 10px rgba(0, 39, 102, 0.05);
     }
 
     .step.active .step-circle {
-        border-color: var(--clr-cyan);
-        color: var(--clr-cyan);
-        box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        border-color: var(--clr-primary);
+        color: var(--clr-primary);
+        background: var(--clr-bg-cream);
+        transform: scale(1.1);
+        box-shadow: 0 10px 20px rgba(0, 51, 153, 0.1);
     }
 
     .step.completed .step-circle {
-        background: linear-gradient(135deg, var(--clr-magenta), var(--clr-cyan));
-        border-color: transparent;
-        color: #fff;
+        background: var(--clr-primary);
+        border-color: var(--clr-primary);
+        color: #ffffff;
     }
 
     .step-label {
-        font-size: 0.8rem;
-        font-weight: 600;
+        font-size: 0.7rem;
+        font-weight: 800;
         text-transform: uppercase;
-        color: var(--clr-muted);
-        letter-spacing: 0.05em;
+        color: var(--clr-text-muted);
+        letter-spacing: 0.1em;
+        font-family: var(--font-heading);
     }
 
     .step.active .step-label {
-        color: #fff;
+        color: var(--clr-primary);
     }
 
     /* Wizard Content Panels */
     .wizard-panel {
         display: none;
-        animation: fadeIn 0.4s ease;
+        animation: fadeIn 0.5s ease forwards;
+        background: #ffffff;
+        border: 1px solid var(--clr-border);
+        border-radius: var(--radius-lg);
+        padding: 3rem;
+        box-shadow: 0 15px 40px rgba(0, 39, 102, 0.05);
     }
 
     .wizard-panel.active {
@@ -85,71 +95,80 @@
     }
 
     @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     /* Selectable Cards */
     .selectable-card {
-        background: var(--clr-card);
-        border: 1px solid var(--clr-border);
+        background: #ffffff;
+        border: 2px solid var(--clr-border);
         border-radius: var(--radius-md);
-        padding: 1.5rem;
+        padding: 2rem;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: var(--transition);
         height: 100%;
-    }
-
-    .selectable-card:hover {
-        border-color: rgba(0, 240, 255, 0.5);
-    }
-
-    .selectable-card.selected {
-        border-color: var(--clr-cyan);
-        background: rgba(0, 240, 255, 0.05);
         position: relative;
     }
 
-    .selectable-card.selected::before {
+    .selectable-card:hover {
+        border-color: var(--clr-primary);
+        background: var(--clr-off-white);
+        transform: translateY(-5px);
+    }
+
+    .selectable-card.selected {
+        border-color: var(--clr-primary);
+        background: var(--clr-bg-cream);
+        box-shadow: 0 8px 25px rgba(0, 51, 153, 0.1);
+    }
+
+    .selectable-card.selected::after {
         content: '\F633';
-        /* bi-check-circle-fill */
         font-family: bootstrap-icons;
         position: absolute;
         top: 1rem;
-        right: 1rem;
-        color: var(--clr-cyan);
-        font-size: 1.25rem;
+        right: 1.25rem;
+        color: var(--clr-primary);
+        font-size: 1.5rem;
     }
 
     /* Form Elements */
     .form-control,
     .form-select {
-        background-color: rgba(255, 255, 255, 0.03);
+        background-color: #f8f9fa;
         border: 1px solid var(--clr-border);
-        color: #fff;
-        padding: 0.8rem 1rem;
+        color: var(--clr-text-main);
+        padding: 1rem 1.25rem;
+        border-radius: var(--radius-md);
+        font-family: var(--font-body);
+        transition: var(--transition);
     }
 
     .form-control:focus,
     .form-select:focus {
-        background-color: rgba(255, 255, 255, 0.05);
-        border-color: var(--clr-cyan);
-        box-shadow: 0 0 0 0.25rem rgba(0, 240, 255, 0.25);
-        color: #fff;
+        background-color: #ffffff;
+        border-color: var(--clr-primary);
+        box-shadow: 0 0 0 5px rgba(0, 51, 153, 0.05);
+        color: var(--clr-text-main);
     }
 
     .summary-box {
-        background: rgba(255, 255, 255, 0.02);
+        background: var(--clr-off-white);
         border: 1px solid var(--clr-border);
         border-radius: var(--radius-md);
-        padding: 1.5rem;
+        padding: 2.5rem;
+    }
+
+    .summary-item {
+        border-bottom: 1px solid var(--clr-border);
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .summary-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
     }
 </style>
 {% endblock %}
@@ -157,8 +176,9 @@
 {% block content %}
 <div class="container wizard-container">
     <div class="text-center mb-5">
-        <h1 class="fw-bold fs-2">Start a Project</h1>
-        <p class="text-muted">Complete the steps below to request a service quotation.</p>
+        <span class="premium-badge mb-2">Project Initialization</span>
+        <h1 class="fw-800 d-navy mb-2">Start Your <span style="color:var(--clr-accent);">Project</span></h1>
+        <p class="text-muted">Complete the steps below to request a formal service quotation.</p>
     </div>
 
     <!-- Stepper -->
@@ -186,102 +206,105 @@
 
         <!-- STEP 1: Select Category -->
         <div class="wizard-panel active" id="wizardStep1">
-            <h4 class="fw-bold mb-4">What type of project is this?</h4>
+            <h4 class="fw-800 mb-4" style="color: var(--clr-primary);">Project Category</h4>
             <div class="row g-3 mb-4">
                 {% for category in categories %}
                 <div class="col-md-6">
                     <div class="selectable-card category-card" data-category-id="{{ category.id }}">
-                        <h5 class="fw-bold text-white mb-2">{{ category.name }}</h5>
-                        <p class="text-muted small mb-0">{{ category.description | truncate(60) }}</p>
+                        <h5 class="fw-800 mb-2" style="color: var(--clr-primary);">{{ category.name }}</h5>
+                        <p class="text-muted small mb-0">{{ category.description | truncate(80) }}</p>
                     </div>
                 </div>
                 {% endfor %}
             </div>
             <!-- Hidden inputs to hold selections -->
             <input type="hidden" name="category_id" id="inputCategoryId">
-            <div class="d-flex justify-content-end">
-                <button type="button" class="btn-gradient" id="btnNext1" disabled>Next Step <i
+            <div class="d-flex justify-content-end mt-4">
+                <button type="button" class="btn-cta px-5" id="btnNext1" disabled>Continue <i
                         class="bi bi-arrow-right ms-2"></i></button>
             </div>
         </div>
 
         <!-- STEP 2: Select Service -->
         <div class="wizard-panel" id="wizardStep2">
-            <h4 class="fw-bold mb-4">Select a specific service</h4>
+            <h4 class="fw-800 mb-4" style="color: var(--clr-primary);">Specific Service</h4>
             <div id="servicesContainer" class="row g-3 mb-4">
                 <div class="col-12 text-muted">Please select a category first.</div>
             </div>
             <input type="hidden" name="service_id" id="inputServiceId">
 
-            <div class="d-flex justify-content-between">
-                <button type="button" class="btn-outline-glow px-4" id="btnPrev2"><i class="bi bi-arrow-left me-2"></i>
+            <div class="d-flex justify-content-between mt-4">
+                <button type="button" class="btn btn-outline-primary px-4 rounded-pill fw-bold" id="btnPrev2"><i class="bi bi-arrow-left me-2"></i>
                     Back</button>
-                <button type="button" class="btn-gradient" id="btnNext2" disabled>Next Step <i
+                <button type="button" class="btn-cta px-5" id="btnNext2" disabled>Continue <i
                         class="bi bi-arrow-right ms-2"></i></button>
             </div>
         </div>
 
         <!-- STEP 3: Project Details -->
         <div class="wizard-panel" id="wizardStep3">
-            <h4 class="fw-bold mb-4">Project Details</h4>
-            <div class="glass-card p-4 border border-dark mb-4">
+            <h4 class="fw-800 mb-4" style="color: var(--clr-primary);">Project Scope & Details</h4>
+            <div class="p-4 bg-light rounded-4 mb-4">
                 <div class="row g-4">
                     <div class="col-12">
-                        <label class="form-label text-muted fw-bold small text-uppercase">Project Quantity</label>
+                        <label class="form-label text-primary fw-800 small text-uppercase letter-spacing-1">Estimated Quantity</label>
                         <input type="number" name="quantity" id="inputQuantity" class="form-control" value="1" min="1"
                             required>
-                        <div class="form-text text-muted">Number of units/items required. Default is 1.</div>
+                        <div class="form-text text-muted">Specify the number of units or estimated scope.</div>
                     </div>
                     <div class="col-12">
-                        <label class="form-label text-muted fw-bold small text-uppercase">Additional Notes /
-                            Requirements</label>
+                        <label class="form-label text-primary fw-800 small text-uppercase letter-spacing-1">Specific Requirements</label>
                         <textarea name="notes" id="inputNotes" class="form-control" rows="5"
-                            placeholder="Please describe your specific requirements, timeline, and any other details we should know..."></textarea>
+                            placeholder="Please describe your requirements, desired timeline, or any specific preferences..."></textarea>
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-between">
-                <button type="button" class="btn-outline-glow px-4" id="btnPrev3"><i class="bi bi-arrow-left me-2"></i>
+            <div class="d-flex justify-content-between mt-4">
+                <button type="button" class="btn btn-outline-primary px-4 rounded-pill fw-bold" id="btnPrev3"><i class="bi bi-arrow-left me-2"></i>
                     Back</button>
-                <button type="button" class="btn-gradient" id="btnNext3">Review Order <i
+                <button type="button" class="btn-cta px-5" id="btnNext3">Review Order <i
                         class="bi bi-arrow-right ms-2"></i></button>
             </div>
         </div>
 
         <!-- STEP 4: Review & Submit -->
         <div class="wizard-panel" id="wizardStep4">
-            <h4 class="fw-bold mb-4">Review Your Request</h4>
+            <h4 class="fw-800 mb-4" style="color: var(--clr-primary);">Review Your Request</h4>
 
             <div class="summary-box mb-4">
-                <div class="row mb-3">
-                    <div class="col-4 text-muted small text-uppercase">Service</div>
-                    <div class="col-8 fw-bold" id="summaryServiceName">--</div>
+                <div class="summary-item row align-items-center">
+                    <div class="col-4 text-muted fw-bold small text-uppercase">Selected Service</div>
+                    <div class="col-8 fw-800 fs-5 text-primary" id="summaryServiceName">--</div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-4 text-muted small text-uppercase">Base Price</div>
-                    <div class="col-8 text-cyan fw-bold" id="summaryServicePrice">--</div>
+                <div class="summary-item row align-items-center">
+                    <div class="col-4 text-muted fw-bold small text-uppercase">Base Quotation</div>
+                    <div class="col-8 text-dark fw-800 fs-5" id="summaryServicePrice">--</div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-4 text-muted small text-uppercase">Quantity</div>
-                    <div class="col-8 text-white" id="summaryQuantity">1</div>
+                <div class="summary-item row align-items-center">
+                    <div class="col-4 text-muted fw-bold small text-uppercase">Quantity</div>
+                    <div class="col-8 text-primary fw-bold" id="summaryQuantity">1</div>
                 </div>
-                <div class="row">
-                    <div class="col-4 text-muted small text-uppercase">Notes</div>
-                    <div class="col-8 text-white small" id="summaryNotes">--</div>
+                <div class="summary-item row">
+                    <div class="col-4 text-muted fw-bold small text-uppercase">Additional Notes</div>
+                    <div class="col-8 text-muted small" id="summaryNotes">--</div>
                 </div>
             </div>
 
-            <div class="alert alert-dark border-secondary text-muted small mb-4">
-                <i class="bi bi-info-circle text-magenta me-2"></i>
-                By submitting this request, an initial order will be created. Our team will review your requirements and
-                provide a formal quotation for your approval before work begins.
+            <div class="alert alert-info border-0 rounded-4 p-4 shadow-sm mb-4" style="background: var(--clr-bg-cream); color: var(--clr-primary);">
+                <div class="d-flex">
+                    <i class="bi bi-shield-check fs-2 me-3"></i>
+                    <div>
+                        <h6 class="fw-800 mb-1">Professional Review Guaranteed</h6>
+                        <p class="small mb-0 opacity-75">Our consultants will review your request and provide a comprehensive quotation tailored to your business needs.</p>
+                    </div>
+                </div>
             </div>
 
-            <div class="d-flex justify-content-between">
-                <button type="button" class="btn-outline-glow px-4" id="btnPrev4"><i class="bi bi-arrow-left me-2"></i>
+            <div class="d-flex justify-content-between mt-4">
+                <button type="button" class="btn btn-outline-primary px-4 rounded-pill fw-bold" id="btnPrev4"><i class="bi bi-arrow-left me-2"></i>
                     Back</button>
-                <button type="submit" class="btn-gradient px-5 py-2 fs-6">Submit Request <i
-                        class="bi bi-check2 ms-2"></i></button>
+                <button type="submit" class="btn-cta px-5 py-3 fs-6">Submit Initialization <i
+                        class="bi bi-rocket-takeoff ms-2"></i></button>
             </div>
         </div>
     </form>
@@ -406,16 +429,16 @@
             filtered.forEach(svc => {
                 let priceHtml = '';
                 if (svc.basePrice !== null) {
-                    priceHtml = `<span class="text-cyan fw-bold">$${svc.basePrice.toFixed(2)}</span>`;
+                    priceHtml = `<span class="fw-800 text-primary">$${svc.basePrice.toFixed(2)}</span>`;
                 } else {
-                    priceHtml = `<span class="text-secondary fst-italic" style="font-size: 0.85rem;">Price not available yet</span>`;
+                    priceHtml = `<span class="text-muted fst-italic" style="font-size: 0.85rem;">Price on Request</span>`;
                 }
                 
                 const html = `
                 <div class="col-md-6">
                     <div class="selectable-card service-card" data-service-id="${svc.id}" data-service-name="${svc.name}" data-service-price="${svc.basePrice}">
                         <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h6 class="fw-bold text-white mb-0">${svc.name}</h6>
+                            <h6 class="fw-800 text-primary mb-0">${svc.name}</h6>
                             ${priceHtml}
                         </div>
                         <p class="text-muted small mb-0">${svc.description}</p>

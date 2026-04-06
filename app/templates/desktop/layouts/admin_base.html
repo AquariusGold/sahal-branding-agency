@@ -236,7 +236,9 @@
 <body>
     <!-- Sidebar -->
     <aside class="sidebar">
-        <a class="sidebar-brand" href="/">SAHAL <span>HQ</span></a>
+        <a class="sidebar-brand mb-4 d-block" href="/">
+            <img src="{{ url_for('static', filename='images/Logo White.png') }}" alt="SAHAL Logo" height="30">
+        </a>
 
         <div class="nav-items">
             <a href="{{ url_for('dashboards.admin') }}" class="sidebar-link {% block nav_dashboard %}{% endblock %}">

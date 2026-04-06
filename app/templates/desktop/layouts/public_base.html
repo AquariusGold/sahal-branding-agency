@@ -11,280 +11,252 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --clr-primary: #0a0a0a;
-
-            /* Vibrant Palette */
-            --clr-magenta: #ff0055;
-            --clr-cyan: #00f0ff;
-            --clr-purple: #7f0df2;
-            --clr-yellow: #ffaa00;
-            --clr-green: #00ff66;
-
-            /* Core UI */
-            --clr-surface: rgba(22, 22, 24, 0.7);
-            --clr-card: #161618;
-            --clr-text: #f8f9fa;
-            --clr-muted: #b3b3b3;
-            --clr-border: #262626;
-            --font-body: 'Inter', sans-serif;
+            /* Brand Colors */
+            --clr-primary: #003399;      /* Primary Action Blue */
+            --clr-deep-navy: #002766;    /* Deep Contrast Navy */
+            --clr-accent: #FFCC00;       /* High-Impact Accent Yellow */
+            --clr-bg-cream: #FFF4C5;     /* Neutral Background Cream */
+            
+            /* UI Palette */
+            --clr-white: #FFFFFF;
+            --clr-off-white: #F8F9FA;
+            --clr-text-main: #001A4D;
+            --clr-text-muted: #556688;
+            --clr-border: rgba(0, 51, 153, 0.1);
+            
+            /* Typography */
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Lato', sans-serif;
+            
+            /* Spacing & Borders */
+            --radius-sm: 8px;
             --radius-md: 12px;
-            --radius-lg: 16px;
+            --radius-lg: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
             font-family: var(--font-body);
-            background-color: var(--clr-primary);
-            background-image:
-                radial-gradient(circle at 15% 50%, rgba(255, 0, 85, 0.10), transparent 40%),
-                radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.10), transparent 40%),
-                radial-gradient(circle at 50% 100%, rgba(127, 13, 242, 0.10), transparent 40%);
-            background-attachment: fixed;
-            color: var(--clr-text);
+            background-color: var(--clr-white);
+            color: var(--clr-text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             margin: 0;
             overflow-x: hidden;
+            line-height: 1.6;
+            padding-top: 85px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: var(--clr-deep-navy);
         }
 
         @media (min-width: 992px) {
-
-            .container,
-            .container-lg,
-            .container-md,
-            .container-sm,
-            .container-xl,
-            .container-xxl {
-                max-width: 80%;
+            .container {
+                max-width: 85%;
             }
         }
 
-        .text-muted {
-            color: var(--clr-muted) !important;
-        }
-
-        /* Color Text Utilities */
-        .text-magenta {
-            color: var(--clr-magenta) !important;
-        }
-
-        .text-cyan {
-            color: var(--clr-cyan) !important;
-        }
-
-        .text-purple {
-            color: var(--clr-purple) !important;
-        }
-
-        .text-yellow {
-            color: var(--clr-yellow) !important;
-        }
-
-        .text-green {
-            color: var(--clr-green) !important;
-        }
-
-        /* Generic utilities for dynamic generation */
-        .border-magenta {
-            border: 1px solid var(--clr-magenta) !important;
-            box-shadow: 0 0 15px rgba(255, 0, 85, 0.1);
-        }
-
-        .border-cyan {
-            border: 1px solid var(--clr-cyan) !important;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
-        }
-
-        .border-purple {
-            border: 1px solid var(--clr-purple) !important;
-            box-shadow: 0 0 15px rgba(127, 13, 242, 0.1);
-        }
-
-        .border-yellow {
-            border: 1px solid var(--clr-yellow) !important;
-            box-shadow: 0 0 15px rgba(255, 170, 0, 0.1);
-        }
-
-        .border-green {
-            border: 1px solid var(--clr-green) !important;
-            box-shadow: 0 0 15px rgba(0, 255, 102, 0.1);
-        }
-
-        .bg-magenta-subtle {
-            background: rgba(255, 0, 85, 0.1) !important;
-        }
-
-        .bg-cyan-subtle {
-            background: rgba(0, 240, 255, 0.1) !important;
-        }
-
-        .bg-purple-subtle {
-            background: rgba(127, 13, 242, 0.1) !important;
-        }
-
-        .bg-yellow-subtle {
-            background: rgba(255, 170, 0, 0.1) !important;
-        }
-
-        .bg-green-subtle {
-            background: rgba(0, 255, 102, 0.1) !important;
-        }
-
-        .text-gradient {
-            background: linear-gradient(135deg, var(--clr-magenta), var(--clr-purple), var(--clr-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Glassmorphism Card */
-        .glass-card {
-            background: var(--clr-card);
+        /* Utilities */
+        .text-primary { color: var(--clr-primary) !important; }
+        .text-navy { color: var(--clr-deep-navy) !important; }
+        .text-accent { color: var(--clr-accent) !important; }
+        .bg-cream { background-color: var(--clr-bg-cream) !important; }
+        .bg-navy { background-color: var(--clr-deep-navy) !important; }
+        
+        .section-padding { padding: 80px 0; }
+        
+        /* Modern Card Styling */
+        .premium-card {
+            background: var(--clr-white);
             border: 1px solid var(--clr-border);
             border-radius: var(--radius-md);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            padding: 2rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(0, 39, 102, 0.05);
         }
 
-        .glass-card:hover {
-            border-color: rgba(201, 168, 76, 0.4);
+        .premium-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 39, 102, 0.08);
+            border-color: var(--clr-primary);
         }
 
         /* Top Navigation */
-        .navbar-glass {
-            background: var(--clr-surface);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--clr-border);
-            padding: 1rem 0;
-            position: sticky;
+        .navbar-custom {
+            background: var(--clr-primary);
+            padding: 1.25rem 0;
+            position: fixed;
+            width: 100%;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar-hidden {
+            transform: translateY(-100%);
         }
 
         .navbar-brand {
-            color: #fff !important;
-            font-weight: 900;
-            letter-spacing: 0.15em;
-            font-size: 1.4rem;
+            color: var(--clr-white) !important;
+            font-family: var(--font-heading);
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            font-size: 1.5rem;
         }
 
         .navbar-brand i {
-            background: linear-gradient(135deg, var(--clr-magenta), var(--clr-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-right: 0.5rem;
+            color: var(--clr-accent);
+            margin-right: 0.6rem;
         }
 
         .nav-link {
-            color: var(--clr-muted) !important;
-            font-weight: 500;
-            margin: 0 0.5rem;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-weight: 600;
+            margin: 0 0.75rem;
+            transition: var(--transition);
+            font-size: 0.95rem;
         }
 
         .nav-link:hover,
         .nav-link.active {
-            color: #fff !important;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            color: var(--clr-accent) !important;
         }
 
-        .btn-gradient {
-            background: linear-gradient(135deg, var(--clr-magenta) 0%, var(--clr-purple) 50%, var(--clr-cyan) 100%);
-            background-size: 200% 200%;
-            background-position: 0% 50%;
-            color: #fff !important;
+        /* Buttons */
+        .btn-cta {
+            background-color: var(--clr-accent);
+            color: var(--clr-deep-navy) !important;
             font-weight: 700;
-            padding: 0.5rem 1.5rem;
-            border-radius: var(--radius-md);
+            padding: 0.85rem 2.5rem;
+            border-radius: 50px;
             border: none;
-            outline: none;
-            cursor: pointer;
-            transition: background-position 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+            transition: var(--transition);
             text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 4px 15px rgba(127, 13, 242, 0.35);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            line-height: 1;
+            box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
         }
 
-        .btn-gradient:hover,
-        .btn-gradient:focus {
-            background-position: 100% 50%;
+        .btn-cta:hover {
+            background-color: var(--clr-primary);
+            color: var(--clr-white) !important;
             transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(255, 0, 85, 0.45), 0 0 40px rgba(127, 13, 242, 0.25), 0 6px 20px rgba(0, 0, 0, 0.3);
-            outline: none;
-            text-decoration: none;
+            box-shadow: 0 6px 18px rgba(0, 51, 153, 0.3);
         }
 
-        .btn-outline-glow {
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            font-weight: 600;
-            padding: 0.5rem 1.5rem;
-            border-radius: var(--radius-md);
-            background: rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
+        .btn-outline-white {
+            border: 2px solid var(--clr-white);
+            color: var(--clr-white);
+            font-weight: 700;
+            padding: 0.8rem 2.2rem;
+            border-radius: 50px;
+            background: transparent;
+            transition: var(--transition);
             text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.85rem;
         }
 
-        .btn-outline-glow:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1), 0 0 15px rgba(255, 255, 255, 0.1);
+        .btn-outline-white:hover {
+            background: var(--clr-white);
+            color: var(--clr-primary) !important;
+        }
+
+        .btn-outline-primary {
+            border: 2px solid var(--clr-primary);
+            color: var(--clr-primary) !important;
+            font-weight: 700;
+            padding: 0.8rem 2.2rem;
+            border-radius: 50px;
+            background: transparent;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.85rem;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--clr-primary);
+            color: var(--clr-white) !important;
+            transform: translateY(-2px);
         }
 
         /* Footer */
-        .footer-glass {
-            background: var(--clr-surface);
-            border-top: 1px solid var(--clr-border);
-            padding: 4rem 0 2rem;
+        .footer-custom {
+            background: var(--clr-deep-navy);
+            color: var(--clr-white);
+            padding: 5rem 0 2.5rem;
             margin-top: auto;
         }
 
         .footer-heading {
-            color: #fff;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
+            font-family: var(--font-heading);
+            color: var(--clr-accent);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .footer-link {
-            color: var(--clr-muted);
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
             display: block;
-            margin-bottom: 0.75rem;
-            transition: color 0.3s ease;
+            margin-bottom: 1rem;
+            transition: var(--transition);
         }
 
         .footer-link:hover {
-            color: #fff;
+            color: var(--clr-accent);
+            padding-left: 5px;
         }
 
         .social-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: var(--clr-card);
-            border: 1px solid var(--clr-border);
-            color: var(--clr-text);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--clr-white);
             text-decoration: none;
-            margin-right: 0.5rem;
-            transition: all 0.3s ease;
+            margin-right: 0.8rem;
+            transition: var(--transition);
         }
 
         .social-icon:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.3);
+            background: var(--clr-accent);
+            color: var(--clr-deep-navy);
+            transform: translateY(-3px);
+            border-color: var(--clr-accent);
         }
 
         /* Layout Block Space */
@@ -298,10 +270,11 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-glass">
+    <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('main.index') }}">
-                <i class="bi bi-diamond-fill"></i>SAHAL
+                <img src="{{ url_for('static', filename='images/Logo White.png') }}" alt="SAHAL Logo"
+                    height="45">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#publicNav">
@@ -334,14 +307,14 @@
                 <div class="d-flex align-items-center gap-3">
                     {% if current_user.is_authenticated %}
                     {% if current_user.is_admin %}
-                    <a href="{{ url_for('dashboards.admin') }}" class="btn-outline-glow">Admin Portal</a>
+                    <a href="{{ url_for('dashboards.admin') }}" class="btn-outline-white">Admin Portal</a>
                     {% else %}
-                    <a href="{{ url_for('dashboards.client') }}" class="btn-outline-glow">Client Portal</a>
+                    <a href="{{ url_for('dashboards.client') }}" class="btn-outline-white">Client Portal</a>
                     {% endif %}
                     {% else %}
                     <a href="{{ url_for('auth.login') }}" class="nav-link">Login</a>
                     {% endif %}
-                    <a href="{{ url_for('services.booking_wizard') }}" class="btn-gradient">Start Project</a>
+                    <a href="{{ url_for('services.booking_wizard') }}" class="btn-cta">Start Project</a>
                 </div>
             </div>
         </div>
@@ -355,7 +328,7 @@
             {% if messages %}
             {% for category, message in messages %}
             <div class="alert alert-{{ category }} alert-dismissible fade show shadow" role="alert"
-                style="background: var(--clr-card); border: 1px solid var(--clr-border); color: #fff;">
+                style="background: var(--clr-bg-cream); border: 1px solid var(--clr-border); color: var(--clr-text-main);">
                 {{ message }}
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
                     aria-label="Close"></button>
@@ -372,12 +345,12 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer-glass">
+    <footer class="footer-custom">
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-4">
                     <a class="navbar-brand d-block mb-4" href="{{ url_for('main.index') }}">
-                        <i class="bi bi-diamond-fill"></i>SAHAL
+                        <img src="{{ url_for('static', filename='images/Logo White.png') }}" alt="SAHAL Logo" height="50">
                     </a>
                     <p class="text-muted mb-4 pe-lg-5">Full-service branding and digital agency delivering premium
                         design, printing, event management, and multimedia solutions.</p>
@@ -408,10 +381,10 @@
 
                 <div class="col-lg-3 col-md-4">
                     <h5 class="footer-heading">Contact</h5>
-                    <p class="text-muted mb-2"><i class="bi bi-geo-alt text-cyan me-2"></i> 123 Brand Avenue, Hub</p>
-                    <p class="text-muted mb-2"><i class="bi bi-envelope text-magenta me-2"></i> hello@sahal.agency</p>
-                    <p class="text-muted mb-4"><i class="bi bi-telephone text-purple me-2"></i> +1 (555) 123-4567</p>
-                    <a href="{{ url_for('services.booking_wizard') }}" class="btn-gradient w-100 text-center">Request
+                    <p class="text-muted mb-2"><i class="bi bi-geo-alt text-accent me-2"></i> 123 Brand Avenue, Hub</p>
+                    <p class="text-muted mb-2"><i class="bi bi-envelope text-accent me-2"></i> hello@sahal.agency</p>
+                    <p class="text-muted mb-4"><i class="bi bi-telephone text-accent me-2"></i> +1 (555) 123-4567</p>
+                    <a href="{{ url_for('services.booking_wizard') }}" class="btn-cta w-100 text-center">Request
                         Quote</a>
                 </div>
             </div>
@@ -430,6 +403,28 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Smart Navbar Scroll Logic -->
+    <script>
+        let lastScrollY = window.scrollY;
+        const navbar = document.querySelector('.navbar-custom');
+        const threshold = 100;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+
+            // Determine scroll direction
+            if (currentScrollY > lastScrollY && currentScrollY > threshold) {
+                // Scrolling down - hide navbar
+                navbar.classList.add('navbar-hidden');
+            } else if (currentScrollY < lastScrollY) {
+                // Scrolling up - show navbar
+                navbar.classList.remove('navbar-hidden');
+            }
+
+            lastScrollY = currentScrollY;
+        });
+    </script>
     {% block extra_js %}{% endblock %}
 
 </body>

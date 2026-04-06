@@ -5,25 +5,25 @@
 {% block extra_css %}
 <style>
     .page-header {
-        padding: 3rem 0 1.5rem;
-        border-bottom: 1px solid var(--clr-border);
-        background: var(--clr-surface);
-        text-align: center;
+        padding: 4rem 1.5rem 2rem;
+        background: #ffffff;
+        border-bottom: 2px solid var(--clr-bg-cream);
+        text-align: left;
     }
 
     /* Mobile Stepper UI */
     .stepper {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 2rem;
+        margin-bottom: 3rem;
         position: relative;
-        padding: 0 1rem;
+        padding: 0 0.5rem;
     }
 
     .stepper::before {
         content: '';
         position: absolute;
-        top: 15px;
+        top: 16px;
         left: 2rem;
         right: 2rem;
         height: 2px;
@@ -35,132 +35,126 @@
         position: relative;
         z-index: 2;
         text-align: center;
-        width: 60px;
+        width: 70px;
     }
 
     .step-circle {
-        width: 32px;
-        height: 32px;
+        width: 34px;
+        height: 34px;
         border-radius: 50%;
-        background: var(--clr-primary);
+        background: #ffffff;
         border: 2px solid var(--clr-border);
-        color: var(--clr-muted);
+        color: var(--clr-text-muted);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 700;
-        font-size: 0.8rem;
-        margin: 0 auto 0.25rem;
-        transition: all 0.3s ease;
+        font-weight: 800;
+        font-family: var(--font-heading);
+        font-size: 0.85rem;
+        margin: 0 auto 0.5rem;
+        transition: var(--transition);
+        box-shadow: 0 4px 10px rgba(0, 39, 102, 0.05);
     }
 
     .step.active .step-circle {
-        border-color: var(--clr-cyan);
-        color: var(--clr-cyan);
-        box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        border-color: var(--clr-primary);
+        color: var(--clr-primary);
+        background: var(--clr-bg-cream);
+        transform: scale(1.1);
     }
 
     .step.completed .step-circle {
-        background: linear-gradient(135deg, var(--clr-magenta), var(--clr-cyan));
-        border-color: transparent;
+        background: var(--clr-primary);
+        border-color: var(--clr-primary);
         color: #fff;
-        font-size: 0;
-    }
-
-    .step.completed .step-circle::after {
-        content: '\F26E';
-        /* bi-check */
-        font-family: bootstrap-icons;
-        font-size: 1rem;
     }
 
     .step-label {
-        font-size: 0.65rem;
-        font-weight: 600;
+        font-size: 0.6rem;
+        font-weight: 800;
         text-transform: uppercase;
-        color: var(--clr-muted);
+        color: var(--clr-text-muted);
         letter-spacing: 0.05em;
+        font-family: var(--font-heading);
     }
 
-    .step.active .step-label,
-    .step.completed .step-label {
-        color: #fff;
+    .step.active .step-label {
+        color: var(--clr-primary);
     }
 
     /* Mobile Wizard Panels */
     .wizard-panel {
         display: none;
-        animation: fadeIn 0.3s ease;
+        animation: slideIn 0.4s ease forwards;
     }
 
     .wizard-panel.active {
         display: block;
     }
 
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateX(10px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateX(20px); }
+        to { opacity: 1; transform: translateX(0); }
     }
 
     /* Mobile Selectable Cards */
     .selectable-card {
-        background: var(--clr-card);
-        border: 1px solid var(--clr-border);
+        background: #ffffff;
+        border: 2px solid var(--clr-border);
         border-radius: var(--radius-md);
-        padding: 1.25rem;
-        margin-bottom: 0.75rem;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
         cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .selectable-card.selected {
-        border-color: var(--clr-cyan);
-        background: rgba(0, 240, 255, 0.05);
+        transition: var(--transition);
         position: relative;
     }
 
-    .selectable-card.selected::before {
+    .selectable-card.selected {
+        border-color: var(--clr-primary);
+        background: var(--clr-bg-cream);
+        box-shadow: 0 4px 15px rgba(0, 51, 153, 0.08);
+    }
+
+    .selectable-card.selected::after {
         content: '\F633';
-        /* bi-check-circle-fill */
         font-family: bootstrap-icons;
         position: absolute;
         top: 1rem;
         right: 1rem;
-        color: var(--clr-cyan);
+        color: var(--clr-primary);
         font-size: 1.25rem;
     }
 
     /* Mobile Forms */
     .form-control,
     .form-select {
-        background-color: rgba(255, 255, 255, 0.03);
+        background-color: #f8f9fa;
         border: 1px solid var(--clr-border);
-        color: #fff;
-        padding: 0.8rem 1rem;
-        font-size: 0.95rem;
+        color: var(--clr-text-main);
+        padding: 1rem 1.25rem;
+        font-size: 1rem;
         border-radius: var(--radius-md);
+        font-family: var(--font-body);
     }
 
     .form-control:focus,
     .form-select:focus {
-        background-color: rgba(255, 255, 255, 0.05);
-        border-color: var(--clr-cyan);
-        box-shadow: 0 0 0 0.25rem rgba(0, 240, 255, 0.25);
-        color: #fff;
+        background-color: #ffffff;
+        border-color: var(--clr-primary);
+        box-shadow: 0 0 0 5px rgba(0, 51, 153, 0.05);
     }
 
     .summary-box {
-        background: rgba(255, 255, 255, 0.02);
+        background: var(--clr-off-white);
         border: 1px solid var(--clr-border);
         border-radius: var(--radius-md);
-        padding: 1.25rem;
+        padding: 1.5rem;
+    }
+
+    .summary-item {
+        border-bottom: 1px solid var(--clr-border);
+        padding-bottom: 0.75rem;
+        margin-bottom: 0.75rem;
     }
 
     /* Floating navigation buttons for mobile */
@@ -168,8 +162,8 @@
         display: flex;
         justify-content: space-between;
         gap: 1rem;
-        margin-top: 2rem;
-        padding-top: 1rem;
+        margin-top: 3rem;
+        padding-top: 1.5rem;
         border-top: 1px solid var(--clr-border);
     }
 </style>
@@ -178,8 +172,9 @@
 {% block content %}
 <div class="page-header mb-4">
     <div class="container">
-        <h2 class="fw-bold mb-2">Request Service</h2>
-        <p class="text-muted small">Complete the steps below for a quotation.</p>
+        <span class="premium-badge mb-2">Project Request</span>
+        <h2 class="fw-800 mb-2" style="color: var(--clr-primary);">Service <span style="color:var(--clr-accent);">Quotation</span></h2>
+        <p class="text-muted small">Complete the steps below for a formal estimate.</p>
     </div>
 </div>
 
@@ -210,96 +205,96 @@
 
         <!-- STEP 1: Select Category -->
         <div class="wizard-panel active" id="wizardStep1">
-            <h5 class="fw-bold mb-3">Project Type</h5>
+            <h5 class="fw-800 mb-3" style="color: var(--clr-primary);">1. Project Category</h5>
             <div class="mb-4">
                 {% for category in categories %}
                 <div class="selectable-card category-card" data-category-id="{{ category.id }}">
-                    <h6 class="fw-bold text-white mb-1">{{ category.name }}</h6>
-                    <p class="text-muted small mb-0">{{ category.description | truncate(50) }}</p>
+                    <h6 class="fw-800 mb-1" style="color: var(--clr-primary);">{{ category.name }}</h6>
+                    <p class="text-muted small mb-0">{{ category.description | truncate(60) }}</p>
                 </div>
                 {% endfor %}
             </div>
 
             <input type="hidden" name="category_id" id="inputCategoryId">
             <div class="wizard-nav justify-content-end">
-                <button type="button" class="btn-gradient px-4 py-2" id="btnNext1" disabled>Next <i
+                <button type="button" class="btn-cta px-4 py-2" id="btnNext1" disabled>Continue <i
                         class="bi bi-arrow-right ms-2"></i></button>
             </div>
         </div>
 
         <!-- STEP 2: Select Service -->
         <div class="wizard-panel" id="wizardStep2">
-            <h5 class="fw-bold mb-3">Which Service?</h5>
+            <h5 class="fw-800 mb-3" style="color: var(--clr-primary);">2. Select Service</h5>
             <div id="servicesContainer" class="mb-4">
                 <div class="text-muted small">Please select a category first.</div>
             </div>
 
             <input type="hidden" name="service_id" id="inputServiceId">
             <div class="wizard-nav">
-                <button type="button" class="btn-outline-glow px-3 py-2" id="btnPrev2"><i class="bi bi-arrow-left"></i>
+                <button type="button" class="btn btn-outline-primary px-3 py-2 rounded-pill fw-bold" id="btnPrev2"><i class="bi bi-arrow-left"></i>
                     Back</button>
-                <button type="button" class="btn-gradient px-4 py-2" id="btnNext2" disabled>Next <i
+                <button type="button" class="btn-cta px-4 py-2" id="btnNext2" disabled>Continue <i
                         class="bi bi-arrow-right ms-2"></i></button>
             </div>
         </div>
 
         <!-- STEP 3: Project Details -->
         <div class="wizard-panel" id="wizardStep3">
-            <h5 class="fw-bold mb-3">Project Details</h5>
-            <div class="glass-card p-3 mb-4">
+            <h5 class="fw-800 mb-3" style="color: var(--clr-primary);">3. Requirements</h5>
+            <div class="p-4 bg-light rounded-4 mb-4">
                 <div class="mb-4">
-                    <label class="form-label text-muted fw-bold small text-uppercase">Quantity</label>
+                    <label class="form-label text-primary fw-800 small text-uppercase">Quantity</label>
                     <input type="number" name="quantity" id="inputQuantity" class="form-control" value="1" min="1"
                         required>
                 </div>
                 <div class="mb-2">
-                    <label class="form-label text-muted fw-bold small text-uppercase">Notes / Requirements</label>
+                    <label class="form-label text-primary fw-800 small text-uppercase">Project Notes</label>
                     <textarea name="notes" id="inputNotes" class="form-control" rows="4"
-                        placeholder="Describe your timeline, specifics, etc..."></textarea>
+                        placeholder="Describe your timeline, specifics, preferences..."></textarea>
                 </div>
             </div>
 
             <div class="wizard-nav">
-                <button type="button" class="btn-outline-glow px-3 py-2" id="btnPrev3"><i class="bi bi-arrow-left"></i>
+                <button type="button" class="btn btn-outline-primary px-3 py-2 rounded-pill fw-bold" id="btnPrev3"><i class="bi bi-arrow-left"></i>
                     Back</button>
-                <button type="button" class="btn-gradient px-4 py-2" id="btnNext3">Review <i
+                <button type="button" class="btn-cta px-4 py-2" id="btnNext3">Review <i
                         class="bi bi-arrow-right ms-2"></i></button>
             </div>
         </div>
 
         <!-- STEP 4: Review & Submit -->
         <div class="wizard-panel" id="wizardStep4">
-            <h5 class="fw-bold mb-3">Review Request</h5>
+            <h5 class="fw-800 mb-3" style="color: var(--clr-primary);">4. Review & Confirm</h5>
 
             <div class="summary-box mb-4">
-                <div class="row mb-2">
-                    <div class="col-4 text-muted small text-uppercase">Service</div>
-                    <div class="col-8 fw-bold small text-end" id="summaryServiceName">--</div>
+                <div class="summary-item row mb-2">
+                    <div class="col-5 text-muted small text-uppercase fw-bold">Service</div>
+                    <div class="col-7 fw-800 small text-end text-primary" id="summaryServiceName">--</div>
                 </div>
-                <div class="row mb-2 pb-2 border-bottom border-dark">
-                    <div class="col-4 text-muted small text-uppercase">Base Price</div>
-                    <div class="col-8 text-cyan fw-bold small text-end" id="summaryServicePrice">--</div>
+                <div class="summary-item row mb-2">
+                    <div class="col-5 text-muted small text-uppercase fw-bold">Price Est.</div>
+                    <div class="col-7 text-dark fw-800 small text-end" id="summaryServicePrice">--</div>
                 </div>
-                <div class="row mb-2 pt-2">
-                    <div class="col-4 text-muted small text-uppercase">Qty</div>
-                    <div class="col-8 text-white small text-end" id="summaryQuantity">1</div>
+                <div class="summary-item row mb-2 pb-2">
+                    <div class="col-5 text-muted small text-uppercase fw-bold">Qty</div>
+                    <div class="col-7 text-primary fw-bold small text-end" id="summaryQuantity">1</div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-12 text-muted small text-uppercase mb-1">Notes</div>
-                    <div class="col-12 text-white small" id="summaryNotes">--</div>
+                    <div class="col-12 text-muted small text-uppercase fw-bold mb-1">Notes</div>
+                    <div class="col-12 text-muted small" id="summaryNotes">--</div>
                 </div>
             </div>
 
             <p class="text-muted small mb-4 text-center">
-                <i class="bi bi-info-circle text-magenta me-1"></i>
-                We will review your request and send a detailed quote to your dashboard.
+                <i class="bi bi-shield-check text-primary me-1"></i>
+                Our team will review your request and provide a professional quote.
             </p>
 
             <div class="wizard-nav">
-                <button type="button" class="btn-outline-glow px-3 py-2" id="btnPrev4"><i class="bi bi-arrow-left"></i>
+                <button type="button" class="btn btn-outline-primary px-3 py-2 rounded-pill fw-bold" id="btnPrev4"><i class="bi bi-arrow-left"></i>
                     Back</button>
-                <button type="submit" class="btn-gradient px-4 py-2 w-100 ms-3">Submit <i
-                        class="bi bi-check2 ms-1"></i></button>
+                <button type="submit" class="btn-cta px-4 py-3 w-100 ms-3 fs-6">Submit Initialization <i
+                        class="bi bi-check2-circle ms-1"></i></button>
             </div>
         </div>
     </form>
@@ -413,18 +408,18 @@
             filtered.forEach(svc => {
                 let priceHtml = '';
                 if (svc.basePrice !== null) {
-                    priceHtml = `<span class="text-cyan fw-bold small">$${svc.basePrice.toFixed(2)}</span>`;
+                    priceHtml = `<span class="fw-800 text-primary small">$${svc.basePrice.toFixed(2)}</span>`;
                 } else {
-                    priceHtml = `<span class="text-secondary fst-italic" style="font-size: 0.75rem;">Price not available yet</span>`;
+                    priceHtml = `<span class="text-muted fst-italic" style="font-size: 0.75rem;">Price on Request</span>`;
                 }
                 
                 const html = `
                 <div class="selectable-card service-card" data-service-id="${svc.id}" data-service-name="${svc.name}" data-service-price="${svc.basePrice}">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <h6 class="fw-bold text-white mb-0" style="font-size: 0.95rem; padding-right:1rem;">${svc.name}</h6>
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <h6 class="fw-800 text-primary mb-0" style="font-size: 0.95rem;">${svc.name}</h6>
                         ${priceHtml}
                     </div>
-                    <p class="text-muted small mb-0 lh-sm">${svc.description}</p>
+                    <p class="text-muted" style="font-size: 0.75rem; margin-bottom: 0;">${svc.description}</p>
                 </div>
             `;
                 servicesContainer.insertAdjacentHTML('beforeend', html);

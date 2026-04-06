@@ -44,365 +44,308 @@
         rel="stylesheet" />
 
   <style>
-    /* =========================================================================
-       CSS Custom Properties (Brand Tokens)
-       Centralizing colours here means theme changes touch only this block.
-    ========================================================================= */
     :root {
-      --clr-primary:     #0d0d0d;
-      --clr-accent:      #C9A84C;   /* SAHAL gold */
-      --clr-accent-dark: #9e7a2e;
-      --clr-surface:     #111111;
-      --clr-card:        #1a1a1a;
-      --clr-text:        #f0f0f0;
-      --clr-muted:       #888888;
-      --clr-success:     #2dce89;
-      --clr-danger:      #f5365c;
-      --font-body:       'Outfit', sans-serif;
-      --radius:          12px;
-      --transition:      0.25s ease;
+      --clr-primary: #003399;
+      --clr-deep-navy: #002766;
+      --clr-accent: #FFCC00;
+      --clr-bg-cream: #FFF4C5;
+      --clr-text-main: #001A4D;
+      --clr-text-muted: #556688;
+      --font-heading: 'Montserrat', sans-serif;
+      --font-body: 'Lato', sans-serif;
+      --radius: 12px;
+      --transition: 0.3s ease;
     }
-
-    *, *::before, *::after { box-sizing: border-box; }
 
     body {
       font-family: var(--font-body);
-      background-color: var(--clr-primary);
-      color: var(--clr-text);
+      background-color: #ffffff;
+      color: var(--clr-text-main);
       margin: 0;
       padding: 0;
-      /* Subtle animated gradient background */
-      background-image:
-        radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.06) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.04) 0%, transparent 50%);
     }
 
-    /* =========================================================================
-       Navbar
-    ========================================================================= */
-    .navbar-brand-text {
-      font-weight: 900;
-      font-size: 1.35rem;
-      letter-spacing: 0.08em;
-      color: var(--clr-accent) !important;
-      text-transform: uppercase;
-    }
-
-    .nav-link {
-      color: var(--clr-muted) !important;
-      font-weight: 400;
-      letter-spacing: 0.04em;
-      transition: color var(--transition);
-    }
-
-    .nav-link:hover { color: var(--clr-accent) !important; }
-
-    .navbar {
-      background: rgba(13, 13, 13, 0.85) !important;
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
-    }
-
-    /* =========================================================================
-       Hero Section
-    ========================================================================= */
+    /* Hero Section Overhaul */
     .hero {
-      min-height: 86vh;
+      background: var(--clr-primary);
+      background-image: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-deep-navy) 100%);
+      min-height: 80vh;
       display: flex;
       align-items: center;
       position: relative;
-      overflow: hidden;
+      color: white;
+      padding: 100px 0;
     }
 
-    .hero::before {
+    .hero::after {
       content: "";
       position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,168,76,0.12), transparent);
+      top: 0;
+      right: 0;
+      width: 40%;
+      height: 100%;
+      background: radial-gradient(circle at 100% 0%, rgba(255, 204, 0, 0.1), transparent 70%);
       pointer-events: none;
     }
 
     .hero-tag {
       display: inline-block;
-      background: rgba(201,168,76,0.12);
-      border: 1px solid rgba(201,168,76,0.3);
-      color: var(--clr-accent);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.35rem 0.9rem;
-      border-radius: 50px;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.8rem, 5vw, 5rem);
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: -0.02em;
-    }
-
-    .hero h1 .gold { color: var(--clr-accent); }
-
-    .hero p.lead {
-      color: var(--clr-muted);
-      font-size: 1.15rem;
-      max-width: 520px;
-      line-height: 1.7;
-    }
-
-    .btn-gold {
-      background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-dark));
-      color: #0d0d0d;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      border: none;
-      padding: 0.75rem 2rem;
-      border-radius: 50px;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      transition: all var(--transition);
-      box-shadow: 0 0 24px rgba(201,168,76,0.3);
-    }
-
-    .btn-gold:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 36px rgba(201,168,76,0.5);
-      color: #0d0d0d;
-    }
-
-    .btn-outline-gold {
+      background: rgba(255, 204, 0, 0.15);
       border: 1px solid var(--clr-accent);
       color: var(--clr-accent);
-      background: transparent;
-      font-weight: 600;
-      padding: 0.72rem 2rem;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      transition: all var(--transition);
-    }
-
-    .btn-outline-gold:hover {
-      background: rgba(201,168,76,0.1);
-      color: var(--clr-accent);
-    }
-
-    /* =========================================================================
-       Status Cards
-    ========================================================================= */
-    .status-card {
-      background: var(--clr-card);
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: var(--radius);
-      padding: 2rem;
-      transition: transform var(--transition), border-color var(--transition);
-    }
-
-    .status-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(201,168,76,0.35);
-    }
-
-    .status-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-    }
-
-    .icon-success { background: rgba(45,206,137,0.15); color: var(--clr-success); }
-    .icon-gold    { background: rgba(201,168,76,0.15); color: var(--clr-accent); }
-    .icon-info    { background: rgba(90,120,255,0.15); color: #8b9fff; }
-
-    .status-card h6 {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--clr-muted);
-      margin-bottom: 0.4rem;
-    }
-
-    .status-card p {
-      font-size: 1rem;
-      font-weight: 500;
-      margin: 0;
-    }
-
-    /* =========================================================================
-       Section Titles
-    ========================================================================= */
-    .section-title {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--clr-accent);
-      margin-bottom: 0.5rem;
-    }
-
-    /* =========================================================================
-       Feature Cards (Future modules)
-    ========================================================================= */
-    .feature-card {
-      background: var(--clr-card);
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: var(--radius);
-      padding: 1.75rem;
-      height: 100%;
-      transition: transform var(--transition), border-color var(--transition);
-    }
-
-    .feature-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(201,168,76,0.25);
-    }
-
-    .feature-card .feature-icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .feature-card h5 {
-      font-weight: 700;
-      font-size: 1.05rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .feature-card p {
-      color: var(--clr-muted);
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    .badge-soon {
-      background: rgba(201,168,76,0.15);
-      color: var(--clr-accent);
-      font-size: 0.65rem;
+      font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 0.25rem 0.6rem;
-      border-radius: 4px;
-      border: 1px solid rgba(201,168,76,0.2);
+      padding: 0.5rem 1.25rem;
+      border-radius: 50px;
+      margin-bottom: 2rem;
+      font-family: var(--font-heading);
     }
 
-    /* =========================================================================
-       Footer
-    ========================================================================= */
-    footer {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 2rem 0;
-      color: var(--clr-muted);
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: white;
+    }
+
+    .hero h1 span.accent {
+      color: var(--clr-accent);
+    }
+
+    .hero p.lead {
+      font-size: 1.25rem;
+      max-width: 600px;
+      opacity: 0.9;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    /* Buttons */
+    .btn-cta {
+      background: var(--clr-accent);
+      color: var(--clr-deep-navy) !important;
+      font-weight: 800;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: var(--transition);
+      border: none;
+      box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+    }
+
+    .btn-cta:hover {
+      background: white;
+      color: var(--clr-primary) !important;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-outline-white {
+      border: 2px solid white;
+      color: white !important;
+      font-weight: 700;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      background: transparent;
+      transition: var(--transition);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-outline-white:hover {
+      background: white;
+      color: var(--clr-primary) !important;
+    }
+
+    /* Status Cards */
+    .status-card {
+      background: white;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      transition: var(--transition);
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 10px 40px rgba(0, 39, 102, 0.08);
+    }
+
+    .status-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0, 39, 102, 0.12);
+    }
+
+    .status-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+      background: var(--clr-bg-cream);
+      color: var(--clr-primary);
+    }
+
+    .status-card h6 {
+      font-family: var(--font-heading);
       font-size: 0.85rem;
+      color: var(--clr-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+
+    .status-card p {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--clr-deep-navy);
+      margin: 0;
+    }
+
+    /* Feature Cards */
+    .feature-card {
+      background: white;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      height: 100%;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      border-color: var(--clr-primary);
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-card h5 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card p {
+      color: var(--clr-text-muted);
+      font-size: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      color: var(--clr-primary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Alternating Sections */
+    .section-cream {
+      background-color: var(--clr-bg-cream);
+    }
+
+    footer {
+      background: var(--clr-deep-navy);
+      padding: 3rem 0;
+      color: rgba(255, 255, 255, 0.7);
     }
   </style>
 </head>
 <body>
 
-  <!-- ======================================================================
-       NAVBAR
-  ====================================================================== -->
-  <nav class="navbar navbar-expand-lg sticky-top py-3">
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg sticky-top py-3 navbar-custom" style="background: var(--clr-primary);">
     <div class="container">
-      <a class="navbar-brand navbar-brand-text" href="/">
-        <i class="bi bi-diamond-fill me-2" style="color:var(--clr-accent);font-size:0.9rem;"></i>
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <i class="bi bi-diamond-fill me-2" style="color:var(--clr-accent);"></i>
         SAHAL
       </a>
 
-      <button class="navbar-toggler border-0" type="button"
-              data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <i class="bi bi-list" style="color:var(--clr-accent);font-size:1.5rem;"></i>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <i class="bi bi-list" style="color:white;font-size:1.5rem;"></i>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto gap-1">
+        <ul class="navbar-nav ms-auto gap-2">
           <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Portfolio</a></li>
           <li class="nav-item"><a class="nav-link" href="#">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
         </ul>
-        <a href="{{ url_for('auth.login') }}" class="btn btn-gold btn-sm ms-3">
+        <a href="{{ url_for('auth.login') }}" class="btn-cta btn-sm ms-lg-4 px-4 py-2">
           Client Login
         </a>
       </div>
     </div>
   </nav>
 
-  <!-- ======================================================================
-       HERO
-  ====================================================================== -->
+  <!-- HERO -->
   <section class="hero">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-7">
           <div class="hero-tag">
-            <i class="bi bi-broadcast me-1"></i> Phase 1 — Stack Verified
+            <i class="bi bi-star-fill me-2"></i> Creativity & Clarity
           </div>
           <h1>
             SAHAL<br />
-            <span class="gold">BRANDING</span><br />
+            <span class="accent">BRANDING</span><br />
             AGENCY
           </h1>
-          <p class="lead mt-4">
-            Premium brand identity, digital strategy & creative design — built for
-            ambitious businesses that refuse to be ordinary.
+          <p class="lead">
+            Strategic design and digital expertise for brands that demand a professional edge. We deliver clarity, impact, and results.
           </p>
           <div class="d-flex gap-3 mt-5 flex-wrap">
-            <a href="#" class="btn btn-gold">Explore Services</a>
-            <a href="#" class="btn btn-outline-gold">View Portfolio</a>
+            <a href="#" class="btn-cta">Explore Services</a>
+            <a href="#" class="btn-outline-white">View Portfolio</a>
           </div>
         </div>
 
-        <!-- Right column - system status panel -->
         <div class="col-lg-5 mt-5 mt-lg-0">
-          <div class="ps-lg-4">
-            <p class="section-title mb-3">System Status</p>
+          <div class="ps-lg-5">
+            <p class="section-title" style="color: var(--clr-accent);">Intelligence Hub</p>
 
             <!-- DB Connection Status -->
-            <div class="status-card mb-3">
-              <div class="status-icon icon-success">
-                <i class="bi bi-database-check"></i>
+            <div class="status-card mb-4">
+              <div class="status-icon">
+                <i class="bi bi-cpu"></i>
               </div>
-              <h6>Database Connection</h6>
-              {% if db_error %}
-                <p style="color:var(--clr-danger);">
-                  <i class="bi bi-x-circle me-1"></i>{{ db_error }}
-                </p>
-              {% elif db_record %}
-                <p style="color:var(--clr-success);">
-                  <i class="bi bi-check2-circle me-1"></i>{{ db_record.message }}
+              <h6>Core Infrastructure</h6>
+              {% if db_record %}
+                <p style="color:var(--clr-primary);">
+                  <i class="bi bi-check-circle-fill me-2"></i>System Synchronized
                 </p>
               {% else %}
-                <p style="color:var(--clr-muted);">No record found — run migrations.</p>
+                <p style="color:var(--clr-text-muted);">Initializing Engine...</p>
               {% endif %}
             </div>
 
             <!-- Flask + Device Info -->
-            <div class="status-card mb-3">
-              <div class="status-icon icon-gold">
-                <i class="bi bi-lightning-charge"></i>
+            <div class="status-card mb-4">
+              <div class="status-icon" style="background: rgba(0, 51, 153, 0.05);">
+                <i class="bi bi-shield-lock"></i>
               </div>
-              <h6>Flask Stack</h6>
-              <p>⚡ Application running on port 5000</p>
+              <h6>Secure Access</h6>
+              <p>Operational Architecture v2.0</p>
             </div>
 
             <!-- Device Type -->
             <div class="status-card">
-              <div class="status-icon icon-info">
-                <i class="bi bi-display"></i>
+              <div class="status-icon" style="background: rgba(0, 51, 153, 0.05);">
+                <i class="bi bi-hdd-network"></i>
               </div>
-              <h6>Detected Device</h6>
-              <p>🖥️ Serving <strong>Desktop</strong> template ({{ device_type }})</p>
+              <h6>Optimized for 🖥️</h6>
+              <p>Serving Desktop Experience</p>
             </div>
           </div>
         </div>
@@ -410,70 +353,61 @@
     </div>
   </section>
 
-  <!-- ======================================================================
-       FUTURE MODULES — Structural preview
-  ====================================================================== -->
-  <section class="py-6 py-5">
-    <div class="container">
-      <p class="section-title">Architecture Roadmap</p>
-      <h2 class="fw-bold mb-4" style="font-size:2rem;">
-        Production-Ready <span style="color:var(--clr-accent);">Module Structure</span>
-      </h2>
+  <!-- Roadmap Section -->
+  <section class="py-5 section-cream">
+    <div class="container py-5">
+      <div class="text-center mb-5">
+        <p class="section-title">Capabilities roadmap</p>
+        <h2 class="fw-bold" style="font-size:2.5rem; color: var(--clr-deep-navy);">
+          Professional <span style="color:var(--clr-primary);">Solutions</span>
+        </h2>
+      </div>
 
       <div class="row g-4">
-
         <div class="col-md-6 col-xl-3">
           <div class="feature-card">
-            <div class="feature-icon">🎨</div>
-            <h5>Portfolio Module</h5>
-            <p>Showcase case studies, before-and-after visuals, and client success stories.</p>
-            <span class="badge-soon mt-2 d-inline-block">Phase 2</span>
+            <div class="feature-icon">💎</div>
+            <h5>Brand Identity</h5>
+            <p>We craft visual stories that establish market authority and lasting recognition.</p>
           </div>
         </div>
 
         <div class="col-md-6 col-xl-3">
           <div class="feature-card">
-            <div class="feature-icon">📦</div>
-            <h5>Service Booking</h5>
-            <p>Package selection, requirement intake forms, and automated confirmation emails.</p>
-            <span class="badge-soon mt-2 d-inline-block">Phase 3</span>
+            <div class="feature-icon">🚀</div>
+            <h5>Digital Strategy</h5>
+            <p>Modern web solutions and platforms built for performance and growth scales.</p>
           </div>
         </div>
 
         <div class="col-md-6 col-xl-3">
           <div class="feature-card">
-            <div class="feature-icon">📊</div>
-            <h5>Order Tracking</h5>
-            <p>Real-time project milestone tracking with client and team notifications.</p>
-            <span class="badge-soon mt-2 d-inline-block">Phase 4</span>
+            <div class="feature-icon">📈</div>
+            <h5>Impact Marketing</h5>
+            <p>Results-driven campaigns that turn clarity into measurable business growth.</p>
           </div>
         </div>
 
         <div class="col-md-6 col-xl-3">
           <div class="feature-card">
-            <div class="feature-icon">⚙️</div>
-            <h5>Admin Workflow</h5>
-            <p>Team task management, client approvals, and analytics dashboard.</p>
-            <span class="badge-soon mt-2 d-inline-block">Phase 5</span>
+            <div class="feature-icon">🤝</div>
+            <h5>Consultancy</h5>
+            <p>Expert guidance to navigate the complex landscape of professional branding.</p>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ======================================================================
-       FOOTER
-  ====================================================================== -->
+  <!-- FOOTER -->
   <footer>
     <div class="container d-flex flex-wrap justify-content-between align-items-center">
       <span>
-        © 2026 <strong style="color:var(--clr-accent);">SAHAL Branding Agency</strong>.
-        Phase 1 — Architecture initialized.
+        © 2026 <strong style="color:white;">SAHAL Branding Agency</strong>. All Rights Reserved.
       </span>
-      <span class="text-muted" style="font-size:0.78rem;">
-        Flask · SQLAlchemy · MySQL · Blueprints ·
-        <span style="color:var(--clr-success);">● Connected</span>
+      <span style="font-size:0.85rem;">
+        Professionalism · Clarity · Creativity ·
+        <span style="color:var(--clr-accent);">● Finalizing Overhaul</span>
       </span>
     </div>
   </footer>

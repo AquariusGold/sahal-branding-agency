@@ -14,173 +14,197 @@
 
     <style>
         :root {
-            --clr-primary: #0d0d0d;
-            --clr-accent: #C9A84C;
-            --clr-accent-dark: #9e7a2e;
-            --clr-card: #1a1a1a;
-            --clr-text: #f0f0f0;
-            --clr-muted: #888888;
-            --font-body: 'Outfit', sans-serif;
-            --radius: 12px;
-            --transition: 0.25s ease;
+            --clr-primary: #003399;
+            --clr-deep-navy: #002766;
+            --clr-accent: #FFCC00;
+            --clr-bg-cream: #FFF4C5;
+            --clr-text-main: #001A4D;
+            --clr-text-muted: #556688;
+            --clr-border: rgba(0, 51, 153, 0.1);
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Lato', sans-serif;
+            --radius: 16px;
+            --transition: 0.3s ease;
         }
 
         body {
             font-family: var(--font-body);
-            background-color: var(--clr-primary);
-            color: var(--clr-text);
+            background-color: var(--clr-bg-cream);
+            color: var(--clr-text-main);
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            padding: 2rem 0;
-            background-image: radial-gradient(ellipse at 50% 50%, rgba(201, 168, 76, 0.05) 0%, transparent 60%);
+            padding: 4rem 0;
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 51, 153, 0.03) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(0, 51, 153, 0.03) 0%, transparent 40%);
         }
 
         .auth-card {
-            background: var(--clr-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: #ffffff;
+            border: 1px solid var(--clr-border);
             border-radius: var(--radius);
-            padding: 3rem;
+            padding: 3.5rem;
             width: 100%;
-            max-width: 500px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            max-width: 550px;
+            box-shadow: 0 20px 60px rgba(0, 39, 102, 0.1);
         }
 
         .brand-logo {
-            color: var(--clr-accent);
-            font-weight: 900;
-            font-size: 1.5rem;
-            letter-spacing: 0.08em;
+            font-family: var(--font-heading);
+            color: var(--clr-primary);
+            font-weight: 800;
+            font-size: 1.75rem;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             text-decoration: none;
             display: block;
         }
 
+        .brand-logo i {
+            color: var(--clr-accent);
+        }
+
         .form-control {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--clr-text);
-            border-radius: 8px;
+            background: #f8f9fa;
+            border: 1px solid var(--clr-border);
+            color: var(--clr-text-main);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: var(--transition);
         }
 
         .form-control:focus {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--clr-accent);
-            box-shadow: 0 0 0 0.25rem rgba(201, 168, 76, 0.25);
-            color: var(--clr-text);
+            background: #ffffff;
+            border-color: var(--clr-primary);
+            box-shadow: 0 0 0 4px rgba(0, 51, 153, 0.05);
+            color: var(--clr-text-main);
         }
 
         .form-label {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--clr-muted);
+            font-family: var(--font-heading);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--clr-text-main);
             letter-spacing: 0.05em;
             text-transform: uppercase;
+            margin-bottom: 0.5rem;
         }
 
-        /* Password Toggle Specific Styles */
         .password-wrapper {
             position: relative;
         }
 
         .password-toggle {
             position: absolute;
-            right: 12px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--clr-muted);
+            color: var(--clr-text-muted);
             cursor: pointer;
             z-index: 10;
-            transition: color var(--transition);
+            transition: var(--transition);
         }
 
         .password-toggle:hover {
-            color: var(--clr-accent);
+            color: var(--clr-primary);
         }
 
-        .btn-gold {
-            background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-dark));
-            color: #0d0d0d;
+        .btn-cta {
+            background: var(--clr-primary);
+            color: #ffffff !important;
+            font-family: var(--font-heading);
             font-weight: 700;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.05em;
             border: none;
-            padding: 0.75rem;
-            border-radius: 8px;
+            padding: 1rem;
+            border-radius: 10px;
             text-transform: uppercase;
             font-size: 0.9rem;
-            transition: all var(--transition);
+            transition: var(--transition);
             width: 100%;
+            box-shadow: 0 4px 12px rgba(0, 51, 153, 0.2);
         }
 
-        .btn-gold:hover {
+        .btn-cta:hover {
+            background: var(--clr-deep-navy);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(201, 168, 76, 0.3);
-            color: #0d0d0d;
+            box-shadow: 0 8px 20px rgba(0, 51, 153, 0.3);
         }
 
-        .form-text,
-        .auth-link {
-            color: var(--clr-muted);
-            font-size: 0.85rem;
+        .form-text, .auth-link {
+            font-size: 0.9rem;
+            color: var(--clr-text-muted);
         }
 
         .auth-link {
-            color: var(--clr-accent);
+            color: var(--clr-primary);
             text-decoration: none;
-            font-weight: 600;
-            transition: opacity var(--transition);
+            font-weight: 700;
         }
 
         .auth-link:hover {
-            opacity: 0.8;
-            color: var(--clr-accent);
+            text-decoration: underline;
+            color: var(--clr-deep-navy);
         }
 
         .alert {
-            border: none;
-            font-size: 0.9rem;
+            border-radius: 10px;
+            font-weight: 600;
         }
 
         .invalid-feedback {
             display: block;
-            color: #f5365c;
+            color: #dc3545;
             font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.25rem;
         }
         
-        /* Account Type Tabs */
         .account-type-tabs {
             display: flex;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 4px;
-            margin-bottom: 1.5rem;
+            background: #f1f4f9;
+            border: 1px solid var(--clr-border);
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 2rem;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 0.5rem;
+            padding: 0.75rem;
             text-align: center;
-            color: var(--clr-muted);
+            color: var(--clr-text-muted);
             cursor: pointer;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all var(--transition);
+            border-radius: 8px;
+            font-weight: 700;
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: var(--transition);
         }
 
         .tab-btn.active {
-            background: var(--clr-accent);
-            color: #0d0d0d;
+            background: var(--clr-primary);
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 51, 153, 0.15);
         }
-        
-        /* Hide fields by default */
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            color: var(--clr-deep-navy);
+        }
+
         .business-fields {
             display: none;
+            border-left: 3px solid var(--clr-accent);
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
         }
     </style>
 </head>
@@ -188,9 +212,12 @@
 <body>
 
     <div class="auth-card">
-        <a href="/" class="brand-logo">
-            <i class="bi bi-diamond-fill me-2" style="font-size:1rem;"></i>SAHAL
-        </a>
+            <div class="text-center mb-4">
+                <a href="{{ url_for('main.index') }}">
+                    <img src="{{ url_for('static', filename='images/Logo Horizontal.png') }}" alt="SAHAL Logo"
+                        height="55">
+                </a>
+            </div>
 
         <h4 class="mb-1 fw-bold text-center">Create an Account</h4>
         <p class="text-center text-muted mb-4" style="font-size:0.9rem;">Join to start your branding journey</p>
@@ -200,7 +227,7 @@
         {% for category, message in messages %}
         <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show">
             {{ message }}
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
         {% endfor %}
         {% endif %}
@@ -294,7 +321,7 @@
                 {% endfor %}
             </div>
 
-            {{ form.submit(class="btn btn-gold") }}
+            {{ form.submit(class="btn-cta") }}
         </form>
 
         <div class="text-center mt-4">

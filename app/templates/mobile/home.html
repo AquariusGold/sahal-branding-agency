@@ -53,318 +53,297 @@
         rel="stylesheet" />
 
     <style>
-        /* =========================================================================
-       Brand Tokens (same as desktop — theming system is consistent)
-    ========================================================================= */
         :root {
-            --clr-primary: #0d0d0d;
-            --clr-accent: #C9A84C;
-            --clr-accent-dark: #9e7a2e;
-            --clr-surface: #111111;
-            --clr-card: #1a1a1a;
-            --clr-text: #f0f0f0;
-            --clr-muted: #888888;
-            --clr-success: #2dce89;
-            --clr-danger: #f5365c;
-            --font-body: 'Outfit', sans-serif;
-            --radius: 14px;
+            --clr-primary: #003399;
+            --clr-deep-navy: #002766;
+            --clr-accent: #FFCC00;
+            --clr-bg-cream: #FFF4C5;
+            --clr-text-main: #001A4D;
+            --clr-text-muted: #556688;
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Lato', sans-serif;
+            --radius: 16px;
             --safe-bottom: env(safe-area-inset-bottom, 0px);
-            /* iPhone notch */
+            --transition: all 0.3s ease;
         }
 
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { box-sizing: border-box; }
 
-        html,
-        body {
+        html, body {
             font-family: var(--font-body);
-            background-color: var(--clr-primary);
-            color: var(--clr-text);
+            background-color: #ffffff;
+            color: var(--clr-text-main);
             margin: 0;
             padding: 0;
-            /* Bottom padding accounts for the sticky CTA bar */
-            padding-bottom: calc(72px + var(--safe-bottom));
+            padding-bottom: calc(85px + var(--safe-bottom));
             overscroll-behavior-y: none;
+            line-height: 1.6;
         }
 
-        scroll-behavior {
-            scroll-behavior: smooth;
-        }
-
-        /* =========================================================================
-       Top App Bar (mobile-style header)
-    ========================================================================= */
+        /* App Bar Overhaul */
         .app-bar {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(13, 13, 13, 0.92);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(201, 168, 76, 0.12);
-            padding: 0.9rem 1.25rem;
+            background: var(--clr-primary);
+            padding: 1.1rem 1.25rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0, 39, 102, 0.1);
         }
 
         .app-bar .brand {
-            font-weight: 900;
-            font-size: 1.15rem;
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.25rem;
             letter-spacing: 0.1em;
-            color: var(--clr-accent);
+            color: white;
             text-decoration: none;
             text-transform: uppercase;
         }
 
-        .app-bar .menu-btn {
-            background: rgba(201, 168, 76, 0.1);
-            border: none;
-            border-radius: 8px;
-            padding: 0.4rem 0.6rem;
+        .app-bar .brand i {
             color: var(--clr-accent);
-            font-size: 1.3rem;
-            line-height: 1;
-            cursor: pointer;
         }
 
-        /* =========================================================================
-       Hero — full-screen, app-like splash
-    ========================================================================= */
+        .app-bar .menu-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 10px;
+            padding: 0.5rem;
+            color: white;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Mobile Overhaul */
         .hero-mobile {
-            min-height: 85vh;
+            min-height: 70vh;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
             justify-content: center;
-            padding: 2rem 1.25rem;
+            padding: 4rem 1.5rem;
+            background: var(--clr-primary);
+            background-image: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-deep-navy) 100%);
+            color: white;
             position: relative;
             overflow: hidden;
         }
 
-        .hero-mobile::before {
+        .hero-mobile::after {
             content: "";
             position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 80% 60% at 50% 60%, rgba(201, 168, 76, 0.1), transparent);
+            bottom: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 204, 0, 0.15), transparent 70%);
             pointer-events: none;
         }
 
         .hero-tag-mobile {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
-            background: rgba(201, 168, 76, 0.1);
-            border: 1px solid rgba(201, 168, 76, 0.25);
+            gap: 0.5rem;
+            background: rgba(255, 204, 0, 0.15);
+            border: 1px solid var(--clr-accent);
             color: var(--clr-accent);
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            padding: 0.3rem 0.75rem;
+            padding: 0.4rem 1rem;
             border-radius: 50px;
-            margin-bottom: 1.75rem;
+            margin-bottom: 2rem;
+            font-family: var(--font-heading);
         }
 
         .hero-mobile h1 {
-            font-size: 2.8rem;
-            font-weight: 900;
-            line-height: 1.05;
-            letter-spacing: -0.02em;
-            margin: 0 0 1rem;
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
         }
 
-        .hero-mobile h1 .gold {
+        .hero-mobile h1 .accent {
             color: var(--clr-accent);
         }
 
         .hero-mobile p {
-            color: var(--clr-muted);
-            font-size: 0.95rem;
-            line-height: 1.7;
-            max-width: 340px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 90%;
+            margin-bottom: 2rem;
         }
 
-        /* =========================================================================
-       Status Chips (compact, mobile-friendly)
-    ========================================================================= */
+        /* Status Section */
         .status-section {
-            padding: 1.5rem 1.25rem;
+            padding: 3rem 1.5rem;
+            background: #ffffff;
+        }
+
+        .label-sm {
+            font-family: var(--font-heading);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--clr-primary);
+            margin-bottom: 1.5rem;
+            display: block;
         }
 
         .chip {
             display: flex;
-            align-items: flex-start;
-            gap: 0.85rem;
-            background: var(--clr-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            align-items: center;
+            gap: 1.25rem;
+            background: #ffffff;
+            border: 1px solid var(--clr-border);
             border-radius: var(--radius);
-            padding: 1.1rem 1.1rem;
-            margin-bottom: 0.85rem;
-            transition: border-color 0.2s;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 39, 102, 0.05);
+            transition: var(--transition);
         }
 
-        .chip.success {
-            border-left: 3px solid var(--clr-success);
+        .chip:active {
+            transform: scale(0.98);
+            background: var(--clr-bg-cream);
         }
 
-        .chip.gold {
-            border-left: 3px solid var(--clr-accent);
+        .chip-icon {
+            font-size: 1.75rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--clr-bg-cream);
+            border-radius: 12px;
+            color: var(--clr-primary);
         }
 
-        .chip.info {
-            border-left: 3px solid #8b9fff;
-        }
-
-        .chip .chip-icon {
-            font-size: 1.4rem;
-            line-height: 1.3;
-            flex-shrink: 0;
-        }
-
-        .chip .chip-label {
-            font-size: 0.65rem;
+        .chip-label {
+            font-family: var(--font-heading);
+            font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--clr-muted);
-            margin-bottom: 0.2rem;
+            letter-spacing: 0.1em;
+            color: var(--clr-text-muted);
+            margin-bottom: 0.25rem;
         }
 
-        .chip .chip-value {
-            font-size: 0.88rem;
-            font-weight: 500;
-            line-height: 1.5;
+        .chip-value {
+            font-weight: 700;
+            color: var(--clr-text-main);
+            font-size: 1rem;
+            margin: 0;
         }
 
-        /* =========================================================================
-       Feature Cards (vertical list on mobile)
-    ========================================================================= */
+        /* Modules Section */
         .modules-section {
-            padding: 0.5rem 1.25rem 1rem;
+            padding: 3rem 1.5rem;
+            background: var(--clr-bg-cream);
         }
 
         .module-row {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            background: var(--clr-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            gap: 1.25rem;
+            background: #ffffff;
             border-radius: var(--radius);
-            padding: 1rem 1.1rem;
-            margin-bottom: 0.75rem;
-            transition: border-color 0.2s;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
-        .module-row:active {
-            border-color: rgba(201, 168, 76, 0.3);
+        .mod-icon {
+            font-size: 1.8rem;
         }
 
-        .module-row .mod-icon {
-            font-size: 1.6rem;
-            flex-shrink: 0;
-        }
-
-        .module-row .mod-info {
-            flex: 1;
-        }
-
-        .module-row .mod-title {
-            font-size: 0.92rem;
+        .mod-title {
+            font-family: var(--font-heading);
             font-weight: 700;
-            margin: 0 0 0.15rem;
+            font-size: 1.05rem;
+            color: var(--clr-deep-navy);
+            margin-bottom: 0.25rem;
         }
 
-        .module-row .mod-desc {
-            font-size: 0.78rem;
-            color: var(--clr-muted);
+        .mod-desc {
+            font-size: 0.85rem;
+            color: var(--clr-text-muted);
             margin: 0;
         }
 
         .badge-phase {
+            font-family: var(--font-heading);
             font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
+            font-weight: 800;
+            background: var(--clr-primary);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
             text-transform: uppercase;
-            background: rgba(201, 168, 76, 0.12);
-            color: var(--clr-accent);
-            border: 1px solid rgba(201, 168, 76, 0.2);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            white-space: nowrap;
-            flex-shrink: 0;
         }
 
-        /* =========================================================================
-       Section Labels
-    ========================================================================= */
-        .label-sm {
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--clr-accent);
-            padding: 0 0 0.5rem;
-        }
-
-        /* =========================================================================
-       Sticky Bottom CTA Bar
-    ========================================================================= */
+        /* Sticky Bottom Bar */
         .bottom-bar {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             z-index: 200;
-            background: rgba(17, 17, 17, 0.96);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(201, 168, 76, 0.15);
-            padding: 0.85rem 1.25rem;
-            padding-bottom: calc(0.85rem + var(--safe-bottom));
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-top: 1px solid var(--clr-border);
+            padding: 1rem 1.5rem;
+            padding-bottom: calc(1rem + var(--safe-bottom));
             display: flex;
-            gap: 0.75rem;
+            gap: 1rem;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
         }
 
         .btn-gold-full {
-            flex: 1;
-            background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-dark));
-            color: #0d0d0d;
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 0.06em;
+            flex: 1.5;
+            background: var(--clr-accent);
+            color: var(--clr-deep-navy) !important;
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            border: none;
-            border-radius: 10px;
-            padding: 0.75rem;
+            letter-spacing: 0.05em;
+            border-radius: 12px;
+            padding: 1rem;
             text-align: center;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.4rem;
-            box-shadow: 0 4px 16px rgba(201, 168, 76, 0.25);
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
         }
 
         .btn-ghost-full {
             flex: 1;
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--clr-text);
-            font-weight: 600;
-            font-size: 0.85rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 0.75rem;
+            background: #ffffff;
+            color: var(--clr-primary);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1px solid var(--clr-primary);
+            border-radius: 12px;
+            padding: 1rem;
             text-align: center;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.4rem;
+            gap: 0.5rem;
         }
     </style>
 </head>
@@ -376,30 +355,27 @@
   ==================================================================== -->
     <header class="app-bar">
         <a class="brand" href="/">
-            <i class="bi bi-diamond-fill me-1" style="font-size:0.8rem;"></i>SAHAL
+            <i class="bi bi-diamond-fill me-1"></i>SAHAL
         </a>
-        <button class="menu-btn" aria-label="Open menu">
+        <button class="menu-btn" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
             <i class="bi bi-list"></i>
         </button>
     </header>
 
-    <!-- ====================================================================
-       HERO SECTION
-  ==================================================================== -->
+    <!-- HERO SECTION -->
     <section class="hero-mobile">
         <span class="hero-tag-mobile">
-            <i class="bi bi-broadcast"></i> Phase 1 — Stack Live
+            <i class="bi bi-award-fill"></i> Professional Excellence
         </span>
 
         <h1>
             SAHAL<br />
-            <span class="gold">BRANDING</span><br />
+            <span class="accent">BRANDING</span><br />
             AGENCY
         </h1>
 
         <p>
-            Premium brand identity &amp; digital strategy — engineered for brands
-            that demand to stand out.
+            Strategic design and digital expertise for brands that demand a professional edge.
         </p>
     </section>
 

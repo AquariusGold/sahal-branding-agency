@@ -11,79 +11,106 @@
         rel="stylesheet" />
     <style>
         :root {
-            --clr-primary: #0d0d0d;
-            --clr-accent: #C9A84C;
-            --clr-accent-dark: #9e7a2e;
-            --clr-card: #1a1a1a;
-            --clr-text: #f0f0f0;
-            --clr-muted: #bcbcbc;
-            --font-body: 'Outfit', sans-serif;
+            --clr-primary: #003399;
+            --clr-deep-navy: #002766;
+            --clr-accent: #FFCC00;
+            --clr-bg-cream: #FFF4C5;
+            --clr-text-main: #001A4D;
+            --clr-text-muted: #556688;
+            --clr-border: rgba(0, 51, 153, 0.1);
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Lato', sans-serif;
             --radius: 12px;
-            --transition: 0.25s ease;
+            --transition: 0.3s ease;
         }
 
         body {
             font-family: var(--font-body);
-            background-color: var(--clr-primary);
-            color: var(--clr-text);
-            background-image: radial-gradient(ellipse at 80% 20%, rgba(201, 168, 76, 0.04) 0%, transparent 50%);
+            background-color: #ffffff;
+            color: var(--clr-text-main);
         }
 
         .navbar {
-            background: rgba(13, 13, 13, 0.85) !important;
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+            background: var(--clr-primary) !important;
+            box-shadow: 0 2px 15px rgba(0, 51, 153, 0.1);
         }
 
-        .navbar-brand-text {
-            font-weight: 900;
-            font-size: 1.35rem;
-            letter-spacing: 0.08em;
+        .navbar-brand {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            color: white !important;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8) !important;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
             color: var(--clr-accent) !important;
-            text-transform: uppercase;
         }
 
         .category-section {
-            padding: 4rem 0;
+            padding: 5rem 0;
         }
 
         .service-card {
-            background: var(--clr-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: #ffffff;
+            border: 1px solid var(--clr-border);
             border-radius: var(--radius);
             padding: 2.5rem;
             height: 100%;
-            transition: all var(--transition);
+            transition: var(--transition);
             display: flex;
             flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 39, 102, 0.05);
         }
 
         .service-card:hover {
-            border-color: rgba(201, 168, 76, 0.3);
-            transform: translateY(-5px);
+            border-color: var(--clr-primary);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 39, 102, 0.1);
         }
 
         .price-tag {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--clr-accent);
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--clr-primary);
         }
 
-        .btn-gold {
-            background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-dark));
-            color: #0d0d0d;
-            font-weight: 700;
+        .btn-cta {
+            background: var(--clr-accent);
+            color: var(--clr-deep-navy) !important;
+            font-weight: 800;
             border: none;
-            padding: 0.8rem 1.5rem;
+            padding: 0.85rem 1.75rem;
             border-radius: 50px;
             text-transform: uppercase;
             font-size: 0.85rem;
-            transition: all var(--transition);
+            letter-spacing: 0.05em;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
         }
 
-        .btn-gold:hover {
-            box-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
-            color: #0d0d0d;
+        .btn-cta:hover {
+            background: var(--clr-primary);
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+        }
+
+        .section-header-line {
+            width: 50px;
+            height: 4px;
+            background: var(--clr-accent);
+            display: inline-block;
+            margin-right: 1rem;
         }
     </style>
 </head>
@@ -107,39 +134,41 @@
         </div>
     </nav>
 
-    <div class="container py-5 text-center">
-        <h1 class="fw-black display-4 mb-3">Premium Design <span style="color:var(--clr-accent);">Services</span></h1>
-        <p class="text-white mx-auto" style="max-width: 600px;">Elevate your brand with our curated selection of
-            creative packages designed for high-impact growth.</p>
+    <div class="container py-5 text-center mt-5">
+        <h1 class="display-3 fw-800 mb-3" style="color: var(--clr-primary);">
+            Strategic <span style="color:var(--clr-accent);">Solutions</span>
+        </h1>
+        <p class="text-muted mx-auto fs-5" style="max-width: 700px;">
+            Premium branding and digital expertise designed to elevate your professional identity.
+        </p>
     </div>
 
     <main class="container py-4">
         {% for category in categories %}
         <section class="category-section">
-            <h2 class="fw-bold mb-4 d-flex align-items-center">
-                <span class="me-3" style="width:40px; height:3px; background:var(--clr-accent);"></span>
-                {{ category.name }}
-            </h2>
-            <p class="text-white mb-5">{{ category.description }}</p>
+            <div class="d-flex align-items-center mb-5">
+                <span class="section-header-line"></span>
+                <h2 class="fw-bold m-0" style="color: var(--clr-deep-navy);">{{ category.name }}</h2>
+            </div>
+            <p class="text-muted mb-5 fs-5">{{ category.description }}</p>
 
             <div class="row g-4">
                 {% for service in category.services if service.is_active %}
                 <div class="col-lg-4">
-                    <div class="service-card d-flex flex-column h-100">
+                    <div class="service-card">
                         <div class="mb-4">
-                            <h4 class="fw-bold mb-2">{{ service.name }}</h4>
-                            <p class="text-white-50 small">{{ service.description }}</p>
+                            <h4 class="fw-bold mb-3" style="color: var(--clr-primary);">{{ service.name }}</h4>
+                            <p class="text-muted small mb-0">{{ service.description }}</p>
                         </div>
-                        <div
-                            class="mt-auto pt-4 border-top border-light border-opacity-10 d-flex justify-content-between align-items-center">
+                        <div class="mt-auto pt-4 border-top d-flex justify-content-between align-items-center">
                             <div>
-                                <span class="text-white-50 small d-block">Starting at</span>
+                                <span class="text-muted small d-block">Investment starting at</span>
                                 <span class="price-tag">${{ "%.2f"|format(service.base_price) }}</span>
                             </div>
                             <form action="{{ url_for('services.create_order') }}" method="POST">
                                 <input type="hidden" name="service_id" value="{{ service.id }}">
                                 <input type="hidden" name="quantity" value="1">
-                                <button type="submit" class="btn btn-gold btn-sm">Order Now</button>
+                                <button type="submit" class="btn-cta">Order Now</button>
                             </form>
                         </div>
                     </div>

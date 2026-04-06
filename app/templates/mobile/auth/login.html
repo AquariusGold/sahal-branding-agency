@@ -12,54 +12,73 @@
 
     <style>
         :root {
-            --clr-primary: #0d0d0d;
-            --clr-accent: #C9A84C;
-            --clr-text: #f0f0f0;
-            --clr-muted: #888888;
+            --clr-primary: #003399;
+            --clr-deep-navy: #002766;
+            --clr-accent: #FFCC00;
+            --clr-bg-cream: #FFF4C5;
+            --clr-text-main: #001A4D;
+            --clr-text-muted: #556688;
+            --clr-border: rgba(0, 51, 153, 0.1);
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Lato', sans-serif;
+            --radius: 16px;
+            --transition: 0.3s ease;
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--clr-primary);
-            color: var(--clr-text);
+            font-family: var(--font-body);
+            background-color: #ffffff;
+            color: var(--clr-text-main);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            padding: 1.5rem;
+            padding: 2rem;
+            margin: 0;
+            background-image: radial-gradient(circle at 50% 100%, var(--clr-bg-cream) 0%, transparent 60%);
         }
 
         .brand-header {
             text-align: center;
-            margin: 2rem 0 3rem;
+            margin: 3rem 0 4rem;
+        }
+
+        .brand-header i {
+            color: var(--clr-primary);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
         }
 
         .brand-header h1 {
-            color: var(--clr-accent);
-            font-weight: 900;
-            letter-spacing: 0.1em;
+            font-family: var(--font-heading);
+            color: var(--clr-primary);
+            font-weight: 800;
+            letter-spacing: 0.15em;
             margin: 0;
-            font-size: 1.8rem;
+            font-size: 2rem;
+            text-transform: uppercase;
         }
 
         .form-control {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-            padding: 1rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid var(--clr-border);
+            color: var(--clr-text-main);
+            padding: 1rem 1.25rem;
+            border-radius: 14px;
+            font-size: 1rem;
+            transition: var(--transition);
         }
 
         .form-control:focus {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--clr-accent);
-            box-shadow: none;
-            color: #fff;
+            background: #ffffff;
+            border-color: var(--clr-primary);
+            box-shadow: 0 0 0 4px rgba(0, 51, 153, 0.05);
+            color: var(--clr-text-main);
         }
 
-        /* Password Toggle Mobile Styles */
         .password-wrapper {
             position: relative;
+            margin-bottom: 1.5rem;
         }
 
         .password-toggle {
@@ -67,46 +86,60 @@
             right: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--clr-muted);
+            color: var(--clr-text-muted);
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             padding: 10px;
-            /* larger tap target for mobile */
-            margin-top: -0.75rem;
-            /* offset the margin bottom of the absolute container's parent if needed, or adjust alignment */
+            z-index: 10;
         }
 
-        /* Adjust for the margin-bottom on .form-control */
-        .password-wrapper .form-control {
-            margin-bottom: 0;
-        }
-
-        .password-wrapper {
-            margin-bottom: 1.5rem;
-        }
-
-        .btn-gold {
-            background: var(--clr-accent);
-            color: #000;
-            font-weight: 700;
-            padding: 1rem;
-            border-radius: 12px;
+        .btn-cta {
+            background: var(--clr-primary);
+            color: #ffffff !important;
+            font-family: var(--font-heading);
+            font-weight: 800;
+            padding: 1.1rem;
+            border-radius: 14px;
             width: 100%;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             border: none;
-            margin-top: 1rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 51, 153, 0.2);
+            transition: var(--transition);
+        }
+
+        .btn-cta:active {
+            transform: scale(0.97);
+            background: var(--clr-deep-navy);
         }
 
         .footer-links {
             margin-top: auto;
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 3rem;
+        }
+
+        .footer-links p {
+            color: var(--clr-text-muted);
+            margin-bottom: 0.5rem;
         }
 
         .footer-links a {
-            color: var(--clr-accent);
+            font-family: var(--font-heading);
+            color: var(--clr-primary);
             text-decoration: none;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        .alert {
+            background: var(--clr-bg-cream);
+            border: 1px solid var(--clr-accent);
+            color: var(--clr-primary);
+            border-radius: 14px;
             font-weight: 600;
         }
     </style>
@@ -115,15 +148,15 @@
 <body>
 
     <div class="brand-header">
-        <i class="bi bi-diamond-fill mb-2 d-inline-block" style="color:var(--clr-accent); font-size:1.5rem;"></i>
+        <i class="bi bi-diamond-fill"></i>
         <h1>SAHAL</h1>
-        <p class="text-muted mt-2 small">Sign in to your account</p>
+        <p class="mt-2 text-muted">Strategic Branding & Digital Agency</p>
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
-    <div class="alert alert-{{ category if category != 'message' else 'info' }} p-3 mb-4 rounded-3"
+    <div class="alert alert-{{ category if category != 'message' else 'info' }} p-3 mb-4"
         style="font-size:0.9rem;">
         {{ message }}
     </div>
@@ -142,14 +175,14 @@
         </div>
 
         <div class="d-flex justify-content-between align-items-center px-1">
-            <div class="form-check text-muted" style="font-size:0.85rem;">
+            <div class="form-check" style="font-size:0.85rem; color: var(--clr-text-muted);">
                 {{ form.remember(class="form-check-input") }}
-                <label class="form-check-label pt-1" for="remember">Remember me</label>
+                <label class="form-check-label pt-1" for="remember">Keep me signed in</label>
             </div>
-            <a href="#" class="text-muted" style="font-size:0.85rem; text-decoration:none;">Forgot?</a>
+            <a href="#" class="auth-link" style="font-size:0.85rem; text-decoration:none;">Forgot?</a>
         </div>
 
-        {{ form.submit(class="btn btn-gold") }}
+        {{ form.submit(class="btn-cta") }}
     </form>
 
     <div class="footer-links">

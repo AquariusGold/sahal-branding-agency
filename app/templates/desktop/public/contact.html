@@ -6,51 +6,90 @@
 {% block extra_css %}
 <style>
     .page-header {
-        padding: 5rem 0 3rem;
+        padding: 6rem 0 4rem;
+        background: #ffffff;
         border-bottom: 1px solid var(--clr-border);
-        background: linear-gradient(180deg, rgba(22, 22, 24, 0.4) 0%, transparent 100%);
     }
 
     .contact-form .form-control,
     .contact-form .form-select {
-        background-color: rgba(255, 255, 255, 0.03);
+        background-color: #f8f9fa;
         border: 1px solid var(--clr-border);
-        color: #fff;
-        padding: 1rem 1.25rem;
+        color: var(--clr-text-main);
+        padding: 1.1rem 1.4rem;
         border-radius: var(--radius-md);
         transition: all 0.3s ease;
+        font-family: var(--font-body);
     }
 
     .contact-form .form-control:focus,
     .contact-form .form-select:focus {
-        background-color: rgba(255, 255, 255, 0.05);
-        border-color: var(--clr-cyan);
-        box-shadow: 0 0 0 0.25rem rgba(0, 240, 255, 0.25);
+        background-color: #ffffff;
+        border-color: var(--clr-primary);
+        box-shadow: 0 0 0 5px rgba(0, 51, 153, 0.05);
+        color: var(--clr-text-main);
     }
 
     .contact-form .form-label {
-        color: var(--clr-muted);
-        font-weight: 500;
-        margin-bottom: 0.5rem;
+        color: var(--clr-primary);
+        font-weight: 800;
+        font-family: var(--font-heading);
+        margin-bottom: 0.6rem;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.05em;
     }
 
     .contact-info-card {
-        background: var(--clr-card);
+        background: #ffffff;
         border: 1px solid var(--clr-border);
-        border-radius: var(--radius-md);
-        padding: 2.5rem;
+        border-radius: var(--radius-lg);
+        padding: 3rem;
         height: 100%;
+        box-shadow: 0 10px 30px rgba(0, 39, 102, 0.05);
     }
 
     .contact-icon-box {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        border-radius: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.25rem;
+        font-size: 1.5rem;
         margin-bottom: 1rem;
+        background: var(--clr-bg-cream);
+        color: var(--clr-primary);
+        border: 1px solid var(--clr-accent);
+        transition: all 0.3s ease;
+    }
+
+    .contact-info-item:hover .contact-icon-box {
+        background: var(--clr-primary);
+        color: white;
+        transform: scale(1.1);
+    }
+
+    .premium-badge {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        background: var(--clr-bg-cream);
+        color: var(--clr-primary);
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 1.5rem;
+        border: 1px solid var(--clr-accent);
+    }
+
+    .client-portal-box {
+        background: var(--clr-primary);
+        padding: 2.5rem;
+        border-radius: var(--radius-lg);
+        color: white;
+        border: 1px solid var(--clr-accent);
     }
 </style>
 {% endblock %}
@@ -58,9 +97,12 @@
 {% block content %}
 <div class="page-header mb-5">
     <div class="container text-center">
-        <h1 class="fw-bold mb-3" style="font-size: 3.5rem;">Let's Connect</h1>
-        <p class="text-muted fs-5 mx-auto" style="max-width: 700px;">Have a project in mind? Reach out to our team of
-            experts and let's build something exceptional together.</p>
+        <span class="premium-badge">Global Inquiry</span>
+        <h1 class="display-3 fw-800 mb-3" style="color: var(--clr-primary);">Let's <span style="color:var(--clr-accent);">Connect</span></h1>
+        <p class="text-muted fs-5 mx-auto" style="max-width: 750px;">
+            Have a strategic project in mind? Reach out to our team of experts and 
+            let's build something exceptional together.
+        </p>
     </div>
 </div>
 
@@ -68,25 +110,25 @@
     <div class="row g-5">
         <!-- Contact Form -->
         <div class="col-lg-7">
-            <div class="glass-card p-4 p-md-5">
-                <h3 class="fw-bold mb-4">Send a Message</h3>
+            <div class="p-4 p-md-5 bg-white border rounded-4 shadow-sm">
+                <h3 class="fw-800 mb-4" style="color: var(--clr-primary);">Direct Message</h3>
                 <form class="contact-form">
                     <div class="row g-4">
                         <div class="col-md-6">
                             <label class="form-label">First Name</label>
-                            <input type="text" class="form-control" placeholder="John">
+                            <input type="text" class="form-control" placeholder="Professional name">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Last Name</label>
-                            <input type="text" class="form-control" placeholder="Doe">
+                            <input type="text" class="form-control" placeholder="Surname">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Email Address</label>
-                            <input type="email" class="form-control" placeholder="john@example.com">
+                            <input type="email" class="form-control" placeholder="corporate@email.com">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" placeholder="+1 (555) 000-0000">
+                            <input type="tel" class="form-control" placeholder="Contact number">
                         </div>
                         <div class="col-12">
                             <label class="form-label">Subject</label>
@@ -103,10 +145,10 @@
                         <div class="col-12">
                             <label class="form-label">Message</label>
                             <textarea class="form-control" rows="5"
-                                placeholder="Tell us about your project..."></textarea>
+                                placeholder="Tell us about your project requirements..."></textarea>
                         </div>
                         <div class="col-12 mt-4">
-                            <button type="button" class="btn-gradient w-100 py-3 fs-5">Send Message</button>
+                            <button type="button" class="btn-cta w-100 py-3 fs-5">Send Inquiry</button>
                         </div>
                     </div>
                 </form>
@@ -116,51 +158,45 @@
         <!-- Contact Info -->
         <div class="col-lg-5">
             <div class="contact-info-card">
-                <h3 class="fw-bold mb-5">Information</h3>
+                <h3 class="fw-800 mb-5" style="color: var(--clr-primary);">Information</h3>
 
-                <div class="d-flex mb-4">
-                    <div class="contact-icon-box text-cyan me-4 flex-shrink-0"
-                        style="background: rgba(0,240,255,0.1); border: 1px solid var(--clr-cyan);">
+                <div class="d-flex mb-5 contact-info-item">
+                    <div class="contact-icon-box me-4 flex-shrink-0">
                         <i class="bi bi-geo-alt"></i>
                     </div>
                     <div>
-                        <h5 class="fw-bold text-white mb-2">Our Office</h5>
+                        <h5 class="fw-800 mb-2" style="color: var(--clr-primary);">Our Office</h5>
                         <p class="text-muted mb-0">123 Brand Avenue, Tech Hub District<br>Innovation City, 10001</p>
                     </div>
                 </div>
 
-                <div class="d-flex mb-4">
-                    <div class="contact-icon-box text-magenta me-4 flex-shrink-0"
-                        style="background: rgba(255,0,85,0.1); border: 1px solid var(--clr-magenta);">
+                <div class="d-flex mb-5 contact-info-item">
+                    <div class="contact-icon-box me-4 flex-shrink-0">
                         <i class="bi bi-envelope"></i>
                     </div>
                     <div>
-                        <h5 class="fw-bold text-white mb-2">Email Us</h5>
+                        <h5 class="fw-800 mb-2" style="color: var(--clr-primary);">Email Us</h5>
                         <p class="text-muted mb-0">hello@sahal.agency<br>support@sahal.agency</p>
                     </div>
                 </div>
 
-                <div class="d-flex mb-5">
-                    <div class="contact-icon-box text-purple me-4 flex-shrink-0"
-                        style="background: rgba(127,13,242,0.1); border: 1px solid var(--clr-purple);">
+                <div class="d-flex mb-5 contact-info-item">
+                    <div class="contact-icon-box me-4 flex-shrink-0">
                         <i class="bi bi-telephone"></i>
                     </div>
                     <div>
-                        <h5 class="fw-bold text-white mb-2">Call Us</h5>
+                        <h5 class="fw-800 mb-2" style="color: var(--clr-primary);">Call Us</h5>
                         <p class="text-muted mb-0">+1 (555) 123-4567<br>Mon-Fri, 9am - 6pm</p>
                     </div>
                 </div>
 
-                <hr class="border-secondary opacity-25 my-4">
-
-                <div class="text-center bg-dark p-4 rounded-3 border border-secondary border-opacity-25"
-                    style="background: rgba(0,0,0,0.3) !important;">
-                    <i class="bi bi-person-workspace fs-1 mb-3 text-muted"></i>
-                    <h5 class="fw-bold text-white mb-2">Already a client?</h5>
-                    <p class="text-muted small mb-3">Access your dashboard to check project status, quotations, and
-                        invoices.</p>
-                    <a href="{{ url_for('auth.login') }}" class="btn-outline-glow w-100 text-decoration-none">Go to
-                        Client Portal <i class="bi bi-box-arrow-in-right ms-2"></i></a>
+                <div class="client-portal-box text-center">
+                    <i class="bi bi-shield-lock fs-1 mb-3 text-accent"></i>
+                    <h5 class="fw-800 mb-2">Client Portal</h5>
+                    <p class="text-white-50 small mb-4">Access your dashboard to check project status, quotations, and invoices.</p>
+                    <a href="{{ url_for('auth.login') }}" class="btn-cta bg-accent text-primary w-100 text-decoration-none py-2">
+                        Client Login <i class="bi bi-box-arrow-in-right ms-2"></i>
+                    </a>
                 </div>
             </div>
         </div>

@@ -9,195 +9,130 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Vibrant Palette */
-            --clr-magenta: #ff0055;
-            --clr-cyan: #00f0ff;
-            --clr-purple: #7f0df2;
-            --clr-yellow: #ffaa00;
-            --clr-green: #00ff66;
-
-            /* Core UI */
-            --clr-primary: #0a0a0a;
-            --clr-surface: #121214;
-            --clr-card: #161618;
-            --clr-text: #f8f9fa;
-            --clr-muted: #b3b3b3;
-            --clr-border: #262626;
+            /* Brand Colors */
+            --clr-primary: #003399;
+            --clr-deep-navy: #002766;
+            --clr-accent: #FFCC00;
+            --clr-bg-cream: #FFF4C5;
+            
+            /* UI Palette */
+            --clr-white: #FFFFFF;
+            --clr-text-main: #001A4D;
+            --clr-text-muted: #556688;
+            --clr-border: rgba(0, 51, 153, 0.1);
+            
+            /* Typography */
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Lato', sans-serif;
+            
             --radius-md: 12px;
             --radius-lg: 16px;
+            --transition: all 0.3s ease;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--clr-primary);
-            color: var(--clr-text);
+            font-family: var(--font-body);
+            background-color: var(--clr-white);
+            color: var(--clr-text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             margin: 0;
             overflow-x: hidden;
-            padding-bottom: 5rem;
-            /* space for bottom CTA */
+            padding-bottom: 5.5rem; /* space for bottom CTA */
+            line-height: 1.5;
         }
 
         .text-muted {
-            color: var(--clr-muted) !important;
+            color: var(--clr-text-muted) !important;
         }
 
-        /* Color Text Utilities */
-        .text-magenta {
-            color: var(--clr-magenta) !important;
-        }
+        /* Utilities */
+        .text-primary { color: var(--clr-primary) !important; }
+        .text-accent { color: var(--clr-accent) !important; }
+        .bg-cream { background-color: var(--clr-bg-cream) !important; }
 
-        .text-cyan {
-            color: var(--clr-cyan) !important;
-        }
-
-        .text-purple {
-            color: var(--clr-purple) !important;
-        }
-
-        .text-yellow {
-            color: var(--clr-yellow) !important;
-        }
-
-        .text-green {
-            color: var(--clr-green) !important;
-        }
-
-        .text-gradient {
-            background: linear-gradient(135deg, var(--clr-magenta), var(--clr-purple), var(--clr-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Generic utilities for dynamic generation */
-        .border-magenta {
-            border: 1px solid var(--clr-magenta) !important;
-            box-shadow: 0 0 15px rgba(255, 0, 85, 0.1);
-        }
-
-        .border-cyan {
-            border: 1px solid var(--clr-cyan) !important;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
-        }
-
-        .border-purple {
-            border: 1px solid var(--clr-purple) !important;
-            box-shadow: 0 0 15px rgba(127, 13, 242, 0.1);
-        }
-
-        .border-yellow {
-            border: 1px solid var(--clr-yellow) !important;
-            box-shadow: 0 0 15px rgba(255, 170, 0, 0.1);
-        }
-
-        .border-green {
-            border: 1px solid var(--clr-green) !important;
-            box-shadow: 0 0 15px rgba(0, 255, 102, 0.1);
-        }
-
-        .bg-magenta-subtle {
-            background: rgba(255, 0, 85, 0.1) !important;
-        }
-
-        .bg-cyan-subtle {
-            background: rgba(0, 240, 255, 0.1) !important;
-        }
-
-        .bg-purple-subtle {
-            background: rgba(127, 13, 242, 0.1) !important;
-        }
-
-        .bg-yellow-subtle {
-            background: rgba(255, 170, 0, 0.1) !important;
-        }
-
-        .bg-green-subtle {
-            background: rgba(0, 255, 102, 0.1) !important;
-        }
-
-        /* Glassmorphism Card Removed - Now Solid Card */
-        .glass-card {
-            background: var(--clr-card);
+        /* Modern Card Styling */
+        .premium-card {
+            background: var(--clr-white);
             border: 1px solid var(--clr-border);
             border-radius: var(--radius-md);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 39, 102, 0.05);
         }
 
         /* Top Navigation */
         .mobile-header {
             background: var(--clr-primary);
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid var(--clr-border);
+            padding: 1.15rem 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .brand-text {
-            color: #fff;
+            color: var(--clr-white);
+            font-family: var(--font-heading);
             font-weight: 800;
             letter-spacing: 0.1em;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             text-decoration: none;
         }
 
         .brand-text i {
-            background: linear-gradient(135deg, var(--clr-magenta), var(--clr-cyan));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-right: 0.4rem;
+            color: var(--clr-accent);
+            margin-right: 0.5rem;
         }
 
         /* Offcanvas Menu */
-        .offcanvas-glass {
-            background: var(--clr-primary) !important;
+        .offcanvas-custom {
+            background: var(--clr-white) !important;
             border-left: 1px solid var(--clr-border);
         }
 
         .offcanvas-header {
             border-bottom: 1px solid var(--clr-border);
+            background: var(--clr-off-white);
         }
 
         .mobile-nav-link {
             display: block;
-            padding: 1.2rem 1.5rem;
-            color: #fff;
+            padding: 1.25rem 1.5rem;
+            color: var(--clr-text-main);
             text-decoration: none;
             font-size: 1.1rem;
             font-weight: 600;
             border-bottom: 1px solid var(--clr-border);
-            transition: background 0.3s;
+            transition: var(--transition);
         }
 
         .mobile-nav-link:hover,
         .mobile-nav-link.active {
-            background: rgba(127, 13, 242, 0.1);
-            color: #fff;
+            background: var(--clr-bg-cream);
+            color: var(--clr-primary);
         }
 
         .mobile-nav-link i {
-            margin-right: 1rem;
-            color: var(--clr-muted);
+            margin-right: 1.2rem;
+            color: var(--clr-text-muted);
             width: 24px;
             text-align: center;
         }
 
         .mobile-nav-link.active i {
-            color: var(--clr-cyan);
+            color: var(--clr-primary);
         }
 
         /* Bottom Fixed CTA */
@@ -206,47 +141,69 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(10, 10, 10, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-top: 1px solid var(--clr-border);
-            padding: 1rem;
+            padding: 1rem 1.5rem;
             z-index: 1000;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
         }
 
-        .btn-gradient {
-            background: linear-gradient(135deg, var(--clr-magenta), var(--clr-purple), var(--clr-cyan));
-            color: #fff !important;
+        .btn-cta {
+            background: var(--clr-accent);
+            color: var(--clr-deep-navy) !important;
             font-weight: 700;
-            padding: 0.5rem 1.5rem;
-            border-radius: var(--radius-md);
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
             border: none;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             text-decoration: none;
-            display: block;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(127, 13, 242, 0.4);
-            position: relative;
-            z-index: 1;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            line-height: 1;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
         }
 
-        .btn-outline-glow {
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            font-weight: 600;
-            padding: 0.5rem 1.5rem;
-            border-radius: var(--radius-md);
-            background: rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
+        .btn-cta:hover {
+            background: var(--clr-primary);
+            color: var(--clr-white) !important;
+            box-shadow: 0 6px 18px rgba(0, 51, 153, 0.3);
+        }
+
+        .btn-outline-primary {
+            border: 2px solid var(--clr-primary);
+            color: var(--clr-primary) !important;
+            font-weight: 700;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            background: transparent;
+            transition: var(--transition);
             text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.85rem;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--clr-primary);
+            color: var(--clr-white) !important;
         }
 
         /* Footer */
         .mobile-footer {
-            background: var(--clr-surface);
-            border-top: 1px solid var(--clr-border);
-            padding: 3rem 1.5rem;
+            background: var(--clr-deep-navy);
+            color: var(--clr-white);
+            padding: 4rem 1.5rem;
             margin-top: auto;
             text-align: center;
         }
@@ -255,14 +212,21 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            background: var(--clr-card);
-            border: 1px solid var(--clr-border);
-            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--clr-white);
             text-decoration: none;
-            margin: 0 0.4rem;
+            margin: 0 0.5rem;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background: var(--clr-accent);
+            color: var(--clr-deep-navy);
+            border-color: var(--clr-accent);
         }
 
         /* Layout Block Space */
@@ -277,7 +241,9 @@
 
     <!-- Header -->
     <header class="mobile-header">
-        <a href="{{ url_for('main.index') }}" class="brand-text"><i class="bi bi-diamond-fill"></i>SAHAL</a>
+        <a href="{{ url_for('main.index') }}" class="brand-text">
+            <img src="{{ url_for('static', filename='images/Logo White.png') }}" alt="SAHAL Logo" height="30">
+        </a>
         <button class="btn text-white p-0 m-0 border-0 shadow-none" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#mobileMenu">
             <i class="bi bi-list fs-1"></i>
@@ -285,11 +251,11 @@
     </header>
 
     <!-- Offcanvas Navigation Menu -->
-    <div class="offcanvas offcanvas-end offcanvas-glass" tabindex="-1" id="mobileMenu"
+    <div class="offcanvas offcanvas-end offcanvas-custom" tabindex="-1" id="mobileMenu"
         aria-labelledby="mobileMenuLabel">
         <div class="offcanvas-header py-4">
-            <h5 class="offcanvas-title text-white fw-bold" id="mobileMenuLabel">Menu</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+            <h5 class="offcanvas-title text-navy fw-bold" id="mobileMenuLabel">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                 aria-label="Close"></button>
         </div>
         <div class="offcanvas-body p-0 d-flex flex-col flex-column">
@@ -308,13 +274,13 @@
                 {% if current_user.is_authenticated %}
                 {% if current_user.is_admin %}
                 <a href="{{ url_for('dashboards.admin') }}"
-                    class="btn btn-outline-light w-100 py-3 rounded-3 fw-bold">Admin Portal</a>
+                    class="btn btn-outline-primary w-100 py-3 rounded-3 fw-bold">Admin Portal</a>
                 {% else %}
                 <a href="{{ url_for('dashboards.client') }}"
-                    class="btn btn-outline-light w-100 py-3 rounded-3 fw-bold">Client Portal</a>
+                    class="btn btn-outline-primary w-100 py-3 rounded-3 fw-bold">Client Portal</a>
                 {% endif %}
                 {% else %}
-                <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light w-100 py-3 rounded-3 fw-bold"><i
+                <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary w-100 py-3 rounded-3 fw-bold"><i
                         class="bi bi-box-arrow-in-right me-2"></i> Client Login</a>
                 {% endif %}
             </div>
@@ -327,9 +293,9 @@
         {% if messages %}
         {% for category, message in messages %}
         <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm rounded-3" role="alert"
-            style="background: var(--clr-card); border: 1px solid var(--clr-border); color: #fff;">
+            style="background: var(--clr-bg-cream); border: 1px solid var(--clr-border); color: var(--clr-text-main);">
             {{ message }}
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         {% endfor %}
         {% endif %}
@@ -342,13 +308,13 @@
     </main>
 
     <div class="bottom-cta-bar">
-        <a href="{{ url_for('services.booking_wizard') }}" class="btn-gradient w-100 py-3 fs-5">Start a Project</a>
+        <a href="{{ url_for('services.booking_wizard') }}" class="btn-cta w-100 py-3 fs-5">Start a Project</a>
     </div>
 
     <!-- Mobile Footer -->
     <footer class="mobile-footer p-4 pt-5 mt-5">
-        <a class="brand-text d-block mb-3 fs-3" href="{{ url_for('main.index') }}">
-            <i class="bi bi-diamond-fill"></i>SAHAL
+        <a class="brand-text d-block mb-4" href="{{ url_for('main.index') }}">
+            <img src="{{ url_for('static', filename='images/Logo White.png') }}" alt="SAHAL Logo" height="40">
         </a>
         <p class="text-muted small mb-4">Premium branding and digital agency</p>
 

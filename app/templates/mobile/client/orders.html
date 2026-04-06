@@ -66,7 +66,9 @@
 <body>
 
     <header class="mobile-header d-flex justify-content-between align-items-center">
-        <a href="/" class="navbar-brand"><i class="bi bi-diamond-fill me-2"></i>SAHAL</a>
+        <a href="/" class="navbar-brand">
+            <img src="{{ url_for('static', filename='images/Logo White.png') }}" alt="SAHAL Logo" height="30">
+        </a>
         <a href="{{ url_for('auth.logout') }}" style="color:#fff;"><i class="bi bi-box-arrow-right fs-5"></i></a>
     </header>
 

@@ -6,9 +6,9 @@
 {% block extra_css %}
 <style>
     .page-header {
-        padding: 5rem 0 3rem;
+        padding: 6rem 0 4rem;
+        background: #ffffff;
         border-bottom: 1px solid var(--clr-border);
-        background: linear-gradient(180deg, rgba(22, 22, 24, 0.4) 0%, transparent 100%);
     }
 
     /* Portfolio Filters */
@@ -17,83 +17,113 @@
         justify-content: center;
         flex-wrap: wrap;
         gap: 1rem;
-        margin-bottom: 3rem;
+        margin-bottom: 4rem;
     }
 
     .filter-btn {
-        background: transparent;
+        background: #ffffff;
         border: 1px solid var(--clr-border);
-        color: var(--clr-muted);
-        padding: 0.5rem 1.5rem;
-        border-radius: 30px;
-        font-weight: 500;
-        transition: all 0.3s ease;
+        color: var(--clr-text-muted);
+        padding: 0.65rem 1.75rem;
+        border-radius: 50px;
+        font-weight: 800;
+        font-family: var(--font-heading);
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.05em;
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
     .filter-btn:hover,
     .filter-btn.active {
-        background: linear-gradient(135deg, var(--clr-magenta), var(--clr-cyan));
-        color: #fff;
-        border-color: transparent;
+        background: var(--clr-primary);
+        color: #ffffff;
+        border-color: var(--clr-primary);
+        box-shadow: 0 5px 15px rgba(0, 51, 153, 0.2);
     }
 
     /* Portfolio Item */
     .portfolio-item {
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
     }
 
     .portfolio-card {
-        background: var(--clr-card);
+        background: #ffffff;
         border: 1px solid var(--clr-border);
-        border-radius: var(--radius-md);
+        border-radius: var(--radius-lg);
         overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         display: block;
         text-decoration: none;
         color: inherit;
+        box-shadow: 0 10px 30px rgba(0, 39, 102, 0.05);
     }
 
     .portfolio-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        border-color: var(--clr-magenta);
+        transform: translateY(-10px);
+        box-shadow: 0 30px 60px rgba(0, 39, 102, 0.12);
+        border-color: var(--clr-primary);
     }
 
-    .portfolio-img-placeholder {
+    .portfolio-img-container {
         width: 100%;
-        height: 250px;
-        background: rgba(255, 255, 255, 0.02);
+        height: 300px;
+        background: var(--clr-bg-cream);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 3rem;
-        color: var(--clr-border);
+        overflow: hidden;
         border-bottom: 1px solid var(--clr-border);
     }
 
-    .portfolio-card:hover .portfolio-img-placeholder i {
-        color: var(--clr-magenta);
-        transform: scale(1.1);
-        transition: transform 0.3s ease, color 0.3s ease;
+    .portfolio-card img {
+        transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .portfolio-card:hover img {
+        transform: scale(1.08);
+    }
+
+    .portfolio-img-placeholder {
+        font-size: 3.5rem;
+        color: var(--clr-primary);
+        opacity: 0.2;
     }
 
     .portfolio-content {
-        padding: 1.5rem;
+        padding: 2rem;
     }
 
     .portfolio-title {
-        font-weight: 700;
-        font-size: 1.25rem;
+        font-family: var(--font-heading);
+        font-weight: 800;
+        font-size: 1.5rem;
         margin-bottom: 0.5rem;
-        color: #fff;
+        color: var(--clr-primary);
     }
 
     .portfolio-category {
-        color: var(--clr-cyan);
-        font-size: 0.85rem;
+        color: var(--clr-text-muted);
+        font-family: var(--font-heading);
+        font-size: 0.8rem;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
-        font-weight: 600;
+        letter-spacing: 0.1em;
+        font-weight: 800;
+        margin-bottom: 0.75rem;
+    }
+
+    .premium-badge {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        background: var(--clr-bg-cream);
+        color: var(--clr-primary);
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 1.5rem;
+        border: 1px solid var(--clr-accent);
     }
 </style>
 {% endblock %}
@@ -101,14 +131,17 @@
 {% block content %}
 <div class="page-header mb-5">
     <div class="container text-center">
-        <h1 class="fw-bold mb-3" style="font-size: 3.5rem;">Our Work</h1>
-        <p class="text-muted fs-5 mx-auto" style="max-width: 700px;">A showcase of our premium branding, event
-            production, interior design, and digital delivery projects.</p>
+        <span class="premium-badge">Visual Excellence</span>
+        <h1 class="display-3 fw-800 mb-3" style="color: var(--clr-primary);">Our <span style="color:var(--clr-accent);">Projects</span></h1>
+        <p class="text-muted fs-5 mx-auto" style="max-width: 750px;">
+            A showcase of our professional branding, strategic event production, and 
+            premium digital delivery solutions.
+        </p>
     </div>
 </div>
 
 <div class="container py-4 mb-5">
-    <!-- Filter UI Placeholder -->
+    <!-- Portfolio Filters -->
     <div class="portfolio-filters">
         <button class="filter-btn active">All Projects</button>
         <button class="filter-btn">Printing & Branding</button>
@@ -123,49 +156,48 @@
         {% for item in items %}
         <div class="col-lg-4 col-md-6 portfolio-item">
             <a href="#" class="portfolio-card d-block">
-                {% if item.image_url %}
-                <div class="portfolio-img-placeholder p-0 bg-transparent" style="height: 250px;">
+                <div class="portfolio-img-container">
+                    {% if item.image_url %}
                     <img src="{{ item.image_url }}" alt="{{ item.title }}" class="w-100 h-100 object-fit-cover">
+                    {% else %}
+                    <i class="bi bi-patch-check portfolio-img-placeholder"></i>
+                    {% endif %}
                 </div>
-                {% else %}
-                <div class="portfolio-img-placeholder">
-                    <i class="bi bi-image"></i>
-                </div>
-                {% endif %}
                 <div class="portfolio-content">
-                    <div class="portfolio-category mb-2">{{ item.category }}</div>
+                    <div class="portfolio-category">{{ item.category }}</div>
                     <h3 class="portfolio-title">{{ item.title }}</h3>
-                    <p class="text-muted small mb-0">{{ item.client_name or 'Independent Project' }} • {{
-                        item.created_at.strftime('%Y') }}</p>
+                    <p class="text-muted small mb-0 fw-600">
+                        {{ item.client_name or 'Corporate Excellence' }} • {{ item.created_at.strftime('%Y') }}
+                    </p>
                 </div>
             </a>
         </div>
         {% else %}
-        <div class="col-12 text-center py-5 glass-card">
-            <i class="bi bi-images fs-1 text-muted d-block mb-3 opacity-50"></i>
-            <h4 class="text-white">Our portfolio is currently being updated</h4>
-            <p class="text-muted">Check back soon to see our latest works of art.</p>
+        <div class="col-12 text-center py-5 border rounded-4 bg-light">
+            <i class="bi bi-briefcase fs-1 text-muted d-block mb-3 opacity-50"></i>
+            <h4 style="color: var(--clr-primary);">Portfolio Update in Progress</h4>
+            <p class="text-muted">We are currently curating our latest high-impact projects. Check back soon.</p>
         </div>
         {% endfor %}
     </div>
 
     <div class="text-center mt-5 pt-4">
-        <button class="btn-outline-glow px-4 py-2">Load More Projects</button>
+        <button class="btn-cta px-5 py-3">Load More Projects</button>
     </div>
 </div>
 
 <!-- CTA -->
 <div class="container mb-5 pb-5">
-    <div class="glass-card p-5 text-center position-relative overflow-hidden" style="border-color: var(--clr-purple);">
-        <div class="position-absolute top-0 end-0 bottom-0 start-0"
-            style="background: radial-gradient(circle at top right, rgba(127,13,242,0.15), transparent 60%); z-index: 0;">
-        </div>
-        <div class="position-relative z-1">
-            <h2 class="fw-bold mb-3">Inspired to start your own project?</h2>
-            <p class="text-muted mb-4">Let's collaborate to bring your vision to life.</p>
-            <a href="{{ url_for('services.booking_wizard') }}"
-                class="btn-gradient px-4 py-2 text-decoration-none">Request a Quote</a>
-        </div>
+    <div class="p-5 text-center d-flex flex-column align-items-center rounded-4"
+        style="background: var(--clr-primary); border: 1px solid var(--clr-accent);">
+        <h3 class="fw-800 mb-3 text-white">Inspired by our work?</h3>
+        <p class="mb-4 text-white-50" style="max-width: 650px;">
+            Let's collaborate to bring your brand vision to life with strategic design 
+            and professional execution.
+        </p>
+        <a href="{{ url_for('services.booking_wizard') }}" class="btn-cta bg-accent text-primary px-5 py-3 text-decoration-none">
+            Start Your Project
+        </a>
     </div>
 </div>
 {% endblock %}

@@ -385,10 +385,10 @@
                         management, interior design, and digital multimedia.</p>
                     <div class="d-flex gap-3 mt-4">
                         <a href="{{ url_for('services.booking_wizard') }}"
-                            class="btn-gradient btn-lg px-4 py-3 shadow-lg">Start a
+                            class="btn-cta btn-lg px-4 py-3">Start a
                             Project</a>
                         <a href="{{ url_for('services.index') }}"
-                            class="btn-outline-glow btn-lg px-4 py-3 bg-dark bg-opacity-50">Explore
+                            class="btn-outline-white btn-lg px-4 py-3">Explore
                             Services</a>
                     </div>
                 </div>
@@ -405,67 +405,67 @@
                 <h2 class="fw-bold mb-2">Our Expertise</h2>
                 <p class="text-muted mb-0">Comprehensive solutions for modern brands.</p>
             </div>
-            <a href="{{ url_for('services.index') }}" class="btn-outline-glow">View All <i
+            <a href="{{ url_for('services.index') }}" class="btn-outline-primary">View All <i
                     class="bi bi-arrow-right ms-2"></i></a>
         </div>
 
         <div class="row g-4">
+            <!-- Printing & Branding -->
             <div class="col-lg-4 col-md-6">
-                <a href="{{ url_for('services.index') }}" class="glass-card service-card p-4 text-center">
-                    <div class="mx-auto mb-4 bg-dark rounded-circle d-flex align-items-center justify-content-center"
-                        style="width: 80px; height: 80px; border: 1px solid var(--clr-cyan); box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);">
-                        <i class="bi bi-palette service-icon text-cyan mb-0"></i>
+                <a href="{{ url_for('services.index') }}" class="premium-card service-card text-center h-100">
+                    <div class="mx-auto mb-4 d-flex align-items-center justify-content-center rounded-circle"
+                        style="width: 80px; height: 80px; background: rgba(0, 51, 153, 0.05); border: 1px solid rgba(0, 51, 153, 0.1);">
+                        <i class="bi bi-palette fs-2 text-primary"></i>
                     </div>
                     <h4 class="fw-bold mb-3">Printing & Branding</h4>
-                    <p class="text-muted mb-0">Logo design, business cards, uniforms, banners, and complete visual
-                        identities.</p>
+                    <p class="text-muted mb-0 small">Logo design, business cards, uniforms, banners, and complete visual identities.</p>
                 </a>
             </div>
+            <!-- Event Organizing -->
             <div class="col-lg-4 col-md-6">
-                <a href="{{ url_for('services.index') }}" class="glass-card service-card p-4 text-center">
-                    <div class="mx-auto mb-4 bg-dark rounded-circle d-flex align-items-center justify-content-center"
-                        style="width: 80px; height: 80px; border: 1px solid var(--clr-magenta); box-shadow: 0 0 20px rgba(255, 0, 85, 0.1);">
-                        <i class="bi bi-calendar-event service-icon text-magenta mb-0"></i>
+                <a href="{{ url_for('services.index') }}" class="premium-card service-card text-center h-100">
+                    <div class="mx-auto mb-4 d-flex align-items-center justify-content-center rounded-circle"
+                        style="width: 80px; height: 80px; background: rgba(0, 51, 153, 0.05); border: 1px solid rgba(0, 51, 153, 0.1);">
+                        <i class="bi bi-calendar-event fs-2 text-primary"></i>
                     </div>
                     <h4 class="fw-bold mb-3">Event Organizing</h4>
-                    <p class="text-muted mb-0">Conferences, product launches, exhibitions, and premium private events.
-                    </p>
+                    <p class="text-muted mb-0 small">Conferences, product launches, exhibitions, and premium private events.</p>
                 </a>
             </div>
+            <!-- Interior Design -->
             <div class="col-lg-4 col-md-6">
-                <a href="{{ url_for('services.index') }}" class="glass-card service-card p-4 text-center">
-                    <div class="mx-auto mb-4 bg-dark rounded-circle d-flex align-items-center justify-content-center"
-                        style="width: 80px; height: 80px; border: 1px solid var(--clr-yellow); box-shadow: 0 0 20px rgba(255, 170, 0, 0.1);">
-                        <i class="bi bi-houses service-icon text-yellow mb-0"></i>
+                <a href="{{ url_for('services.index') }}" class="premium-card service-card text-center h-100">
+                    <div class="mx-auto mb-4 d-flex align-items-center justify-content-center rounded-circle"
+                        style="width: 80px; height: 80px; background: rgba(0, 51, 153, 0.05); border: 1px solid rgba(0, 51, 153, 0.1);">
+                        <i class="bi bi-houses fs-2 text-primary"></i>
                     </div>
                     <h4 class="fw-bold mb-3">Interior Design</h4>
-                    <p class="text-muted mb-0">Office fit-outs, restaurant design, 3D layouts, and decorative wall
-                        finishes.</p>
+                    <p class="text-muted mb-0 small">Office fit-outs, restaurant design, 3D layouts, and decorative wall finishes.</p>
                 </a>
             </div>
+            <!-- LED Screen Solutions -->
             <div class="col-lg-6 col-md-6">
-                <a href="{{ url_for('services.index') }}" class="glass-card service-card p-4 d-flex align-items-center">
-                    <div class="bg-dark rounded-circle flex-shrink-0 d-flex align-items-center justify-content-center me-4"
-                        style="width: 80px; height: 80px; border: 1px solid var(--clr-green); box-shadow: 0 0 20px rgba(0, 255, 102, 0.1);">
-                        <i class="bi bi-display service-icon text-green mb-0"></i>
+                <a href="{{ url_for('services.index') }}" class="premium-card service-card p-4 d-flex align-items-center h-100">
+                    <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle me-4"
+                        style="width: 80px; height: 80px; background: rgba(0, 51, 153, 0.05); border: 1px solid rgba(0, 51, 153, 0.1);">
+                        <i class="bi bi-display fs-2 text-primary"></i>
                     </div>
                     <div>
                         <h4 class="fw-bold mb-2">LED Screen Solutions</h4>
-                        <p class="text-muted mb-0">Indoor/outdoor rentals, installations, and video wall maintenance.
-                        </p>
+                        <p class="text-muted mb-0 small">Indoor/outdoor rentals, installations, and video wall maintenance.</p>
                     </div>
                 </a>
             </div>
+            <!-- Multimedia & Digital -->
             <div class="col-lg-6 col-md-12">
-                <a href="{{ url_for('services.index') }}" class="glass-card service-card p-4 d-flex align-items-center">
-                    <div class="bg-dark rounded-circle flex-shrink-0 d-flex align-items-center justify-content-center me-4"
-                        style="width: 80px; height: 80px; border: 1px solid var(--clr-purple); box-shadow: 0 0 20px rgba(127, 13, 242, 0.1);">
-                        <i class="bi bi-camera-video service-icon text-purple mb-0"></i>
+                <a href="{{ url_for('services.index') }}" class="premium-card service-card p-4 d-flex align-items-center h-100">
+                    <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle me-4"
+                        style="width: 80px; height: 80px; background: rgba(0, 51, 153, 0.05); border: 1px solid rgba(0, 51, 153, 0.1);">
+                        <i class="bi bi-camera-video fs-2 text-primary"></i>
                     </div>
                     <div>
                         <h4 class="fw-bold mb-2">Multimedia & Digital</h4>
-                        <p class="text-muted mb-0">Video production, motion graphics, photography, and social media
-                            campaigns.</p>
+                        <p class="text-muted mb-0 small">Video production, motion graphics, photography, and social media campaigns.</p>
                     </div>
                 </a>
             </div>
@@ -481,44 +481,38 @@
         <div class="row g-4 position-relative">
             <div class="col-md-3">
                 <div class="process-step">
-                    <div class="process-icon"
-                        style="border-color: var(--clr-cyan); color: var(--clr-cyan); box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);">
-                        <i class="bi bi-chat-square-dots"></i>
+                    <div class="process-icon text-primary" style="border: 1px solid rgba(0, 51, 153, 0.2); background: rgba(0, 51, 153, 0.05);"><i class="bi bi-chat-square-dots"></i></div>
+                    <div>
+                        <h5 class="fw-bold mb-1" style="color: var(--clr-deep-navy);">1. Request</h5>
+                        <p class="text-muted small mb-0">Send us your project details via our portal.</p>
                     </div>
-                    <h5 class="process-title">1. Request</h5>
-                    <p class="process-desc">Select your services and send us your project details via our portal.</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="process-step">
-                    <div class="process-icon"
-                        style="border-color: var(--clr-magenta); color: var(--clr-magenta); box-shadow: 0 0 20px rgba(255, 0, 85, 0.1);">
-                        <i class="bi bi-file-earmark-text"></i>
+                    <div class="process-icon text-primary" style="border: 1px solid var(--clr-accent); background: rgba(255, 204, 0, 0.1);"><i class="bi bi-file-earmark-text"></i></div>
+                    <div>
+                        <h5 class="fw-bold mb-1" style="color: var(--clr-deep-navy);">2. Quote</h5>
+                        <p class="text-muted small mb-0">We provide a detailed quotation for approval.</p>
                     </div>
-                    <h5 class="process-title">2. Quote</h5>
-                    <p class="process-desc">We review the requirements and provide a detailed quotation for approval.
-                    </p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="process-step">
-                    <div class="process-icon"
-                        style="border-color: var(--clr-yellow); color: var(--clr-yellow); box-shadow: 0 0 20px rgba(255, 170, 0, 0.1);">
-                        <i class="bi bi-tools"></i>
+                    <div class="process-icon text-primary" style="border: 1px solid rgba(0, 51, 153, 0.2); background: rgba(0, 51, 153, 0.05);"><i class="bi bi-tools"></i></div>
+                    <div>
+                        <h5 class="fw-bold mb-1" style="color: var(--clr-deep-navy);">3. Execute</h5>
+                        <p class="text-muted small mb-0">Track our progress directly in your dashboard.</p>
                     </div>
-                    <h5 class="process-title">3. Execute</h5>
-                    <p class="process-desc">Our team gets to work, providing clear timeline updates in your dashboard.
-                    </p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="process-step">
-                    <div class="process-icon"
-                        style="border-color: var(--clr-green); color: var(--clr-green); box-shadow: 0 0 20px rgba(0, 255, 102, 0.1);">
-                        <i class="bi bi-check2-circle"></i>
+                    <div class="process-icon text-primary" style="border: 1px solid rgba(0, 51, 153, 0.2); background: rgba(0, 51, 153, 0.05);"><i class="bi bi-check2-circle"></i></div>
+                    <div>
+                        <h5 class="fw-bold mb-1" style="color: var(--clr-deep-navy);">4. Deliver</h5>
+                        <p class="text-muted small mb-0">Final delivery and successful completion.</p>
                     </div>
-                    <h5 class="process-title">4. Deliver</h5>
-                    <p class="process-desc">Final delivery, invoicing, and support. Project completed successfully.</p>
                 </div>
             </div>
         </div>
@@ -530,7 +524,7 @@
     <div class="container position-relative z-1">
         <h2 class="fw-bold mb-4" style="font-size: 3rem;">Ready to build something amazing?</h2>
         <p class="text-muted mb-5 fs-5">Join forward-thinking brands that trust SAHAL with their vision.</p>
-        <a href="{{ url_for('services.booking_wizard') }}" class="btn-gradient btn-lg px-5 py-3 fs-5 rounded-pill">Start
+        <a href="{{ url_for('services.booking_wizard') }}" class="btn-cta btn-lg px-5 py-3 fs-5 rounded-pill">Start
             Your Project Now
             <i class="bi bi-arrow-right ms-2"></i></a>
     </div>
