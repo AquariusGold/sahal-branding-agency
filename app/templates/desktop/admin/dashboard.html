@@ -1,0 +1,110 @@
+{% extends 'desktop/layouts/admin_base.html' %}
+
+{% block title %}HQ Dashboard{% endblock %}
+{% block nav_dashboard %}active{% endblock %}
+
+{% block header_title %}Command Center{% endblock %}
+{% block header_subtitle %}Monitoring agency performance and system health.{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <!-- Stat Cards -->
+    <div class="col-md-3">
+        <div class="card-stat">
+            <h6 class="text-muted small text-uppercase fw-bold mb-3">Total Revenue</h6>
+            <h2 class="fw-bold mb-0 text-dark">$124,500</h2>
+            <div class="mt-2 text-success small">
+                <i class="bi bi-arrow-up-right me-1"></i> +12.5% <span class="text-muted ms-1">vs last month</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card-stat">
+            <h6 class="text-muted small text-uppercase fw-bold mb-3">Active Jobs</h6>
+            <h2 class="fw-bold mb-0 text-dark">84</h2>
+            <div class="mt-2 text-primary small">
+                <i class="bi bi-gear-wide-connected me-1"></i> 12 pending <span class="text-muted ms-1">approval</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card-stat">
+            <h6 class="text-muted small text-uppercase fw-bold mb-3">Client Base</h6>
+            <h2 class="fw-bold mb-0 text-dark">412</h2>
+            <div class="mt-2 text-success small">
+                <i class="bi bi-person-plus me-1"></i> +8.2% <span class="text-muted ms-1">growth</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card-stat">
+            <h6 class="text-muted small text-uppercase fw-bold mb-3">Staff Force</h6>
+            <h2 class="fw-bold mb-0 text-dark">08</h2>
+            <div class="mt-2 text-info small">
+                <i class="bi bi-activity me-1"></i> Active <span class="text-muted ms-1">now</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Orders Table -->
+    <div class="col-12 mt-5">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <h4 class="fw-bold mb-0">Incoming Orders</h4>
+                <p class="text-muted small mb-0">Latest 5 submissions from the public site.</p>
+            </div>
+            <a href="{{ url_for('admin.list_orders') }}" class="btn btn-sm btn-light border rounded-pill px-4">See All Records</a>
+        </div>
+        
+        <div class="table-custom">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Client</th>
+                            <th>Service</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="fw-bold">#SK-2026-001</span></td>
+                            <td>
+                                <div class="fw-bold text-dark">Kawdan Agency</div>
+                                <div class="smaller text-muted">kawdan@sahal.com</div>
+                            </td>
+                            <td>Full Brand Identity</td>
+                            <td><span class="badge bg-success-subtle text-success rounded-pill px-3">COMPLETED</span></td>
+                            <td><span class="text-muted small">Standard</span></td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-light border rounded-3"><i class="bi bi-eye"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold">#SK-2026-002</span></td>
+                            <td>
+                                <div class="fw-bold text-dark">Hassan Estates</div>
+                                <div class="smaller text-muted">hassan@realestate.com</div>
+                            </td>
+                            <td>3D Signage Design</td>
+                            <td><span class="badge bg-warning-subtle text-warning rounded-pill px-3">IN PROGRESS</span></td>
+                            <td><span class="badge bg-danger-subtle text-danger rounded-pill px-3 py-1" style="font-size: 0.65rem;">URGENT</span></td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-light border rounded-3"><i class="bi bi-eye"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .smaller { font-size: 0.8rem; }
+    .fw-500 { font-weight: 500; }
+</style>
+{% endblock %}

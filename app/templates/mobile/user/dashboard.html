@@ -1,0 +1,66 @@
+{% extends 'mobile/layouts/client_base.html' %}
+
+{% block title %}My Summary{% endblock %}
+{% block nav_dashboard %}active{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h4 class="fw-800 mb-1">Hello, {{ current_user.full_name.split(' ')[0] }}</h4>
+    <p class="text-muted small">Here's your project status update.</p>
+</div>
+
+<!-- Active Project Card -->
+<div class="card-client-mobile">
+    <span class="badge bg-indigo-subtle text-indigo rounded-pill px-2 py-1 mb-2" style="font-size: 0.6rem;">ACTIVE PROJECT</span>
+    <h6 class="fw-bold mb-1">Corporate Rebranding</h6>
+    <div class="d-flex justify-content-between align-items-end mb-2 mt-3">
+        <span class="smaller text-muted">Strategy Phase</span>
+        <span class="small fw-bold text-indigo">65%</span>
+    </div>
+    <div class="progress rounded-pill" style="height: 4px;">
+        <div class="progress-bar bg-indigo" style="width: 65%;"></div>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6">
+        <div class="card-client-mobile mb-0 p-3">
+            <div class="smaller text-muted mb-1">Next Delivery</div>
+            <div class="small fw-bold">June 15</div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card-client-mobile mb-0 p-3">
+            <div class="smaller text-muted mb-1">Pending Sync</div>
+            <div class="small fw-bold">Tomorrow</div>
+        </div>
+    </div>
+</div>
+
+<h6 class="fw-bold mb-3">Quick Actions</h6>
+<div class="d-grid gap-2">
+    <a href="#" class="btn btn-light border rounded-4 p-3 text-start d-flex align-items-center gap-3">
+        <div class="bg-indigo-subtle p-2 rounded-3"><i class="bi bi-plus-lg text-indigo"></i></div>
+        <div class="fw-bold small">New Project Request</div>
+    </a>
+    <a href="{{ url_for('services.list_orders') }}" class="btn btn-light border rounded-4 p-3 text-start d-flex align-items-center gap-3">
+        <div class="bg-warning-subtle p-2 rounded-3"><i class="bi bi-receipt text-warning"></i></div>
+        <div class="fw-bold small">View Pending Invoices</div>
+    </a>
+</div>
+
+<div class="mt-5 p-4 bg-dark text-white rounded-5 shadow-lg text-center">
+    <h6 class="fw-bold mb-2">Agency Tip</h6>
+    <p class="smaller text-white-50 mb-0">Visit the asset library for your source files.</p>
+</div>
+
+<style>
+    .fw-800 { font-weight: 800; }
+    .smaller { font-size: 0.75rem; }
+    .bg-indigo-subtle { background-color: rgba(99, 102, 241, 0.1); }
+    .text-indigo { color: #6366f1; }
+    .bg-indigo { background-color: #6366f1; }
+    .bg-warning-subtle { background-color: #fffbeb; }
+    .text-warning { color: #d97706; }
+</style>
+{% endblock %}

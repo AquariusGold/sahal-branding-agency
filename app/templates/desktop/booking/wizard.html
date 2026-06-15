@@ -88,6 +88,7 @@
         border-radius: var(--radius-lg);
         padding: 3rem;
         box-shadow: 0 15px 40px rgba(0, 39, 102, 0.05);
+        min-height: 400px;
     }
 
     .wizard-panel.active {
@@ -102,29 +103,33 @@
     /* Selectable Cards */
     .selectable-card {
         background: #ffffff;
-        border: 2px solid var(--clr-border);
+        border: 1px solid var(--clr-border);
         border-radius: var(--radius-md);
         padding: 2rem;
         cursor: pointer;
-        transition: var(--transition);
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
         height: 100%;
         position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .selectable-card:hover {
         border-color: var(--clr-primary);
         background: var(--clr-off-white);
         transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 51, 153, 0.08);
     }
 
     .selectable-card.selected {
         border-color: var(--clr-primary);
         background: var(--clr-bg-cream);
-        box-shadow: 0 8px 25px rgba(0, 51, 153, 0.1);
+        box-shadow: 0 8px 25px rgba(0, 51, 153, 0.15);
     }
 
     .selectable-card.selected::after {
-        content: '\F633';
+        content: '\F272';
         font-family: bootstrap-icons;
         position: absolute;
         top: 1rem;
@@ -170,6 +175,31 @@
         border-bottom: none;
         margin-bottom: 0;
     }
+
+    /* Back Button Styling */
+    .btn-back {
+        color: var(--clr-primary);
+        font-weight: 800;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.25rem;
+        border-radius: 50px;
+        transition: var(--transition);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border: 1px solid var(--clr-border);
+        background: #ffffff;
+    }
+
+    .btn-back:hover {
+        background: var(--clr-bg-cream);
+        color: var(--clr-primary);
+        border-color: var(--clr-primary);
+        transform: translateX(-3px);
+    }
 </style>
 {% endblock %}
 
@@ -178,7 +208,7 @@
     <div class="text-center mb-5">
         <span class="premium-badge mb-2">Project Initialization</span>
         <h1 class="fw-800 d-navy mb-2">Start Your <span style="color:var(--clr-accent);">Project</span></h1>
-        <p class="text-muted">Complete the steps below to request a formal service quotation.</p>
+        <p class="text-muted">Our automated wizard will guide you through the initial project setup.</p>
     </div>
 
     <!-- Stepper -->
@@ -206,62 +236,73 @@
 
         <!-- STEP 1: Select Category -->
         <div class="wizard-panel active" id="wizardStep1">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <a href="{{ url_for('services.index') }}" class="btn-back">
+                        <i class="bi bi-arrow-left"></i> Back to Services
+                    </a>
+                </div>
+                <span class="text-muted small">Step 1 of 4</span>
+            </div>
             <h4 class="fw-800 mb-4" style="color: var(--clr-primary);">Project Category</h4>
-            <div class="row g-3 mb-4">
+            <div class="row g-4 mb-2">
                 {% for category in categories %}
                 <div class="col-md-6">
                     <div class="selectable-card category-card" data-category-id="{{ category.id }}">
                         <h5 class="fw-800 mb-2" style="color: var(--clr-primary);">{{ category.name }}</h5>
-                        <p class="text-muted small mb-0">{{ category.description | truncate(80) }}</p>
+                        <p class="text-muted small mb-0">{{ category.description or 'Professional solutions tailored for your business needs.' }}</p>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-            <!-- Hidden inputs to hold selections -->
             <input type="hidden" name="category_id" id="inputCategoryId">
-            <div class="d-flex justify-content-end mt-4">
-                <button type="button" class="btn-cta px-5" id="btnNext1" disabled>Continue <i
-                        class="bi bi-arrow-right ms-2"></i></button>
-            </div>
         </div>
 
         <!-- STEP 2: Select Service -->
         <div class="wizard-panel" id="wizardStep2">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <a href="javascript:void(0)" class="btn-back" id="btnPrev2">
+                        <i class="bi bi-arrow-left"></i> Change Category
+                    </a>
+                </div>
+                <span class="text-muted small">Step 2 of 4</span>
+            </div>
             <h4 class="fw-800 mb-4" style="color: var(--clr-primary);">Specific Service</h4>
-            <div id="servicesContainer" class="row g-3 mb-4">
-                <div class="col-12 text-muted">Please select a category first.</div>
+            <div id="servicesContainer" class="row g-4 mb-2">
+                <div class="col-12 text-center py-5">
+                    <div class="spinner-border text-primary" role="status"></div>
+                </div>
             </div>
             <input type="hidden" name="service_id" id="inputServiceId">
-
-            <div class="d-flex justify-content-between mt-4">
-                <button type="button" class="btn btn-outline-primary px-4 rounded-pill fw-bold" id="btnPrev2"><i class="bi bi-arrow-left me-2"></i>
-                    Back</button>
-                <button type="button" class="btn-cta px-5" id="btnNext2" disabled>Continue <i
-                        class="bi bi-arrow-right ms-2"></i></button>
-            </div>
         </div>
 
         <!-- STEP 3: Project Details -->
         <div class="wizard-panel" id="wizardStep3">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <a href="javascript:void(0)" class="btn-back" id="btnPrev3">
+                        <i class="bi bi-arrow-left"></i> Change Service
+                    </a>
+                </div>
+                <span class="text-muted small">Step 3 of 4</span>
+            </div>
             <h4 class="fw-800 mb-4" style="color: var(--clr-primary);">Project Scope & Details</h4>
-            <div class="p-4 bg-light rounded-4 mb-4">
+            <div class="p-5 bg-light rounded-4 mb-4">
                 <div class="row g-4">
                     <div class="col-12">
                         <label class="form-label text-primary fw-800 small text-uppercase letter-spacing-1">Estimated Quantity</label>
-                        <input type="number" name="quantity" id="inputQuantity" class="form-control" value="1" min="1"
+                        <input type="number" name="quantity" id="inputQuantity" class="form-control form-control-lg" value="1" min="1"
                             required>
-                        <div class="form-text text-muted">Specify the number of units or estimated scope.</div>
                     </div>
                     <div class="col-12">
                         <label class="form-label text-primary fw-800 small text-uppercase letter-spacing-1">Specific Requirements</label>
-                        <textarea name="notes" id="inputNotes" class="form-control" rows="5"
-                            placeholder="Please describe your requirements, desired timeline, or any specific preferences..."></textarea>
+                        <textarea name="notes" id="inputNotes" class="form-control" rows="6"
+                            placeholder="Describe your requirements, desired timeline, or any specific preferences..."></textarea>
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-between mt-4">
-                <button type="button" class="btn btn-outline-primary px-4 rounded-pill fw-bold" id="btnPrev3"><i class="bi bi-arrow-left me-2"></i>
-                    Back</button>
+            <div class="d-flex justify-content-end">
                 <button type="button" class="btn-cta px-5" id="btnNext3">Review Order <i
                         class="bi bi-arrow-right ms-2"></i></button>
             </div>
@@ -269,6 +310,14 @@
 
         <!-- STEP 4: Review & Submit -->
         <div class="wizard-panel" id="wizardStep4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <a href="javascript:void(0)" class="btn-back" id="btnPrev4">
+                        <i class="bi bi-arrow-left"></i> Back to Details
+                    </a>
+                </div>
+                <span class="text-muted small">Step 4 of 4</span>
+            </div>
             <h4 class="fw-800 mb-4" style="color: var(--clr-primary);">Review Your Request</h4>
 
             <div class="summary-box mb-4">
@@ -290,8 +339,8 @@
                 </div>
             </div>
 
-            <div class="alert alert-info border-0 rounded-4 p-4 shadow-sm mb-4" style="background: var(--clr-bg-cream); color: var(--clr-primary);">
-                <div class="d-flex">
+            <div class="alert alert-info border-0 rounded-4 p-4 shadow-sm mb-4" style="background: var(--clr-bg-cream); color: var(--clr-primary); border-left: 5px solid var(--clr-accent) !important;">
+                <div class="d-flex align-items-center">
                     <i class="bi bi-shield-check fs-2 me-3"></i>
                     <div>
                         <h6 class="fw-800 mb-1">Professional Review Guaranteed</h6>
@@ -300,12 +349,8 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-between mt-4">
-                <button type="button" class="btn btn-outline-primary px-4 rounded-pill fw-bold" id="btnPrev4"><i class="bi bi-arrow-left me-2"></i>
-                    Back</button>
-                <button type="submit" class="btn-cta px-5 py-3 fs-6">Submit Initialization <i
-                        class="bi bi-rocket-takeoff ms-2"></i></button>
-            </div>
+            <button type="submit" class="btn-cta w-100 py-3 fs-6">Submit Initialization <i
+                    class="bi bi-rocket-takeoff ms-2"></i></button>
         </div>
     </form>
 </div>
@@ -331,158 +376,125 @@
     document.addEventListener('DOMContentLoaded', function () {
         let currentStep = 1;
 
-        // Step Elements
-        const s1 = document.getElementById('wizardStep1');
-        const s2 = document.getElementById('wizardStep2');
-        const s3 = document.getElementById('wizardStep3');
-        const s4 = document.getElementById('wizardStep4');
+        // Step Panels
+        const panels = [
+            document.getElementById('wizardStep1'),
+            document.getElementById('wizardStep2'),
+            document.getElementById('wizardStep3'),
+            document.getElementById('wizardStep4')
+        ];
 
-        const ind1 = document.getElementById('stepIndicator1');
-        const ind2 = document.getElementById('stepIndicator2');
-        const ind3 = document.getElementById('stepIndicator3');
-        const ind4 = document.getElementById('stepIndicator4');
+        // Indicators
+        const indicators = [
+            document.getElementById('stepIndicator1'),
+            document.getElementById('stepIndicator2'),
+            document.getElementById('stepIndicator3'),
+            document.getElementById('stepIndicator4')
+        ];
 
-        // Button Elements
-        const btnNext1 = document.getElementById('btnNext1');
+        // Back Buttons
         const btnPrev2 = document.getElementById('btnPrev2');
-        const btnNext2 = document.getElementById('btnNext2');
         const btnPrev3 = document.getElementById('btnPrev3');
-        const btnNext3 = document.getElementById('btnNext3');
         const btnPrev4 = document.getElementById('btnPrev4');
 
-        // Inputs
+        // Review Button
+        const btnNext3 = document.getElementById('btnNext3');
+
+        // Inputs & Containers
         const inputCatId = document.getElementById('inputCategoryId');
         const inputSvcId = document.getElementById('inputServiceId');
-        const inputQty = document.getElementById('inputQuantity');
-        const inputNotes = document.getElementById('inputNotes');
-
-        // Containers
         const servicesContainer = document.getElementById('servicesContainer');
 
-        // Card selections
-        const catCards = document.querySelectorAll('.category-card');
-
-        catCards.forEach(card => {
+        // Initial Category Selection
+        document.querySelectorAll('.category-card').forEach(card => {
             card.addEventListener('click', function () {
-                catCards.forEach(c => c.classList.remove('selected'));
+                document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
                 this.classList.add('selected');
                 inputCatId.value = this.getAttribute('data-category-id');
-                btnNext1.disabled = false;
+                
+                // Auto-advance to step 2 after a small delay
+                setTimeout(() => {
+                    populateServices();
+                    goStep(2);
+                }, 400);
             });
         });
 
-        // Navigation logic
-        btnNext1.addEventListener('click', () => { goStep(2); populateServices(); });
-        btnPrev2.addEventListener('click', () => { goStep(1); });
-        btnNext2.addEventListener('click', () => { goStep(3); });
-        btnPrev3.addEventListener('click', () => { goStep(2); });
-        btnNext3.addEventListener('click', () => { populateSummary(); goStep(4); });
-        btnPrev4.addEventListener('click', () => { goStep(3); });
+        // Navigation listeners
+        btnPrev2.addEventListener('click', () => goStep(1));
+        btnPrev3.addEventListener('click', () => goStep(2));
+        btnNext3.addEventListener('click', () => {
+            populateSummary();
+            goStep(4);
+        });
+        btnPrev4.addEventListener('click', () => goStep(3));
 
         function goStep(target) {
-            // Hide all
-            [s1, s2, s3, s4].forEach(el => el.classList.remove('active'));
-            // Reset indicators
-            [ind1, ind2, ind3, ind4].forEach(el => {
-                el.classList.remove('active');
-                el.classList.remove('completed');
+            panels.forEach((p, idx) => {
+                p.classList.toggle('active', idx === target - 1);
             });
-
+            
+            indicators.forEach((ind, idx) => {
+                ind.classList.toggle('active', idx === target - 1);
+                ind.classList.toggle('completed', idx < target - 1);
+            });
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             currentStep = target;
-
-            // Show target
-            if (target === 1) { s1.classList.add('active'); ind1.classList.add('active'); }
-            if (target === 2) {
-                s2.classList.add('active');
-                ind1.classList.add('completed');
-                ind2.classList.add('active');
-            }
-            if (target === 3) {
-                s3.classList.add('active');
-                ind1.classList.add('completed');
-                ind2.classList.add('completed');
-                ind3.classList.add('active');
-            }
-            if (target === 4) {
-                s4.classList.add('active');
-                ind1.classList.add('completed');
-                ind2.classList.add('completed');
-                ind3.classList.add('completed');
-                ind4.classList.add('active');
-            }
         }
 
         function populateServices() {
-            const rawCatId = document.getElementById('inputCategoryId').value;
-            const catId = String(rawCatId).trim();
-            const filtered = servicesData.filter(s => String(s.categoryId) === catId);
+            const catId = inputCatId.value;
+            const filtered = servicesData.filter(s => String(s.categoryId) === String(catId));
 
             servicesContainer.innerHTML = '';
             inputSvcId.value = '';
-            btnNext2.disabled = true;
 
-            if (!catId || filtered.length === 0) {
-                servicesContainer.innerHTML = '<div class="col-12 text-muted">No services available for this category. Please select another.</div>';
+            if (filtered.length === 0) {
+                servicesContainer.innerHTML = '<div class="col-12 text-center text-muted py-5">No services available for this category.</div>';
                 return;
             }
 
             filtered.forEach(svc => {
-                let priceHtml = '';
-                if (svc.basePrice !== null) {
-                    priceHtml = `<span class="fw-800 text-primary">$${svc.basePrice.toFixed(2)}</span>`;
-                } else {
-                    priceHtml = `<span class="text-muted fst-italic" style="font-size: 0.85rem;">Price on Request</span>`;
-                }
-                
+                const priceText = svc.basePrice !== null ? `$${svc.basePrice.toFixed(2)}` : 'On Request';
                 const html = `
-                <div class="col-md-6">
-                    <div class="selectable-card service-card" data-service-id="${svc.id}" data-service-name="${svc.name}" data-service-price="${svc.basePrice}">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h6 class="fw-800 text-primary mb-0">${svc.name}</h6>
-                            ${priceHtml}
+                    <div class="col-md-6">
+                        <div class="selectable-card service-card" data-service-id="${svc.id}" data-service-name="${svc.name}" data-service-price="${svc.basePrice}">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="fw-800 text-primary mb-0">${svc.name}</h6>
+                                <span class="fw-800 text-primary small">${priceText}</span>
+                            </div>
+                            <p class="text-muted small mb-0">${svc.description}</p>
                         </div>
-                        <p class="text-muted small mb-0">${svc.description}</p>
                     </div>
-                </div>
-            `;
+                `;
                 servicesContainer.insertAdjacentHTML('beforeend', html);
             });
 
-            // Add event listeners to new cards
-            const svcCards = document.querySelectorAll('.service-card');
-            svcCards.forEach(card => {
+            // Add auto-advance for services
+            document.querySelectorAll('.service-card').forEach(card => {
                 card.addEventListener('click', function () {
-                    svcCards.forEach(c => c.classList.remove('selected'));
+                    document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
                     this.classList.add('selected');
                     inputSvcId.value = this.dataset.serviceId;
-
-                    // Store data for summary
                     inputSvcId.dataset.name = this.dataset.serviceName;
                     inputSvcId.dataset.price = this.dataset.servicePrice;
 
-                    btnNext2.disabled = false;
+                    // Auto-advance to step 3
+                    setTimeout(() => {
+                        goStep(3);
+                    }, 400);
                 });
             });
         }
 
         function populateSummary() {
             document.getElementById('summaryServiceName').innerText = inputSvcId.dataset.name || '--';
-            
-            const priceEl = document.getElementById('summaryServicePrice');
-            if (inputSvcId.dataset.price === 'null') {
-                priceEl.innerText = 'Price not available yet';
-                priceEl.classList.remove('text-cyan');
-                priceEl.classList.add('text-secondary', 'fst-italic');
-            } else {
-                const price = parseFloat(inputSvcId.dataset.price || '0');
-                priceEl.innerText = '$' + price.toFixed(2);
-                priceEl.classList.remove('text-secondary', 'fst-italic');
-                priceEl.classList.add('text-cyan');
-            }
-            
-            document.getElementById('summaryQuantity').innerText = inputQty.value;
-            document.getElementById('summaryNotes').innerText = inputNotes.value || 'No additional notes provided.';
+            const price = inputSvcId.dataset.price;
+            document.getElementById('summaryServicePrice').innerText = (price === 'null' || !price) ? 'Custom Quotation' : `$${parseFloat(price).toFixed(2)}`;
+            document.getElementById('summaryQuantity').innerText = document.getElementById('inputQuantity').value;
+            document.getElementById('summaryNotes').innerText = document.getElementById('inputNotes').value || 'No specific notes provided.';
         }
     });
 </script>
-{% endblock %}
+{% endblock %}

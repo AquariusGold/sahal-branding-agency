@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{% block title %}My Account{% endblock %} — SAHAL</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-light: #f8f9fa;
+            --accent: #7f0df2;
+            --card-bg: #ffffff;
+            --text-main: #1a1d2d;
+            --text-muted: #64748b;
+            --tab-height: 70px;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            padding-bottom: var(--tab-height);
+        }
+
+        .mobile-header {
+            padding: 1.5rem 1rem;
+            background: var(--card-bg);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .bottom-tabs {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: var(--tab-height);
+            background: var(--card-bg);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-muted);
+        }
+
+        .tab-item.active {
+            color: var(--accent);
+        }
+
+        .tab-item i { font-size: 1.4rem; }
+        .tab-item span { font-size: 0.7rem; }
+
+        .content-body { padding: 1rem; }
+    </style>
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+    <header class="mobile-header">
+        <h1 class="fs-5 fw-bold mb-0">{% block header_title %}My Portal{% endblock %}</h1>
+        <a href="{{ url_for('auth.logout') }}" class="text-dark"><i class="bi bi-box-arrow-right fs-4"></i></a>
+    </header>
+
+    <main class="content-body">
+        {% block content %}{% endblock %}
+    </main>
+
+    <nav class="bottom-tabs">
+        <a href="{{ url_for('user_dashboard.dashboard') }}" class="tab-item {% block nav_home %}{% endblock %}">
+            <i class="bi bi-house-door-fill"></i>
+            <span>Home</span>
+        </a>
+        <a href="{{ url_for('user_dashboard.orders') }}" class="tab-item {% block nav_orders %}{% endblock %}">
+            <i class="bi bi-bag-check-fill"></i>
+            <span>Orders</span>
+        </a>
+        <a href="#" class="tab-item">
+            <i class="bi bi-credit-card-fill"></i>
+            <span>Wallet</span>
+        </a>
+        <a href="{{ url_for('main.index') }}" class="tab-item">
+            <i class="bi bi-browser-safari"></i>
+            <span>Site</span>
+        </a>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

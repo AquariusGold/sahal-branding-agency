@@ -1,0 +1,99 @@
+{% extends 'desktop/layouts/staff_base.html' %}
+
+{% block title %}My Project Queue{% endblock %}
+{% block nav_dashboard %}active{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <!-- Quick Stats -->
+    <div class="col-md-8">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="card bg-white border border-light-subtle rounded-4 p-4 shadow-sm">
+                    <div class="text-muted small fw-bold text-uppercase mb-1">To Do</div>
+                    <div class="h3 fw-800 mb-0">12</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-white border border-light-subtle rounded-4 p-4 shadow-sm">
+                    <div class="text-muted small fw-bold text-uppercase mb-1">In Progress</div>
+                    <div class="h3 fw-800 mb-0">04</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-cyan-subtle border-0 rounded-4 p-4">
+                    <div class="text-cyan-emphasis small fw-bold text-uppercase mb-1">Completed (Wk)</div>
+                    <div class="h3 fw-800 mb-0">28</div>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="fw-bold mt-5 mb-3">Active Assignments</h5>
+        
+        <div class="card-task">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                    <span class="badge bg-info-subtle text-info rounded-pill px-2 py-1 mb-2" style="font-size: 0.7rem;">GRAPHIC DESIGN</span>
+                    <h5 class="fw-bold mb-1">Social Media Kit — Alpha Real Estate</h5>
+                    <p class="text-muted small mb-0">Due in 4 hours • High Priority</p>
+                </div>
+                <button class="btn btn-staff-primary">Start Work</button>
+            </div>
+            <div class="progress rounded-pill" style="height: 6px;">
+                <div class="progress-bar bg-info" style="width: 45%;"></div>
+            </div>
+        </div>
+
+        <div class="card-task">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                    <span class="badge bg-purple-subtle text-purple rounded-pill px-2 py-1 mb-2" style="font-size: 0.7rem;">BRANDING</span>
+                    <h5 class="fw-bold mb-1">Logo Refresh — Kawdan Agency</h5>
+                    <p class="text-muted small mb-0">Due Tomorrow • Standard Priority</p>
+                </div>
+                <button class="btn btn-outline-secondary btn-sm border-0"><i class="bi bi-three-dots-vertical"></i></button>
+            </div>
+            <div class="progress rounded-pill" style="height: 6px;">
+                <div class="progress-bar bg-purple" style="width: 10%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Side Activities -->
+    <div class="col-md-4">
+        <div class="card bg-white border border-light-subtle rounded-4 p-4 shadow-sm mb-4">
+            <h6 class="fw-bold mb-3"><i class="bi bi-lightning-fill text-warning me-2"></i>Recent Activity</h6>
+            <div class="d-flex gap-3 mb-3">
+                <div class="status-dot bg-success mt-2"></div>
+                <div>
+                    <div class="small fw-bold">Task Completed</div>
+                    <div class="smaller text-muted">Brand Guidelines for Zenith</div>
+                </div>
+            </div>
+            <div class="d-flex gap-3">
+                <div class="status-dot bg-warning mt-2"></div>
+                <div>
+                    <div class="small fw-bold">Feedback Received</div>
+                    <div class="smaller text-muted">Awaiting revisions for Project-X</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card bg-dark text-white rounded-4 p-4 shadow-lg border-0">
+            <h6 class="fw-bold mb-2">Agency Tip</h6>
+            <p class="small text-white-50 mb-3">"Good design is obvious. Great design is transparent." — Joe Sparano</p>
+            <button class="btn btn-sm btn-outline-light w-100 rounded-pill">Read Handbook</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-cyan-subtle { background-color: rgba(6, 182, 212, 0.1); }
+    .text-cyan-emphasis { color: #0891b2; }
+    .bg-purple-subtle { background-color: #f3e8ff; }
+    .text-purple { color: #7e22ce; }
+    .bg-purple { background-color: #a855f7; }
+    .fw-800 { font-weight: 800; }
+    .bg-info-subtle { background-color: #e0f2fe; }
+</style>
+{% endblock %}

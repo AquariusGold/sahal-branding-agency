@@ -22,9 +22,11 @@ def login():
     # If already logged in, send them to their dashboard
     if current_user.is_authenticated:
         if current_user.role == UserRole.admin:
-            return redirect(url_for("dashboards.admin"))
+            return redirect(url_for("admin_dashboard.dashboard"))
+        elif current_user.role == UserRole.staff:
+            return redirect(url_for("staff_dashboard.dashboard"))
         elif current_user.role == UserRole.client:
-            return redirect(url_for("dashboards.client"))
+            return redirect(url_for("user_dashboard.dashboard"))
         return redirect(url_for("main.index"))
 
     form = LoginForm()
@@ -44,9 +46,11 @@ def login():
         next_page = request.args.get("next")
         if not next_page or not next_page.startswith("/"):
             if user.role == UserRole.admin:
-                next_page = url_for("dashboards.admin")
+                next_page = url_for("admin_dashboard.dashboard")
+            elif user.role == UserRole.staff:
+                next_page = url_for("staff_dashboard.dashboard")
             elif user.role == UserRole.client:
-                next_page = url_for("dashboards.client")
+                next_page = url_for("user_dashboard.dashboard")
             else:
                 next_page = url_for("main.index")
                 
@@ -104,7 +108,7 @@ def register():
         
         # Automatically log them in
         login_user(user)
-        return redirect(url_for("dashboards.client"))
+        return redirect(url_for("user_dashboard.dashboard"))
 
     if is_mobile(request):
         return render_template("mobile/auth/register.html", form=form)

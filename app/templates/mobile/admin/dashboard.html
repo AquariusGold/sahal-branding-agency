@@ -1,0 +1,72 @@
+{% extends 'mobile/layouts/admin_base.html' %}
+
+{% block title %}HQ Dashboard{% endblock %}
+{% block nav_dashboard %}active{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h4 class="fw-800 mb-1">HQ Overview</h4>
+    <p class="text-muted small">Real-time agency performance stats.</p>
+</div>
+
+<div class="row g-3">
+    <div class="col-6">
+        <div class="card-mobile-stat">
+            <div class="text-muted smaller fw-bold text-uppercase mb-1">Revenue</div>
+            <div class="h5 fw-800 mb-0">$124.5k</div>
+            <div class="text-success smaller"><i class="bi bi-caret-up-fill"></i> 12%</div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card-mobile-stat">
+            <div class="text-muted smaller fw-bold text-uppercase mb-1">Active</div>
+            <div class="h5 fw-800 mb-0">84</div>
+            <div class="text-primary smaller">Jobs live</div>
+        </div>
+    </div>
+</div>
+
+<!-- Performance Section -->
+<div class="card-mobile-stat mt-2">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold mb-0">Studio Capacity</h6>
+        <span class="badge bg-danger-subtle text-danger rounded-pill">High Load</span>
+    </div>
+    <div class="progress rounded-pill mb-2" style="height: 6px;">
+        <div class="progress-bar bg-danger" style="width: 88%;"></div>
+    </div>
+    <div class="smaller text-muted">8 members currently working on live tasks.</div>
+</div>
+
+<div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold mb-0">Pending Approvals</h6>
+        <a href="#" class="smaller text-accent text-decoration-none fw-bold">View All</a>
+    </div>
+
+    <!-- Mini Table / List -->
+    <div class="bg-white rounded-4 border border-light p-2">
+        <div class="p-3 border-bottom border-light">
+            <div class="d-flex justify-content-between mb-1">
+                <span class="fw-bold small">#SK-2026-002</span>
+                <span class="badge bg-warning-subtle text-warning rounded-pill">Urgent</span>
+            </div>
+            <div class="smaller text-muted">Hassan Estates • 3D Signage</div>
+        </div>
+        <div class="p-3">
+            <div class="d-flex justify-content-between mb-1">
+                <span class="fw-bold small">#SK-2026-005</span>
+                <span class="badge bg-info-subtle text-info rounded-pill">New</span>
+            </div>
+            <div class="smaller text-muted">Amana Group • Logo Package</div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .fw-800 { font-weight: 800; }
+    .text-accent { color: var(--clr-accent); }
+    .bg-info-subtle { background-color: #e0f2fe; }
+    .text-info { color: #0369a1; }
+</style>
+{% endblock %}

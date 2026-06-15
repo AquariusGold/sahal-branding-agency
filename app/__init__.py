@@ -85,7 +85,7 @@ def create_app(config_name: str = None) -> Flask:
     # Phase 2: Real user loader
     @login_manager.user_loader
     def load_user(user_id):
-        from app.models.user import User
+        from app.models.user import User, UserRole
         return User.query.get(int(user_id))
 
     mail.init_app(app)
@@ -95,17 +95,21 @@ def create_app(config_name: str = None) -> Flask:
     # -------------------------------------------------------------------------
     # Import here (not at module top) to avoid circular imports — blueprints
     # import from extensions, which must already be initialized.
-    from app.main       import main       as main_blueprint
-    from app.auth       import auth       as auth_blueprint
-    from app.services   import services   as services_blueprint
-    from app.admin      import admin      as admin_blueprint
-    from app.dashboards import dashboards as dashboards_blueprint
+    from app.main            import main            as main_blueprint
+    from app.auth            import auth            as auth_blueprint
+    from app.services        import services        as services_blueprint
+    from app.admin            import admin            as admin_blueprint
+    from app.admin_dashboard import admin_dashboard as admin_dashboard_blueprint
+    from app.staff_dashboard import staff_dashboard as staff_dashboard_blueprint
+    from app.user_dashboard  import user_dashboard  as user_dashboard_blueprint
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(services_blueprint)
     app.register_blueprint(admin_blueprint)
-    app.register_blueprint(dashboards_blueprint)
+    app.register_blueprint(admin_dashboard_blueprint)
+    app.register_blueprint(staff_dashboard_blueprint)
+    app.register_blueprint(user_dashboard_blueprint)
 
     # -------------------------------------------------------------------------
     # 6. Context processor — inject device detection into ALL templates
@@ -117,9 +121,11 @@ def create_app(config_name: str = None) -> Flask:
     @app.context_processor
     def inject_device_context():
         """Make device detection result available in every template."""
+        from app.models.user import UserRole
         return {
             "is_mobile": is_mobile(flask_request),
             "device_type": "Mobile" if is_mobile(flask_request) else "Desktop",
+            "UserRole": UserRole,
         }
 
     # -------------------------------------------------------------------------

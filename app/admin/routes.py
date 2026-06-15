@@ -210,12 +210,6 @@ def toggle_service(id):
     return redirect(url_for("admin.list_services"))
 
 
-@admin.route("/", methods=["GET"])
-@login_required
-@role_required("admin")
-def dashboard():
-    """Admin dashboard stub."""
-    return redirect(url_for("dashboards.admin"))
 
 
 @admin.route("/jobs", methods=["GET"])

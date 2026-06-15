@@ -12,34 +12,32 @@ from functools import wraps
 from flask import abort
 from flask_login import current_user, login_required
 
-def role_required(required_role: str):
+def role_required(allowed_roles):
     """
-    Decorator to restrict access to a specific user role.
+    Decorator to restrict access to specific user roles.
     Must be placed AFTER @login_required.
     
-    Example:
-        @app.route("/admin")
-        @login_required
-        @role_required("admin")
-        def admin_panel():
-            pass
-            
+    Admins are ALWAYS allowed access regardless of the allowed_roles list.
+    
     Args:
-        required_role (str): The string value of the UserRole enum required.
-                             e.g., "admin", "client", "staff".
+        allowed_roles (str or list): A single role string or a list of role strings.
+                                     e.g., "staff" or ["staff", "client"].
     """
+    if isinstance(allowed_roles, str):
+        allowed_roles = [allowed_roles]
+
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            # If the user is somehow not logged in (e.g., they didn't use 
-            # @login_required, or accessed it directly), deny access.
             if not current_user.is_authenticated:
                 return abort(401)
                 
-            # Check if their role enum value matches the required string
-            if current_user.role.value != required_role:
-                # 403 Forbidden: Server understands the request, but refuses 
-                # to authorize it (they are logged in, but lack permissions).
+            # Admins have global access
+            if current_user.role.value == "admin":
+                return func(*args, **kwargs)
+
+            # Check if their role is in the allowed list
+            if current_user.role.value not in allowed_roles:
                 return abort(403)
                 
             return func(*args, **kwargs)
